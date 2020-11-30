@@ -6,9 +6,16 @@
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.2.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "axios": "^0.21.0",
+    "react": "^16.14.0",
+    "react-bootstrap": "^1.4.0",
+    "react-dom": "^16.13.0",
+    "react-redux": "^7.2.2",
+    "react-router": "^5.2.0",
     "react-scripts": "4.0.1",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "underscore": "^1.12.0",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -18,10 +25,20 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": "react-app",
+    "parserOptions": {
+      "ecmaVersion": 9,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "rules": {
+      "semi": "error"
+    },
+    "env": {
+      "browser": true
+    }
   },
   "browserslist": {
     "production": [
