@@ -4,7 +4,7 @@ import {getApplicationState} from '../redux/selectors';
 import {connect} from 'react-redux';
 import LoginPage from '../Pages/LoginPage';
 import InstructionsPage from '../Pages/InstructionsPage';
-import TaskPage from '../Pages/TaskPage';
+import TaskPage from './TaskPage';
 import {EndPage} from '../Pages/EndPage';
 
 function AppController({appState}) {

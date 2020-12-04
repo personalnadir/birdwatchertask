@@ -1,4 +1,8 @@
-export const COLOURS = ['Red','Blue','Green','Yellow'];
+export const COLOUR_RED = 'COLOUR_RED';
+export const COLOUR_BLUE = 'COLOUR_BLUE';
+export const COLOUR_GREEN = 'COLOUR_GREEN';
+export const COLOUR_YELLOW = 'COLOUR_YELLOW';
+export const COLOURS = [COLOUR_RED,COLOUR_BLUE,COLOUR_GREEN,COLOUR_YELLOW];
 export const MIN_ANIMALS_PER_BLOCK = 5;
 export const MAX_ANIMALS_PER_BLOCK = 12;
-export const NUM_BLOCKS = 10;
+export const NUM_BLOCKS = 2;

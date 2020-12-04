@@ -1,6 +1,7 @@
 import {
   NEXT_TASK_STATE,
-  NEXT_TRIAL,
+  NEXT_BLOCK,
+  SWITCH_MODE
 } from "../taskactions";
 
 import gen from '../../generatetrials';
@@ -8,39 +9,47 @@ import gen from '../../generatetrials';
 import {
   TASK_RULE,
   TASK_PROPER,
+  TYPE_TUTORIAL,
+  TYPE_MAIN,
   TASK_FLOW,
 } from "../taskconstants";
 
 const initialState = {
   taskPhaseIndex: 0,
-  currentTrial: 0,
   currentBlock: 0,
-  blocks: gen()
+  mode: TYPE_TUTORIAL,
+  blocks: {
+    [TYPE_TUTORIAL]:gen(),
+    [TYPE_MAIN]:gen()
+  }
 };
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialState, action) {
   switch (action.type) {
   case NEXT_TASK_STATE:
       return {
         ...state,
-        taskPhaseIndex: (state.taskPhaseIndex + 1) % TASK_FLOW.Length,
+        taskPhaseIndex: (state.taskPhaseIndex + 1) % TASK_FLOW.length,
       };
-    case NEXT_TRIAL:
-      let nextTrial = state.currentTrial + 1;
-      let blockIndex = state.currentBlock;
-      let phaseIndex = state.taskPhaseIndex;
+    case NEXT_BLOCK:
+      const blockIndex = state.currentBlock + 1;
+      const phaseIndex = state.taskPhaseIndex;
 
-      const block = state.blocks[blockIndex];
-      if (nextTrial >= block.length) {
-        nextTrial = 0;
-        blockIndex ++;
-        phaseIndex = 0;
-      }
+      const lastBlock = blockIndex >= state.blocks[state.mode].length;
       return {
         ...state,
-        currentTrial: nextTrial,
+        lastBlock,
         currentBlock: blockIndex,
         taskPhaseIndex: phaseIndex
+      };
+    case SWITCH_MODE:
+      return {
+        ...state,
+        mode:action.mode,
+        taskPhaseIndex: 0,
+        currentBlock: 0,
+        lastBlock: false
       };
     default:
       return state;

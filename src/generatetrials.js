@@ -1,10 +1,9 @@
-import _ from 'underscore';
 import {
 	COLOURS,
 	MIN_ANIMALS_PER_BLOCK,
 	MAX_ANIMALS_PER_BLOCK,
 	NUM_BLOCKS
-} from 'constants';
+} from './constants';
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);

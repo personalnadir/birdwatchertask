@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import application from "./application";
-
-import {
-
-} from '../applicationconstants';
+import task from "./task";
+import trial from "./trial";
 
 export default combineReducers({
-	application
+	application,
+	task,
+	trial
 });
