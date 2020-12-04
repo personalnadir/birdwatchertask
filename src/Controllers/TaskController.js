@@ -6,7 +6,7 @@ import { TASK_RULE, TASK_PROPER } from '../redux/taskconstants';
 import TrialController from './TrialController';
 import RulePage from '../Pages/RulePage';
 
-class TaskPage extends React.Component {
+class TaskController extends React.Component {
 	constructor (props) {
 		super(props);
 		this.state = {
@@ -47,4 +47,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(TaskPage);;
+)(TaskController);;

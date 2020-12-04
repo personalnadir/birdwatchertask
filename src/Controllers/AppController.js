@@ -4,7 +4,7 @@ import {getApplicationState} from '../redux/selectors';
 import {connect} from 'react-redux';
 import LoginPage from '../Pages/LoginPage';
 import InstructionsPage from '../Pages/InstructionsPage';
-import TaskPage from './TaskPage';
+import TaskController from './TaskController';
 import {EndPage} from '../Pages/EndPage';
 
 function AppController({appState}) {
@@ -14,7 +14,7 @@ function AppController({appState}) {
 		case app.INSTRUCTIONS:
 			return <InstructionsPage />;
 		case app.TASK:
-			return <TaskPage />;
+			return <TaskController />;
 		case app.END:
 			return <EndPage />;
 		default:
