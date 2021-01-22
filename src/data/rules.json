@@ -1,0 +1,84 @@
+{
+	"chainOfRules" : {
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} bird. Then then the press {key_act} for the next {n} {b} birds. Then press {key_act} when you see a {c} bird then the first {d} bird",
+		"variables" : {
+			"n" : "rules[1].transitionAfterTargetsMatched"
+		},
+		"rules" : [
+			{
+				"target" : ["a"],
+				"transitionToRule" : 1,
+				"transitionAfterTargetsMatched" : 1
+			},
+			{
+				"target" : ["b"],
+				"transitionToRule" : 2,
+				"transitionAfterTargetsMatched" : 3
+			},
+			{
+				"target" : ["c"],
+				"transitionToRule" : 3,
+				"transitionAfterTargetsMatched" : 1
+			},
+			{
+				"target" : ["d"],
+				"transitionToRule" : 4,
+				"transitionAfterTargetsMatched" : 1
+			},
+			{}
+		]
+	},
+	"once" : {
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} bird once only",
+		"rules" : [
+			{
+				"target" : ["a"],
+				"transitionToRule" : 1,
+				"transitionAfterTargetsMatched" : 1
+			},
+			{}
+		]
+	},
+	"complexTarget" : {
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} bird followed by any other bird except {a} and then a {b} bird. Repeat this {n} times",
+		"variables" : {
+			"n" : "rules[0].transitionAfterTargetsMatched"
+		},
+		"rules" : [
+			{
+				"target" : ["a", "!a", "b"],
+				"transitionToRule" : 1,
+				"transitionAfterTargetsMatched" : 3
+			},
+			{}
+		]
+	},
+	"orTarget" : {
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} bird or a {b} bird followed by any other bird except {a}. Repeat this {n} times",
+		"variables" : {
+			"n" : "rules[0].transitionAfterTargetsMatched"
+		},
+		"rules" : [
+			{
+				"target" : ["a|b", "!a"],
+				"transitionToRule" : 1,
+				"transitionAfterTargetsMatched" : 3
+			},
+			{}
+		]
+	},
+	"wildCardTarget" : {
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} bird or a {b} bird followed by any other bird, and then any bird except {a}. Repeat this {n} times",
+		"variables" : {
+			"n" : "rules[0].transitionAfterTargetsMatched"
+		},
+		"rules" : [
+			{
+				"target" : ["a|b", "*", "!a"],
+				"transitionToRule" : 1,
+				"transitionAfterTargetsMatched" : 3
+			},
+			{}
+		]
+	}
+}

@@ -1,0 +1,8 @@
+{
+	"tutorial": {
+		"ruleOrder": ["once"]
+	},
+	"main":{
+		"ruleOrder": ["chainOfRules", "orTarget"]
+	}
+}

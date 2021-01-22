@@ -7,7 +7,10 @@ import {
 	showITI
 } from '../redux/trialactions';
 import {startTimeout} from '../redux/timeactions';
-import {getTrialColour} from '../redux/selectors';
+import {
+	getTrialColour,
+	getLastInputWasCorrect
+} from '../redux/selectors';
 import KeyListener from '../Components/KeyListener';
 import blueBird from '../images/task/bird-blue.png';
 import greenBird from '../images/task/bird-green.png';
@@ -17,8 +20,11 @@ import {
 	COLOUR_RED,
 	COLOUR_BLUE,
 	COLOUR_GREEN,
-	COLOUR_YELLOW
+	COLOUR_YELLOW,
+	KEYS
 } from '../constants';
+import keyEncode from '../keyencode';
+import _ from 'underscore';
 
 const colToImg = {
 	[COLOUR_RED]: (<img alt="Red Bird" src={redBird} />),
@@ -26,6 +32,8 @@ const colToImg = {
 	[COLOUR_GREEN]: (<img alt="Green Bird" src={greenBird} />),
 	[COLOUR_YELLOW]: (<img alt="Yellow Bird" src={yellowBird} />)
 };
+
+const validKeys = _.invert(KEYS);
 
 class StimuliPage extends React.Component {
 	constructor (props) {
@@ -51,12 +59,14 @@ class StimuliPage extends React.Component {
     	this.props.startTimeout();
   	}
 	handleKeyPress(keyCode) {
-		this.props.registerKeyPress(keyCode);
+		if (_.has(validKeys, keyCode)) {
+			this.props.registerKeyPress(keyCode);
+		}
 	}
 
 	render() {
 		const img = colToImg[this.props.trialColour];
-		const feedback = this.props.feedback? <p>Feedback</p> : null;
+		const feedback = this.props.feedback? <p>{this.props.wasCorrect? "Correct": "Wrong"}</p> : null;
 		return (
 			<div>
 				<KeyListener onKeyEvent = {this.handleKeyPress} />
@@ -68,7 +78,8 @@ class StimuliPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	trialColour: getTrialColour(state)
+	trialColour: getTrialColour(state),
+	wasCorrect: getLastInputWasCorrect(state)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -81,7 +92,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 			if (ownProps.feedback) {
 				return;
 			} else {
-				dispatch(registerInput(keyCode));
+				dispatch(registerInput(keyEncode(keyCode)));
 				dispatch(showFeedback());
 			}
 		}

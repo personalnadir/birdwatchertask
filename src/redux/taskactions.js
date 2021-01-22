@@ -1,8 +1,9 @@
 import {
 	isLastBlock,
-	getCurrentBlock,
 	getTrialsComplete,
-	getTaskState
+	getTaskState,
+	getStimuliForBlock,
+	getCurrentRule
 } from './selectors';
 import {goToNextApplicationState} from './applicationactions';
 import {setTrialStimuli} from './trialactions';
@@ -18,16 +19,29 @@ export const SWITCH_MODE = 'task/switchMode';
 export const goToNextTaskState = () => {
 	return (dispatch, getState) => {
 		const state = getState();
-		if (isLastBlock(state) && getTaskState(state) === TASK_PROPER) {
+		const inTask = getTaskState(state) === TASK_PROPER;
+		if (isLastBlock(state) && inTask) {
 			dispatch(goToNextApplicationState());
 			dispatch(switchMode(TYPE_MAIN));
-			dispatch(setTrialStimuli(getCurrentBlock(getState())));
+			dispatch(
+				setTrialStimuli(
+					getStimuliForBlock(getState()),
+					getCurrentRule(getState())
+				)
+			);
 			return;
 		}
 
 		if (getTrialsComplete(state)) {
-			dispatch(setTrialStimuli(getCurrentBlock(state)));
-			dispatch(goToNextBlock());
+			dispatch(
+				setTrialStimuli(
+					getStimuliForBlock(state),
+					getCurrentRule(state)
+				)
+			);
+			if (inTask) {
+				dispatch(goToNextBlock());
+			}
 		}
 
 		dispatch({

@@ -3,6 +3,24 @@ export const COLOUR_BLUE = 'COLOUR_BLUE';
 export const COLOUR_GREEN = 'COLOUR_GREEN';
 export const COLOUR_YELLOW = 'COLOUR_YELLOW';
 export const COLOURS = [COLOUR_RED,COLOUR_BLUE,COLOUR_GREEN,COLOUR_YELLOW];
+export const USER_INPUT_SKIP = 'USER_INPUT_SKIP';
+export const USER_INPUT_PHOTO = 'USER_INPUT_PHOTO';
 export const MIN_ANIMALS_PER_BLOCK = 5;
 export const MAX_ANIMALS_PER_BLOCK = 12;
-export const NUM_BLOCKS = 2;
+
+export const HUMAN_READABLE_COLOURS = {
+	[COLOUR_RED]: 'red',
+	[COLOUR_BLUE]: 'blue',
+	[COLOUR_GREEN]: 'green',
+	[COLOUR_YELLOW]: 'yellow',
+};
+
+export const KEYS = {
+	[USER_INPUT_SKIP]: "KeyQ",
+	[USER_INPUT_PHOTO]: "KeyP",
+};
+
+export const HUMAN_READABLE_KEYS = {
+	[USER_INPUT_SKIP]: "Q",
+	[USER_INPUT_PHOTO]: "P",
+};

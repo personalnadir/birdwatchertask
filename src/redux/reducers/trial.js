@@ -14,12 +14,15 @@ import {
   TRIAL_FLOW,
 } from "../trialconstants";
 
+import {processTrials} from '../../applyrulestotrials';
+
 const initialState = {
   trialPhaseIndex: 0,
   currentTrial: 0,
   feedbackType:false,
   stimuli: [],
-  complete: true
+  complete: true,
+  correctAction: []
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -31,7 +34,8 @@ export default function(state = initialState, action) {
         currentTrial: 0,
         trialPhaseIndex: 0,
         stimuli: action.stimuli,
-        complete: false
+        complete: false,
+        correctAction: processTrials(action.rule, action.stimuli)
       };
     case SHOW_ITI:
       return {
@@ -60,8 +64,10 @@ export default function(state = initialState, action) {
         complete
       };
     case REGISTER_INPUT:
+      const correct = state.correctAction[state.currentTrial] === action.optionSelected;
       return {
         ...state,
+        correct,
         optionSelected: action.optionSelected,
         trialPhaseIndex: TRIAL_FLOW.indexOf(TRIAL_FEEDBACK)
       };

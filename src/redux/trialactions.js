@@ -31,9 +31,10 @@ export const goToNextTrial = () => {
 	};
 };
 
-export const setTrialStimuli = (stimuli) => ({
+export const setTrialStimuli = (stimuli, rule) => ({
 	type: SET_TRIAL_STIMULI,
-	stimuli
+	stimuli,
+	rule
 });
 
 export const registerInput = (optionSelected) => ({

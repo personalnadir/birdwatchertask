@@ -1,7 +1,6 @@
 import {APP_STATE_FLOW} from './applicationconstants';
 import {TASK_FLOW} from './taskconstants';
 import {TRIAL_FLOW} from './trialconstants';
-import {COLOURS} from '../constants';
 
 const getApplicationState = state => APP_STATE_FLOW[state.application.appStateIndex];
 const getTaskState = state => TASK_FLOW[state.task.taskPhaseIndex];
@@ -16,6 +15,11 @@ const getCurrentTrialStimulus = state => state.trial.stimuli[getCurrentTrial(sta
 const getTrialColour = state => getCurrentTrialStimulus(state);
 const currentTrialsExhausted = state => state.trial.stimuli.length === state.trial.currentTrial;
 const getTrialsComplete = state => state.trial.complete;
+const getCurrentRuleConfig = state => getCurrentBlock(state).rules;
+const getCurrentRule = state => getCurrentRuleConfig(state).rules;
+const getStimuliForBlock = state => getCurrentBlock(state).trials;
+const getCurrentRuleText = state => getCurrentRuleConfig(state).text;
+const getLastInputWasCorrect = state => state.trial.correct;
 
 export {
 	getApplicationState,
@@ -25,5 +29,9 @@ export {
 	getTrialsComplete,
 	isLastBlock,
 	getCurrentBlock,
-	currentTrialsExhausted
+	currentTrialsExhausted,
+	getCurrentRuleText,
+	getStimuliForBlock,
+	getCurrentRule,
+	getLastInputWasCorrect
 };

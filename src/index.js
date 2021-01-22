@@ -4,7 +4,6 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import AppController from './Controllers/AppController';
 
-
 import {Provider} from 'react-redux';
 import store from './redux/store';
 

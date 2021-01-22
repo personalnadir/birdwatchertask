@@ -1,6 +1,8 @@
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { goToNextTaskState } from '../redux/taskactions';
+import { getCurrentRuleText } from '../redux/selectors';
 
 class RulePage extends React.Component{
 	componentDidUpdate() {
@@ -10,12 +12,16 @@ class RulePage extends React.Component{
 	render() {
 		return (
 			<div>
-				<p>A rule to follow</p>
+				<p>{this.props.ruleText}</p>
 				<button onClick={this.props.nextPage} className="ContinueButton">Continue</button>
 			</div>
 		);
 	}
 }
+
+const mapStateToProps = state => ({
+	ruleText: getCurrentRuleText(state)
+});
 
 const mapDispatchToProps = dispatch => {
 	return {
@@ -26,6 +32,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-	null,
+	mapStateToProps,
 	mapDispatchToProps
 )(RulePage);
