@@ -32,21 +32,21 @@ export const goToNextTaskState = () => {
 			return;
 		}
 
-		if (getTrialsComplete(state)) {
-			dispatch(
-				setTrialStimuli(
-					getStimuliForBlock(state),
-					getCurrentRule(state)
-				)
-			);
-			if (inTask) {
-				dispatch(goToNextBlock());
-			}
-		}
-
 		dispatch({
 			type: NEXT_TASK_STATE
 		});
+
+		if (getTrialsComplete(state)) {
+			if (inTask) {
+				dispatch(goToNextBlock());
+			}
+			dispatch(
+				setTrialStimuli(
+					getStimuliForBlock(getState()),
+					getCurrentRule(getState())
+				)
+			);
+		}
 	};
 };
 
