@@ -1,6 +1,6 @@
 {
 	"chainOfRules" : {
-		"humanReadableExplanation" : "Press {key_act} when you see a {a} bird. Then then the press {key_act} for the next {n} {b} birds. Then press {key_act} when you see a {c} bird then the first {d} bird",
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} bird. Then then press {key_act} for the next {n} {b} birds. Then press {key_act} when you see a {c} bird then the first {d} bird",
 		"variables" : {
 			"n" : "rules[1].transitionAfterTargetsMatched"
 		},
