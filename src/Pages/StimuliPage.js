@@ -4,12 +4,16 @@ import {
 	registerInput,
 	showFeedback,
 	goToNextTrial,
-	showITI
+	showITI,
 } from '../redux/trialactions';
+import {storeTrialData} from '../redux/dataactions';
+import {storeData} from '../database/db';
 import {startTimeout} from '../redux/timeactions';
 import {
 	getTrialColour,
-	getLastInputWasCorrect
+	getLastInputWasCorrect,
+	getTrialData,
+	getUserID
 } from '../redux/selectors';
 import KeyListener from '../Components/KeyListener';
 import blueBird from '../images/task/bird-blue.png';
@@ -46,21 +50,22 @@ class StimuliPage extends React.Component {
 	}
 
 	componentDidMount() {
+	 	this.trialStart = Date.now();
     	if (!this.props.feedback) {
     		return;
     	}
     	this.props.startTimeout();
-  	}
+   	}
 
   	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (!this.props.feedback || prevProps.feedback) {
-    		return;
+			return;
     	}
     	this.props.startTimeout();
   	}
 	handleKeyPress(keyCode) {
 		if (_.has(validKeys, keyCode)) {
-			this.props.registerKeyPress(keyCode);
+			this.props.registerKeyPress(this.props.user, keyCode, this.trialStart, this.props.data);
 		}
 	}
 
@@ -79,7 +84,9 @@ class StimuliPage extends React.Component {
 
 const mapStateToProps = state => ({
 	trialColour: getTrialColour(state),
-	wasCorrect: getLastInputWasCorrect(state)
+	data: getTrialData(state),
+	wasCorrect: getLastInputWasCorrect(state),
+	user: getUserID(state)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -88,11 +95,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	    	dispatch(showITI());
 			dispatch(goToNextTrial());
 		},1000)),
-		registerKeyPress: (keyCode) => {
+		registerKeyPress: (user, keyCode, startTime, data) => {
 			if (ownProps.feedback) {
 				return;
 			} else {
-				dispatch(registerInput(keyEncode(keyCode)));
+				const keyAction = keyEncode(keyCode);
+				const reactionTime = Date.now() - startTime;
+				const dataAction = storeTrialData(keyAction, startTime, reactionTime, data);
+				dispatch(dataAction);
+				storeData(user, dataAction);
+				dispatch(registerInput(keyAction));
 				dispatch(showFeedback());
 			}
 		}

@@ -20,6 +20,20 @@ const getCurrentRule = state => getCurrentRuleConfig(state).rules;
 const getStimuliForBlock = state => getCurrentBlock(state).trials;
 const getCurrentRuleText = state => getCurrentRuleConfig(state).text;
 const getLastInputWasCorrect = state => state.trial.correct;
+const getTrialData = state => {
+	const {currentBlock, mode} = state.task;
+	const {currentTrial, stimuli, correctAction} = state.trial;
+	const rule = getCurrentRuleConfig(state);
+	return {
+		block: currentBlock,
+		mode,
+		trial: currentTrial,
+		stimuli: stimuli[currentTrial],
+		correctAction: correctAction[currentTrial],
+		rule: rule.name
+	};
+};
+const getUserID = state => state.data.user;
 
 export {
 	getApplicationState,
@@ -33,5 +47,7 @@ export {
 	getCurrentRuleText,
 	getStimuliForBlock,
 	getCurrentRule,
-	getLastInputWasCorrect
+	getLastInputWasCorrect,
+	getTrialData,
+	getUserID
 };

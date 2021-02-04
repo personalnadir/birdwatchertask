@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import LoginPage from '../Pages/LoginPage';
 import InstructionsPage from '../Pages/InstructionsPage';
 import TaskController from './TaskController';
-import {EndPage} from '../Pages/EndPage';
+import EndPage from '../Pages/EndPage';
 
 function AppController({appState}) {
 	switch (appState) {

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { setLoginID } from './redux/dataactions';
-// import checkLoginID from './serverlogin';
+import { setUserID } from '../redux/dataactions';
 import {goToNextApplicationState} from '../redux/applicationactions';
 
 class LoginPage extends React.Component {
@@ -61,12 +60,8 @@ class LoginPage extends React.Component {
 const mapDispatchToProps = dispatch => {
 	return {
 		handleLoginRequest: (id) => {
-			// checkLoginID(id).then(ab => {
-				// dispatch(setLoginID(id));
-				dispatch(goToNextApplicationState());
-			// }).catch(error => {
-			// 	console.log(error);
-			// });
+			dispatch(setUserID(id));
+			dispatch(goToNextApplicationState());
 		}
 	};
 };
