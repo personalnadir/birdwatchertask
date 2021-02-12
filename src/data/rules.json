@@ -88,7 +88,7 @@
 		]
 	},
 	"branching": {
-		"humanReadableExplanation" : "Press {key_act} for every {a} bird until you see a {b} bird. Then press {key_act} evertime you see a {b} bird",
+		"humanReadableExplanation" : "Press {key_act} for every {a} bird until you see a {b} bird. Then press {key_act} every time you see a {b} bird",
 		"rules" : [
 			{
 				"target" : ["a"],
@@ -102,7 +102,7 @@
 		]
 	},
 	"complex branching": {
-		"humanReadableExplanation" : "Press {key_act} for every {a} bird until you see a second {b} bird. Then press {key_act} evertime you see a {c} bird",
+		"humanReadableExplanation" : "Press {key_act} for every {a} bird until you see a second {b} bird. Then press {key_act} every time you see a {c} bird",
 		"rules" : [
 			{
 				"target" : ["a"],
