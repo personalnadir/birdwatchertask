@@ -16,8 +16,9 @@ import {
 import parse from '../../ruleparser';
 import genRuleBlocks from '../../ruleblockparser';
 import {COLOURS} from '../../constants';
+import _ from 'underscore';
 
-const ruleSets = parse(COLOURS);
+const ruleSets = parse(_.shuffle(COLOURS));
 const initialState = {
   taskPhaseIndex: 0,
   currentBlock: 0,
