@@ -1,8 +1,8 @@
 {
 	"tutorial": {
-		"ruleOrder": ["once"]
+		"ruleOrder": ["once", "sequence of two"]
 	},
 	"main":{
-		"ruleOrder": ["chainOfRules", "orTarget"]
+		"ruleOrder": ["two identical", "negation", "double negation", "double negation", "simple sequence", "branching", "complex branching"]
 	}
 }

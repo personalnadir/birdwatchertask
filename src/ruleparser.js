@@ -102,18 +102,31 @@ const generateInstructions = (humanReadableExplanation, colourOrder, variableVal
 const generateRules = (rules, colourOrder) => {
 	let processedRules = JSON.parse(JSON.stringify(rules)); // deep clone
 	for (let rule of processedRules) {
-		if (typeof rule.target === 'undefined') {
+		const targetSpecified = _.has(rule, "target");
+		const transitionOnTargetSpecified = _.has(rule, "transitionOnTarget");
+		if (!targetSpecified && !transitionOnTargetSpecified) {
 			continue;
 		}
 		const transitionSpecified = _.has(rule, "transitionToRule");
 		const transitionRequirementsSpecified = _.has(rule,"transitionAfterTargetsMatched");
 		console.assert(!transitionSpecified || transitionRequirementsSpecified, `ruleparser: rule ${rule.name} specifies a transition, but no associated limit`);
-		let target = [];
-  		for (const symbol of rule.target) {
-  			target.push(processSymbol(symbol).map(i => colourOrder[i]));
+
+		if (targetSpecified) {
+			let target = [];
+	  		for (const symbol of rule.target) {
+	  			target.push(processSymbol(symbol).map(i => colourOrder[i]));
+			}
+			rule.target = target;
 		}
 
-		rule.target = target;
+		if (transitionOnTargetSpecified) {
+			let transitionOnTarget = [];
+	  		for (const symbol of rule.transitionOnTarget) {
+	  			transitionOnTarget.push(processSymbol(symbol).map(i => colourOrder[i]));
+			}
+			delete rule.transitionOnTarget;
+			rule.transitionTarget = transitionOnTarget;
+		}
 	}
 
 	return processedRules;

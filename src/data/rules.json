@@ -39,6 +39,82 @@
 			{}
 		]
 	},
+	"sequence of two" : {
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} bird, followed immediately by a {b} bird",
+		"rules" : [
+			{
+				"target" : ["a", "b"]
+			}
+		]
+	},
+	"two identical" : {
+		"humanReadableExplanation" : "Press {key_act} when you see two {a} birds, one after another ",
+		"rules" : [
+			{
+				"target" : ["a", "a"]
+			}
+		]
+	},
+	"negation" : {
+		"humanReadableExplanation" : "Press {key_act} when you see any bird that is not {a}",
+		"rules" : [
+			{
+				"target" : ["!a"]
+			}
+		]
+	},
+	"double negation" : {
+		"humanReadableExplanation" : "Press {key_act} when you see any bird that is not {a} and not {b}",
+		"rules" : [
+			{
+				"target" : ["c|d"]
+			}
+		]
+	},
+	"total negation" : {
+		"humanReadableExplanation" : "Press {key_act} when you see any bird that is not {a}, {b} or {c}",
+		"rules" : [
+			{
+				"target" : ["d"]
+			}
+		]
+	},
+	"simple sequence" : {
+		"humanReadableExplanation" : "Press {key_act} when you see a sequence of three birds matching: {a}, {b}, {c}",
+		"rules" : [
+			{
+				"target" : ["a", "b", "c"]
+			}
+		]
+	},
+	"branching": {
+		"humanReadableExplanation" : "Press {key_act} for every {a} bird until you see a {b} bird. Then press {key_act} evertime you see a {b} bird",
+		"rules" : [
+			{
+				"target" : ["a"],
+				"transitionOnTarget": ["b"],
+				"transitionToRule" : 1,
+				"transitionAfterTargetsMatched" : 1
+			},
+			{
+				"target": ["b"]
+			}
+		]
+	},
+	"complex branching": {
+		"humanReadableExplanation" : "Press {key_act} for every {a} bird until you see a second {b} bird. Then press {key_act} evertime you see a {c} bird",
+		"rules" : [
+			{
+				"target" : ["a"],
+				"transitionOnTarget": ["b"],
+				"transitionToRule" : 1,
+				"transitionAfterTargetsMatched" : 2
+			},
+			{
+				"target": ["c"]
+			}
+		]
+	},
 	"complexTarget" : {
 		"humanReadableExplanation" : "Press {key_act} when you see a {a} bird followed by any other bird except {a} and then a {b} bird. Repeat this {n} times",
 		"variables" : {

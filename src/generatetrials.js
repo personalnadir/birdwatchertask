@@ -4,7 +4,10 @@ import {
 	MAX_ANIMALS_PER_BLOCK,
 } from './constants';
 
-import {countRuleTransitions} from './applyrulestotrials';
+import {
+	countRuleTransitions,
+	countNumRuleTransitions
+} from './applyrulestotrials';
 import _ from 'underscore';
 
 const geneticCreatures = 50;
@@ -43,33 +46,31 @@ function crossOver(mum, dad) {
 	return trials;
 }
 
-function generateTransitionsMask(rules) {
-	let mask = new Array(rules.length);
-	for (let i = 0; i < rules.length; i++) {
-		mask[i] = _.has(rules[i], "transitionToRule");
-	}
-
-	return mask;
-}
-
 function generateBlockTrials(rules) {
 	let population = new Array(geneticCreatures);
 	for (let i = 0; i < geneticCreatures; i++) {
 		population[i] = generateRandomTrials();
 	}
 
-	let transitionMask = generateTransitionsMask(rules).map(count => count > 0? 1 : 0);
+	let numTransitionsDesired = countNumRuleTransitions(rules);
 
+	let count = 0;
 	while (true) {
+		count ++;
+		if (count > 500) {
+			console.log(rules, "Perfect match not generated");
+			return;
+		}
 		let transitionCounts = population.map(trials => countRuleTransitions(rules, trials));
 		let transitionBitmaps = transitionCounts.map(counts => counts.map(n => Math.min(1, n)));
 		let perfectMatch = _.findIndex(transitionBitmaps, bits => {
+			let numTransitions = 0;
 			for (let i = 0; i < bits.length; i++) {
-				if (bits[i] !== transitionMask[i]) {
-					return false;
+				if (bits[i]) {
+					numTransitions ++;
 				}
 			}
-			return true;
+			return numTransitions === numTransitionsDesired;
 		});
 		if (perfectMatch >= 0) {
 			return population[perfectMatch];
