@@ -24,7 +24,11 @@ const ruleSymbols = {
 	"a":0,
 	"b":1,
 	"c":2,
-	"d":3
+	"d":3,
+	"1":-1,
+	"2":-2,
+	"3":-3,
+	"4":-4
 };
 
 const keyAct = /\{key_act\}/g;
@@ -34,6 +38,7 @@ const isOr = /([a-d])\|([a-d])/g;
 const isNot = /!([a-d])/g;
 const anySymbol = /\*/g;
 const specifcSymbol = /([a-d])/g;
+const number = /([1-4])/g;
 
 const processSymbol = symbol => {
 	let array = [...symbol.matchAll(isOr)];
@@ -63,7 +68,10 @@ const processSymbol = symbol => {
 	if (array.length > 0) {
 		return [ruleSymbols[array[0][1]]];
 	}
-
+	array = [...symbol.matchAll(number)];
+	if (array.length > 0) {
+		return [ruleSymbols[array[0][1]]];
+	}
 
 	console.error(`Could not parse ${symbol}`);
 };
@@ -114,7 +122,9 @@ const generateRules = (rules, colourOrder) => {
 		if (targetSpecified) {
 			let target = [];
 	  		for (const symbol of rule.target) {
-	  			target.push(processSymbol(symbol).map(i => colourOrder[i]));
+	  			target.push(processSymbol(symbol).map(
+  					i => i >= 0? colourOrder[i]: Math.abs(symbol) - 1
+	  			));
 			}
 			rule.target = target;
 		}
@@ -122,7 +132,9 @@ const generateRules = (rules, colourOrder) => {
 		if (transitionOnTargetSpecified) {
 			let transitionOnTarget = [];
 	  		for (const symbol of rule.transitionOnTarget) {
-	  			transitionOnTarget.push(processSymbol(symbol).map(i => colourOrder[i]));
+	  			transitionOnTarget.push(processSymbol(symbol).map(
+  					i => i >= 0? colourOrder[i]: Math.abs(symbol) - 1
+	  			));
 			}
 			delete rule.transitionOnTarget;
 			rule.transitionTarget = transitionOnTarget;

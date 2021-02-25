@@ -5,8 +5,13 @@ import {
 
 import _ from 'underscore';
 
+function detectOrdinalColours(trials) {
+	return _.first(trials,4);
+}
+
 function processTrials(ruleSet, trials) {
 	console.log(ruleSet);
+	const ordinalColours = detectOrdinalColours(trials);
 	let ruleIndex = 0;
 	let targetIndex = 0;
 	let transitionOnTargetIndex = 0;
@@ -15,7 +20,7 @@ function processTrials(ruleSet, trials) {
 
 	for(const col of trials) {
 		const rule = ruleSet[ruleIndex];
-		const targetSequence = rule.target;
+		const targetSequence = rule.target.map(t => ordinalColours[t]? ordinalColours[t]: t);
 		const hasTransitionOnTargetRule = _.has(rule, "transitionTarget");
 		const transitionOnTarget = rule.transitionTarget;
 
@@ -106,6 +111,8 @@ function countNumRuleTransitions(ruleSet) {
 }
 
 function countRuleTransitions(ruleSet, trials) {
+	const ordinalColours = detectOrdinalColours(trials);
+
 	let transitions = new Array(countNumRuleTransitions(ruleSet));
 	let ruleMap = mapRuleTransitions(ruleSet);
 	transitions.fill(0);
@@ -117,7 +124,7 @@ function countRuleTransitions(ruleSet, trials) {
 
 	for(const col of trials) {
 		const rule = ruleSet[ruleIndex];
-		const targetSequence = rule.target;
+		const targetSequence = rule.target.map(t => ordinalColours[t]? ordinalColours[t]: t);;
 		const hasTransitionOnTargetRule = _.has(rule, "transitionTarget");
 		const transitionOnTarget = rule.transitionTarget;
 

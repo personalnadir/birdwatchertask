@@ -156,5 +156,13 @@
 			},
 			{}
 		]
+	},
+	"ordinals" : {
+		"humanReadableExplanation" : "Make note of the first two bird colours you see. Press {key_act} whenever you see the first colour followed immediately by the second",
+		"rules" : [
+			{
+				"target" : ["1", "2"]
+			}
+		]
 	}
 }
