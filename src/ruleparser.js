@@ -31,6 +31,8 @@ const ruleSymbols = {
 	"4":-4
 };
 
+const allColours = [1,2,3,4];
+
 const keyAct = /\{key_act\}/g;
 const keySkip = /\{key_skip\}/g;
 
@@ -54,6 +56,9 @@ const processSymbol = symbol => {
 			if (letterCode === exclude) {
 				continue;
 			}
+			if (ruleSymbols[letter] < 0) {
+				continue;
+			}
 			include.push(letterCode);
 		}
 
@@ -61,7 +66,7 @@ const processSymbol = symbol => {
 	}
 	array = [...symbol.matchAll(anySymbol)];
 	if (array.length > 0) {
-		return Object.values(ruleSymbols);
+		return allColours;
 	}
 
 	array = [...symbol.matchAll(specifcSymbol)];
