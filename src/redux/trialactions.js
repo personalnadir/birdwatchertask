@@ -6,6 +6,7 @@ export const SHOW_FEEDBACK = 'trial/showFeeback';
 export const NEXT_TRIAL = 'trial/nextTrial';
 export const SET_TRIAL_STIMULI = 'trial/setTrialStimuli';
 export const REGISTER_INPUT = 'trial/registerInput';
+export const END_TRIAL = 'trial/end';
 
 export const showITI = ()=> ({
 	type: SHOW_ITI
@@ -17,6 +18,10 @@ export const showStimulus = ()=> ({
 
 export const showFeedback = () => ({
 	type: SHOW_FEEDBACK
+});
+
+export const endCurrentTrials = () => ({
+	type: END_TRIAL
 });
 
 export const goToNextTrial = () => {

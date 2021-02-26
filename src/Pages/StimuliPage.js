@@ -5,7 +5,12 @@ import {
 	showFeedback,
 	goToNextTrial,
 	showITI,
+	endCurrentTrials
 } from '../redux/trialactions';
+
+import {
+	goToNextTaskState
+} from '../redux/taskactions';
 import {storeTrialData} from '../redux/dataactions';
 import {storeData} from '../database/db';
 import {startTimeout} from '../redux/timeactions';
@@ -54,14 +59,14 @@ class StimuliPage extends React.Component {
     	if (!this.props.feedback) {
     		return;
     	}
-    	this.props.startTimeout();
+    	this.props.startTimeout(this.props.wasCorrect);
    	}
 
   	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (!this.props.feedback || prevProps.feedback) {
 			return;
     	}
-    	this.props.startTimeout();
+    	this.props.startTimeout(this.props.wasCorrect);
   	}
 	handleKeyPress(keyCode) {
 		if (_.has(validKeys, keyCode)) {
@@ -91,9 +96,14 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
-	    startTimeout: () => dispatch(startTimeout(dispatch => {
-	    	dispatch(showITI());
-			dispatch(goToNextTrial());
+	    startTimeout: (wasCorrect) => dispatch(startTimeout(dispatch => {
+	    	if (wasCorrect) {
+		    	dispatch(showITI());
+				dispatch(goToNextTrial());
+	    	} else {
+	    		dispatch(endCurrentTrials());
+	    		dispatch(goToNextTaskState());
+	    	}
 		},1000)),
 		registerKeyPress: (user, keyCode, startTime, data) => {
 			if (ownProps.feedback) {

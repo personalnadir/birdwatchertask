@@ -3,6 +3,7 @@ import {
   SHOW_STIMULUS,
   SHOW_FEEDBACK,
   NEXT_TRIAL,
+  END_TRIAL,
   SET_TRIAL_STIMULI,
   REGISTER_INPUT
 } from "../trialactions";
@@ -62,6 +63,11 @@ export default function(state = initialState, action) {
         ...state,
         currentTrial: nextTrial,
         complete
+      };
+    case END_TRIAL:
+      return {
+        ...state,
+        complete:true
       };
     case REGISTER_INPUT:
       const correct = state.correctAction[state.currentTrial] === action.optionSelected;
