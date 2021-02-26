@@ -144,6 +144,16 @@ const generateRules = (rules, colourOrder) => {
 			delete rule.transitionOnTarget;
 			rule.transitionTarget = transitionOnTarget;
 		}
+
+		if (_.has(rule, "startCondition")) {
+			let condition = [];
+	  		for (const symbol of rule.startCondition) {
+	  			condition.push(processSymbol(symbol).map(
+  					i => i >= 0? colourOrder[i]: Math.abs(symbol) - 1
+	  			));
+			}
+			rule.condition = condition;
+		}
 	}
 
 	return processedRules;

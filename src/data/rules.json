@@ -164,5 +164,19 @@
 				"target" : ["1", "2"]
 			}
 		]
+	},
+	"ordinal branching" : {
+		"humanReadableExplanation" : "If the second bird colour you see is {a} then photograph every {b} bird. But if the second bird colour is not {a} then photograph every {c} bird",
+		"rules" : [
+			{
+				"startCondition": ["*", "a"],
+				"target" : ["b"]
+			},
+			{
+				"startCondition": ["*", "!a"],
+				"target" : ["c"]
+			}
+		]
 	}
+
 }

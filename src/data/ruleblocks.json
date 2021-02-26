@@ -1,6 +1,6 @@
 {
 	"tutorial": {
-		"ruleOrder": ["ordinals", "sequence of two"]
+		"ruleOrder": ["ordinal branching", "sequence of two"]
 	},
 	"main":{
 		"ruleOrder": ["two identical", "negation", "double negation", "double negation", "simple sequence", "branching", "complex branching"]

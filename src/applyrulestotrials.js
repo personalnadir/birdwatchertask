@@ -9,10 +9,45 @@ function detectOrdinalColours(trials) {
 	return _.first(trials,4);
 }
 
+function targetMatchesTrials (target, trials){
+	const ordinalColours = detectOrdinalColours(trials);
+	const targetSequence = target.map(t => ordinalColours[t]? ordinalColours[t]: t);
+	let targetIndex = 0;
+
+	for(const col of trials) {
+		const isTarget = targetSequence? targetSequence[targetIndex].indexOf(col) >= 0: false;
+		if (!isTarget) {
+			return false;
+		}
+		if (isTarget) {
+			targetIndex ++;
+			if (targetIndex >= targetSequence.length) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+function getStartingRuleIndex(ruleSet, trials) {
+	for (let i = 0; i < ruleSet.length; i++) {
+		if (!_.has(ruleSet[i], "condition")) {
+			continue;
+		}
+
+		if (targetMatchesTrials(ruleSet[i].condition, trials)) {
+			return i;
+		}
+	}
+
+	return 0;
+}
+
 function processTrials(ruleSet, trials) {
 	console.log(ruleSet);
 	const ordinalColours = detectOrdinalColours(trials);
-	let ruleIndex = 0;
+	let ruleIndex = getStartingRuleIndex(ruleSet, trials);
 	let targetIndex = 0;
 	let transitionOnTargetIndex = 0;
 	let targetMatches = 0;
@@ -68,10 +103,14 @@ function processTrials(ruleSet, trials) {
 	return takePhoto.map(b => b? TRIAL_ACTION_PHOTO: TRIAL_ACTION_SKIP);
 }
 
-function mapRuleTransitions(ruleSet) {
+function mapRuleTransitions(ruleSet, trials) {
+	let isReachable = getReachableRules(ruleSet, trials);
 	let ruleMap = new Array(ruleSet.length);
 	let index = 0;
 	for (let i = 0; i < ruleSet.length; i++) {
+		if (!isReachable[i]) {
+			continue;
+		}
 		ruleMap[i] = {};
 		let rs = ruleSet[i];
 		if (_.has(rs, "target")) {
@@ -94,9 +133,32 @@ function mapRuleTransitions(ruleSet) {
 	return ruleMap;
 }
 
-function countNumRuleTransitions(ruleSet) {
+function getReachableRules(ruleSet, trials) {
+	let ruleIndex = getStartingRuleIndex(ruleSet, trials);
+	let reachable = new Array(ruleSet.length);
+	reachable.fill(false);
+	reachable[ruleIndex] = true;
+
+	while (true) {
+		if (!_.has(ruleSet[ruleIndex], "transitionToRule")) {
+			return reachable;
+		}
+
+		ruleIndex = ruleSet[ruleIndex].transitionToRule;
+		if (reachable[ruleIndex]) {
+			return reachable;
+		}
+		reachable[ruleIndex] = true;
+	}
+}
+
+function countNumRuleTransitions(ruleSet, trials) {
+	let isReachable = getReachableRules(ruleSet, trials);
 	let numTransitions = 0;
 	for (let i = 0; i < ruleSet.length; i++) {
+		if (!isReachable[i]) {
+			continue;
+		}
 		let ruleTransitions = 0;
 		if (_.has(ruleSet[i], "target")) {
 			ruleTransitions += ruleSet[i].target.length;
@@ -113,11 +175,11 @@ function countNumRuleTransitions(ruleSet) {
 function countRuleTransitions(ruleSet, trials) {
 	const ordinalColours = detectOrdinalColours(trials);
 
-	let transitions = new Array(countNumRuleTransitions(ruleSet));
-	let ruleMap = mapRuleTransitions(ruleSet);
+	let transitions = new Array(countNumRuleTransitions(ruleSet, trials));
+	let ruleMap = mapRuleTransitions(ruleSet, trials);
 	transitions.fill(0);
 
-	let ruleIndex = 0;
+	let ruleIndex = getStartingRuleIndex(ruleSet, trials);
 	let targetIndex = 0;
 	let transitionOnTargetIndex = 0;
 	let targetMatches = 0;

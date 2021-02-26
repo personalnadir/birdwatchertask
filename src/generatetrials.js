@@ -52,7 +52,7 @@ function generateBlockTrials(rules) {
 		population[i] = generateRandomTrials();
 	}
 
-	let numTransitionsDesired = countNumRuleTransitions(rules);
+	let numTransitionsDesired = population.map(trials => countNumRuleTransitions(rules, trials));
 
 	let count = 0;
 	while (true) {
@@ -63,14 +63,14 @@ function generateBlockTrials(rules) {
 		}
 		let transitionCounts = population.map(trials => countRuleTransitions(rules, trials));
 		let transitionBitmaps = transitionCounts.map(counts => counts.map(n => Math.min(1, n)));
-		let perfectMatch = _.findIndex(transitionBitmaps, bits => {
+		let perfectMatch = _.findIndex(transitionBitmaps, (bits, index) => {
 			let numTransitions = 0;
 			for (let i = 0; i < bits.length; i++) {
 				if (bits[i]) {
 					numTransitions ++;
 				}
 			}
-			return numTransitions === numTransitionsDesired;
+			return numTransitions === numTransitionsDesired[index];
 		});
 		if (perfectMatch >= 0) {
 			return population[perfectMatch];
