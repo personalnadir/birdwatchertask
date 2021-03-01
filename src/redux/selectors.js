@@ -34,6 +34,7 @@ const getTrialData = state => {
 	};
 };
 const getUserID = state => state.data.user;
+const getTaskMode = state => state.task.mode;
 
 export {
 	getApplicationState,
@@ -49,5 +50,6 @@ export {
 	getCurrentRule,
 	getLastInputWasCorrect,
 	getTrialData,
+	getTaskMode,
 	getUserID
 };

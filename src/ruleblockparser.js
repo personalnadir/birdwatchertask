@@ -2,13 +2,15 @@ import blocksConfig from './data/ruleblocks.json';
 
 import {
   TYPE_TUTORIAL,
-  TYPE_MAIN,
+  TYPE_RANDOMISED,
+  TYPE_NONRANDOMISED
 } from "./redux/taskconstants";
 
 const createBlocks = (type, ruleSets) => {
 	const typeConverter = {
-		[TYPE_MAIN]: "main",
-		[TYPE_TUTORIAL]: "tutorial"
+		[TYPE_RANDOMISED]: "randomised",
+		[TYPE_TUTORIAL]: "tutorial",
+		[TYPE_NONRANDOMISED]: "nonrandomised"
 	};
 
 	const blockStructure = blocksConfig[typeConverter[type]];

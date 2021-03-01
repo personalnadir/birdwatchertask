@@ -8,8 +8,9 @@ import gen from '../../generatetrials';
 
 import {
   TYPE_TUTORIAL,
-  TYPE_MAIN,
-  TASK_FLOW,
+  TYPE_RANDOMISED,
+  TYPE_NONRANDOMISED,
+  TASK_FLOW
 } from "../taskconstants";
 
 
@@ -25,7 +26,8 @@ const initialState = {
   mode: TYPE_TUTORIAL,
   blocks: {
     [TYPE_TUTORIAL]:gen(genRuleBlocks(TYPE_TUTORIAL, ruleSets)),
-    [TYPE_MAIN]:gen(genRuleBlocks(TYPE_MAIN, ruleSets))
+    [TYPE_RANDOMISED]:gen(genRuleBlocks(TYPE_RANDOMISED, ruleSets)),
+    [TYPE_NONRANDOMISED]:gen(genRuleBlocks(TYPE_NONRANDOMISED, ruleSets)),
   }
 };
 

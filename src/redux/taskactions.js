@@ -3,13 +3,15 @@ import {
 	getTrialsComplete,
 	getTaskState,
 	getStimuliForBlock,
-	getCurrentRule
+	getCurrentRule,
+	getTaskMode
 } from './selectors';
 import {goToNextApplicationState} from './applicationactions';
 import {setTrialStimuli} from './trialactions';
 import {
 	TASK_PROPER,
-	TYPE_MAIN
+	TYPE_RANDOMISED,
+	TYPE_NONRANDOMISED
 } from './taskconstants';
 
 export const NEXT_TASK_STATE = 'task/nextTaskState';
@@ -22,7 +24,7 @@ export const goToNextTaskState = () => {
 		const inTask = getTaskState(state) === TASK_PROPER;
 		if (isLastBlock(state) && inTask) {
 			dispatch(goToNextApplicationState());
-			dispatch(switchMode(TYPE_MAIN));
+			dispatch(switchMode(getTaskMode(state) === TYPE_RANDOMISED? TYPE_NONRANDOMISED : TYPE_RANDOMISED));
 			dispatch(
 				setTrialStimuli(
 					getStimuliForBlock(getState()),

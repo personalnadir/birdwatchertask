@@ -2,7 +2,10 @@
 	"tutorial": {
 		"ruleOrder": ["ordinal branching", "sequence of two"]
 	},
-	"main":{
+	"randomised":{
+		"ruleOrder": ["two identical", "negation", "double negation", "double negation", "simple sequence", "branching", "complex branching"]
+	},
+	"nonrandomised": {
 		"ruleOrder": ["two identical", "negation", "double negation", "double negation", "simple sequence", "branching", "complex branching"]
 	}
 }

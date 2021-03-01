@@ -8,6 +8,7 @@ export const APP_STATE_FLOW = [
 	INSTRUCTIONS,
 	TASK, // tutorial
 	INSTRUCTIONS,
-	TASK, // main task
+	TASK, // randomised task,
+	TASK, // non-randomised
 	END,
 ];

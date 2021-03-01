@@ -1,9 +1,10 @@
 export const TASK_RULE = 'TASK_RULE';
 export const TASK_PROPER = 'TASK_PROPER';
 export const TYPE_TUTORIAL = 'TYPE_TUTORIAL';
-export const TYPE_MAIN = 'TYPE_MAIN';
+export const TYPE_RANDOMISED = 'TYPE_RANDOMISED';
+export const TYPE_NONRANDOMISED = 'TYPE_NONRANDOMISED';
 
 export const TASK_FLOW = [
 	TASK_RULE,
-	TASK_PROPER,
+	TASK_PROPER
 ];
