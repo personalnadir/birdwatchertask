@@ -35,6 +35,7 @@ const getTrialData = state => {
 };
 const getUserID = state => state.data.user;
 const getTaskMode = state => state.task.mode;
+const getInstructionsPage = state => state.application.instructionPage;
 
 export {
 	getApplicationState,
@@ -51,5 +52,6 @@ export {
 	getLastInputWasCorrect,
 	getTrialData,
 	getTaskMode,
-	getUserID
+	getUserID,
+	getInstructionsPage
 };
