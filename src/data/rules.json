@@ -55,14 +55,6 @@
 			}
 		]
 	},
-	"negation" : {
-		"humanReadableExplanation" : "Press {key_act} when you see any bird that is not {a}",
-		"rules" : [
-			{
-				"target" : ["!a"]
-			}
-		]
-	},
 	"double negation" : {
 		"humanReadableExplanation" : "Press {key_act} when you see any bird that is not {a} and not {b}",
 		"rules" : [
@@ -88,7 +80,7 @@
 		]
 	},
 	"branching": {
-		"humanReadableExplanation" : "Press {key_act} for every {a} bird until you see a {b} bird. Then press {key_act} every time you see a {b} bird",
+		"humanReadableExplanation" : "Start by taking a picture of each {a} bird. But if you see a {b} bird, photograph that {b} bird, and from then on, only photograph {b} birds.",
 		"rules" : [
 			{
 				"target" : ["a"],
@@ -177,6 +169,71 @@
 				"target" : ["c"]
 			}
 		]
+	},
+	"modus ponens": {
+		"humanReadableExplanation" : "If the first bird colour you see is {a} then photograph every {b} bird. But if the second bird colour is not {a} then photograph every {c} bird",
+		"rules" : [
+			{
+				"startCondition": ["a"],
+				"target" : ["b"]
+			},
+			{
+				"startCondition": ["!a"],
+				"target" : ["c"]
+			}
+		]
+	},
+	"sequence": {
+		"humanReadableExplanation" : "If you see {a}, {b}, {c} birds one after another, photograph the {c} bird.",
+		"rules" : [
+			{
+				"target" : ["a","b","c"]
+			}
+		]
+	},
+	"negation": {
+		"humanReadableExplanation" : "Photograph all birds that are not {a}.",
+		"rules" : [
+			{
+				"target" : ["!a"]
+			}
+		]
+	},
+	"rule shifting" :{
+		"humanReadableExplanation" : "Wait for the first {a} bird, then take a picture of it. Then wait for the first {b} bird, then take a picture of it. Alternate taking pictures of one {a} bird and one {b} bird.",
+		"rules" : [
+			{
+				"target" : ["a"],
+				"transitionAfterTargetsMatched" : 1,
+				"transitionToRule": 1
+			},
+			{
+				"target" : ["b"],
+				"transitionAfterTargetsMatched" : 1,
+				"transitionToRule": 0
+			}
+		]
+	},
+	"branching logic complex" :{
+		"humanReadableExplanation" : "Take a picture of every {a} bird, until you see at least two {b} birds in a row. Then photograph every {c} bird, but not {a} birds anymore.",
+		"rules" : [
+			{
+				"target" : ["a"],
+				"transitionOnTarget": ["b", "b"],
+				"transitionAfterTargetsMatched" : 1,
+				"transitionToRule": 1
+			},
+			{
+				"target" : ["c"]
+			}
+		]
+	},
+	"sequence": {
+		"humanReadableExplanation" : "If you see {a}, {b}, {c} birds one after another, photograph the {c} bird.",
+		"rules" : [
+			{
+				"target" : ["a","b","c"]
+			}
+		]
 	}
-
 }

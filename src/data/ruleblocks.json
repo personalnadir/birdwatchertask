@@ -1,11 +1,11 @@
 {
 	"tutorial": {
-		"ruleOrder": ["ordinal branching", "sequence of two"]
+		"ruleOrder": ["modus ponens", "sequence of two"]
 	},
 	"randomised":{
-		"ruleOrder": ["two identical", "negation", "double negation", "double negation", "simple sequence", "branching", "complex branching"]
+		"ruleOrder": ["modus ponens", "sequence", "negation", "rule shifting", "branching", "branching logic complex"]
 	},
 	"nonrandomised": {
-		"ruleOrder": ["two identical", "negation", "double negation", "double negation", "simple sequence", "branching", "complex branching"]
+		"ruleOrder": ["modus ponens", "negation", "branching", "modus ponens", "sequence"]
 	}
 }
