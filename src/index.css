@@ -16,28 +16,12 @@ span.red {
 	text-transform: uppercase;
 	font-weight: bold;
 	color:red;
-	text-shadow:  1px  1px black,
-				 -1px  1px black,
-				  1px -1px black,
-				 -1px -1px black,
-				  0px  1px black,
-				  0px -1px black,
-				  1px  0px black,
-				 -1px  0px black;
 }
 
 span.blue {
 	text-transform: uppercase;
 	font-weight: bold;
 	color:blue;
-	text-shadow:  1px  1px black,
-				 -1px  1px black,
-				  1px -1px black,
-				 -1px -1px black,
-				  0px  1px black,
-				  0px -1px black,
-				  1px  0px black,
-				 -1px  0px black;
 
 }
 
@@ -45,14 +29,6 @@ span.green {
 	text-transform: uppercase;
 	font-weight: bold;
 	color:green;
-	text-shadow:  1px  1px black,
-				 -1px  1px black,
-				  1px -1px black,
-				 -1px -1px black,
-				  0px  1px black,
-				  0px -1px black,
-				  1px  0px black,
-				 -1px  0px black;
 
 }
 
