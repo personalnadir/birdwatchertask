@@ -6,11 +6,15 @@ import { getCurrentRuleText } from '../redux/selectors';
 
 import {
 	HUMAN_READABLE_COLOURS,
+	USER_INPUT_SKIP,
+	USER_INPUT_PHOTO,
+	HUMAN_READABLE_KEYS
 } from '../constants';
 
 
 const colourRe = new RegExp(`(${Object.values(HUMAN_READABLE_COLOURS).join('|')})`, 'g');
 
+const keyInstruction = (<div><p>Instructions:</p><p>Press '{HUMAN_READABLE_KEYS[USER_INPUT_PHOTO]}' to take a picture, and press '{HUMAN_READABLE_KEYS[USER_INPUT_SKIP]}' to skip this bird</p></div>);
 
 class RulePage extends React.Component{
 	componentDidUpdate() {
@@ -23,6 +27,7 @@ class RulePage extends React.Component{
 		</p>);
 		return (
 			<div>
+				{keyInstruction}
 				{text}
 				<button onClick={this.props.nextPage} className="ContinueButton">Continue</button>
 			</div>
