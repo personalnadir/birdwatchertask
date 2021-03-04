@@ -60,14 +60,14 @@ class StimuliPage extends React.Component {
     	if (!this.props.feedback) {
     		return;
     	}
-    	this.props.startTimeout(this.props.wasCorrect);
+    	this.props.startITITimer(this.props.wasCorrect);
    	}
 
   	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (!this.props.feedback || prevProps.feedback) {
 			return;
     	}
-    	this.props.startTimeout(this.props.wasCorrect);
+    	this.props.startITITimer(this.props.wasCorrect);
   	}
 	handleKeyPress(keyCode) {
 		if (_.has(validKeys, keyCode)) {
@@ -97,7 +97,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
-	    startTimeout: (wasCorrect) => dispatch(startTimeout(dispatch => {
+	    startITITimer: (wasCorrect) => dispatch(startTimeout(dispatch => {
 	    	if (wasCorrect) {
 		    	dispatch(showITI());
 				dispatch(goToNextTrial());
