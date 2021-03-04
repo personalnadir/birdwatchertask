@@ -30,7 +30,8 @@ import {
 	COLOUR_BLUE,
 	COLOUR_GREEN,
 	COLOUR_YELLOW,
-	KEYS
+	KEYS,
+	ITI_MILLIS
 } from '../constants';
 import keyEncode from '../keyencode';
 import _ from 'underscore';
@@ -104,7 +105,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	    		dispatch(endCurrentTrials());
 	    		dispatch(goToNextTaskState());
 	    	}
-		},1000)),
+		},ITI_MILLIS)),
 		registerKeyPress: (user, keyCode, startTime, data) => {
 			if (ownProps.feedback) {
 				return;

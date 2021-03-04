@@ -7,6 +7,7 @@ export const USER_INPUT_SKIP = 'USER_INPUT_SKIP';
 export const USER_INPUT_PHOTO = 'USER_INPUT_PHOTO';
 export const MIN_ANIMALS_PER_BLOCK = 5;
 export const MAX_ANIMALS_PER_BLOCK = 12;
+export const ITI_MILLIS = 1000;
 
 export const HUMAN_READABLE_COLOURS = {
 	[COLOUR_RED]: 'red',
