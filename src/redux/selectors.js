@@ -1,9 +1,9 @@
 import {APP_STATE_FLOW} from './applicationconstants';
-import {TASK_FLOW} from './taskconstants';
+import {TASK_FLOW, TASK_TIMEOUT} from './taskconstants';
 import {TRIAL_FLOW} from './trialconstants';
 
 const getApplicationState = state => APP_STATE_FLOW[state.application.appStateIndex];
-const getTaskState = state => TASK_FLOW[state.task.taskPhaseIndex];
+const getTaskState = state => state.task.timeout? TASK_TIMEOUT: TASK_FLOW[state.task.taskPhaseIndex];
 const getTrialState = state => TRIAL_FLOW[state.trial.trialPhaseIndex];
 const isLastBlock = state => state.task.lastBlock;
 const getCurrentBlock = state => {
@@ -36,6 +36,7 @@ const getTrialData = state => {
 const getUserID = state => state.data.user;
 const getTaskMode = state => state.task.mode;
 const getInstructionsPage = state => state.application.instructionPage;
+const getTrialPositon = state => ({block: state.task.currentBlock, trial: state.trial.currentTrial});
 
 export {
 	getApplicationState,
@@ -53,5 +54,6 @@ export {
 	getTrialData,
 	getTaskMode,
 	getUserID,
-	getInstructionsPage
+	getInstructionsPage,
+	getTrialPositon
 };

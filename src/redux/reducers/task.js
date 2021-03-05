@@ -1,7 +1,10 @@
 import {
   NEXT_TASK_STATE,
   NEXT_BLOCK,
-  SWITCH_MODE
+  SWITCH_MODE,
+  SHOW_TIMEOUT,
+  HIDE_TIMEOUT,
+  REGENERATE_BLOCK
 } from "../taskactions";
 
 import gen from '../../generatetrials';
@@ -60,6 +63,23 @@ export default function(state = initialState, action) {
         taskPhaseIndex: 0,
         currentBlock: 0,
         lastBlock: false
+      };
+    case SHOW_TIMEOUT:
+      return {
+        ...state,
+        timeout:true
+      };
+    case HIDE_TIMEOUT:
+      return {
+        ...state,
+        timeout:false
+      };
+    case REGENERATE_BLOCK:
+      let blocks = state.blocks;
+      blocks[state.mode] = gen(genRuleBlocks(state.mode, ruleSets));
+      return {
+        ...state,
+        blocks
       };
     default:
       return state;

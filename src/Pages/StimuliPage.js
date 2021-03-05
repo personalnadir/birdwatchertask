@@ -9,7 +9,8 @@ import {
 } from '../redux/trialactions';
 
 import {
-	goToNextTaskState
+	goToNextTaskState,
+	showTimeOut
 } from '../redux/taskactions';
 import {storeTrialData} from '../redux/dataactions';
 import {storeData} from '../database/db';
@@ -18,7 +19,8 @@ import {
 	getTrialColour,
 	getLastInputWasCorrect,
 	getTrialData,
-	getUserID
+	getUserID,
+	getTrialPositon
 } from '../redux/selectors';
 import KeyListener from '../Components/KeyListener';
 import blueBird from '../images/task/bird-blue.png';
@@ -31,6 +33,7 @@ import {
 	COLOUR_GREEN,
 	COLOUR_YELLOW,
 	KEYS,
+	TIMEOUT_MILLIS,
 	ITI_MILLIS
 } from '../constants';
 import keyEncode from '../keyencode';
@@ -58,6 +61,7 @@ class StimuliPage extends React.Component {
 	componentDidMount() {
 	 	this.trialStart = Date.now();
     	if (!this.props.feedback) {
+    		this.props.startTimeOutTimer(this.props.trialPos.block, this.props.trialPos.trial);
     		return;
     	}
     	this.props.startITITimer(this.props.wasCorrect);
@@ -65,6 +69,7 @@ class StimuliPage extends React.Component {
 
   	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (!this.props.feedback || prevProps.feedback) {
+    		this.props.startTimeOutTimer(this.props.trialPos.block, this.props.trialPos.trial);
 			return;
     	}
     	this.props.startITITimer(this.props.wasCorrect);
@@ -92,7 +97,8 @@ const mapStateToProps = state => ({
 	trialColour: getTrialColour(state),
 	data: getTrialData(state),
 	wasCorrect: getLastInputWasCorrect(state),
-	user: getUserID(state)
+	user: getUserID(state),
+	trialPos: getTrialPositon(state)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -106,6 +112,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	    		dispatch(goToNextTaskState());
 	    	}
 		},ITI_MILLIS)),
+		 startTimeOutTimer: (block, trial) => dispatch(startTimeout(dispatch => {
+		 	console.log('TIMEOUT');
+		 	dispatch(showTimeOut(block, trial));
+		},TIMEOUT_MILLIS)),
 		registerKeyPress: (user, keyCode, startTime, data) => {
 			if (ownProps.feedback) {
 				return;

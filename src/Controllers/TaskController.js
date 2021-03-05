@@ -2,9 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {goToNextTaskState} from '../redux/taskactions';
 import {getTaskState} from '../redux/selectors';
-import { TASK_RULE, TASK_PROPER } from '../redux/taskconstants';
+import {
+	TASK_RULE,
+	TASK_PROPER,
+	TASK_TIMEOUT
+} from '../redux/taskconstants';
 import TrialController from './TrialController';
 import RulePage from '../Pages/RulePage';
+import TimeOutPage from '../Pages/TimeOutPage';
 
 class TaskController extends React.Component {
 	constructor (props) {
@@ -26,6 +31,8 @@ class TaskController extends React.Component {
 				return <RulePage />;
 			case TASK_PROPER:
 				return <TrialController />;
+			case TASK_TIMEOUT:
+				return <TimeOutPage />;
 			default:
 				return null;
 		};

@@ -4,7 +4,8 @@ import {
 	getTaskState,
 	getStimuliForBlock,
 	getCurrentRule,
-	getTaskMode
+	getTaskMode,
+	getTrialPositon
 } from './selectors';
 import {goToNextApplicationState} from './applicationactions';
 import {setTrialStimuli} from './trialactions';
@@ -17,6 +18,9 @@ import {
 export const NEXT_TASK_STATE = 'task/nextTaskState';
 export const NEXT_BLOCK = 'task/nextBlock';
 export const SWITCH_MODE = 'task/switchMode';
+export const SHOW_TIMEOUT = 'task/showTimeout';
+export const HIDE_TIMEOUT = 'task/hideTimeout';
+export const REGENERATE_BLOCK = 'task/regenBlock';
 
 export const goToNextTaskState = () => {
 	return (dispatch, getState) => {
@@ -60,3 +64,45 @@ export const switchMode = (newMode)=> ({
 	type: SWITCH_MODE,
 	mode: newMode
 });
+
+export const showTimeOut = (block, trial) => {
+	return (dispatch, getState) => {
+		const state = getState();
+		const pos = getTrialPositon(state);
+
+		if (pos.block !== block || pos.trial !== trial) {
+			console.log("Outdated timeout command");
+			console.log(pos);
+			console.log(`${block} ${trial}`);
+			return;
+		}
+		console.log("TIMEOUTED");
+		dispatch({
+			type: SHOW_TIMEOUT,
+			block,
+			trial
+		});
+	};
+};
+
+export const hideTimeOut = () => ({
+	type: HIDE_TIMEOUT
+});
+
+export const regenerateBlocks = () => ({
+	type: REGENERATE_BLOCK
+});
+
+export const restartBlock = () => {
+	return (dispatch, getState) => {
+		dispatch({
+			type: NEXT_TASK_STATE
+		});
+		dispatch(
+			setTrialStimuli(
+				getStimuliForBlock(getState()),
+				getCurrentRule(getState())
+			)
+		);
+	};
+};
