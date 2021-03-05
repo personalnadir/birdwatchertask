@@ -71,12 +71,9 @@ export const showTimeOut = (block, trial) => {
 		const pos = getTrialPositon(state);
 
 		if (pos.block !== block || pos.trial !== trial) {
-			console.log("Outdated timeout command");
-			console.log(pos);
-			console.log(`${block} ${trial}`);
 			return;
 		}
-		console.log("TIMEOUTED");
+
 		dispatch({
 			type: SHOW_TIMEOUT,
 			block,

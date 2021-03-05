@@ -18,7 +18,6 @@ class EndPage extends React.Component {
 	}
 };
 
-
 const mapStateToProps = (state, ownProps) => {
 	return {
 		user: getUserID(state)

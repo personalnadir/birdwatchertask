@@ -15,7 +15,6 @@ class TimeOutPage extends React.Component {
 	}
 
 	handleKeyPress(keyCode) {
-		console.log(keyCode);
 		this.props.restartBlock();
 	}
 
