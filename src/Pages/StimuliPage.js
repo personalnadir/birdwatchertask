@@ -20,13 +20,18 @@ import {
 	getLastInputWasCorrect,
 	getTrialData,
 	getUserID,
-	getTrialPositon
+	getTrialPositon,
+	getTaskMode
 } from '../redux/selectors';
 import KeyListener from '../Components/KeyListener';
 import blueBird from '../images/task/bird-blue.png';
 import greenBird from '../images/task/bird-green.png';
 import redBird from '../images/task/bird-red.png';
 import yellowBird from '../images/task/bird-yellow.png';
+import blueSnake from '../images/task/snake-blue.png';
+import greenSnake from '../images/task/snake-green.png';
+import redSnake from '../images/task/snake-red.png';
+import yellowSnake from '../images/task/snake-yellow.png';
 import {
 	COLOUR_RED,
 	COLOUR_BLUE,
@@ -36,14 +41,29 @@ import {
 	TIMEOUT_MILLIS,
 	ITI_MILLIS
 } from '../constants';
+
+import {
+	MODE_STIMULI,
+	STIMULI_BIRD,
+	STIMULI_SNAKE
+} from '../redux/taskconstants';
+
 import keyEncode from '../keyencode';
 import _ from 'underscore';
 
 const colToImg = {
-	[COLOUR_RED]: (<img alt="Red Bird" src={redBird} />),
-	[COLOUR_BLUE]: (<img alt="Blue Bird" src={blueBird} />),
-	[COLOUR_GREEN]: (<img alt="Green Bird" src={greenBird} />),
-	[COLOUR_YELLOW]: (<img alt="Yellow Bird" src={yellowBird} />)
+	[STIMULI_BIRD]: {
+		[COLOUR_RED]: (<img alt="Red Bird" src={redBird} />),
+		[COLOUR_BLUE]: (<img alt="Blue Bird" src={blueBird} />),
+		[COLOUR_GREEN]: (<img alt="Green Bird" src={greenBird} />),
+		[COLOUR_YELLOW]: (<img alt="Yellow Bird" src={yellowBird} />)
+	},
+	[STIMULI_SNAKE]: {
+		[COLOUR_RED]: (<img alt="Red Snake" className="scaleup" src={redSnake} />),
+		[COLOUR_BLUE]: (<img alt="Blue Snake" className="scaleup" src={blueSnake} />),
+		[COLOUR_GREEN]: (<img alt="Green Snake" className="scaleup" src={greenSnake} />),
+		[COLOUR_YELLOW]: (<img alt="Yellow Snake" className="scaleup" src={yellowSnake} />)
+	}
 };
 
 const validKeys = _.invert(KEYS);
@@ -81,7 +101,7 @@ class StimuliPage extends React.Component {
 	}
 
 	render() {
-		const img = colToImg[this.props.trialColour];
+		const img = colToImg[MODE_STIMULI[this.props.mode]][this.props.trialColour];
 		const feedback = this.props.feedback? <p>{this.props.wasCorrect? "Correct": "Wrong"}</p> : null;
 		return (
 			<div>
@@ -98,7 +118,8 @@ const mapStateToProps = state => ({
 	data: getTrialData(state),
 	wasCorrect: getLastInputWasCorrect(state),
 	user: getUserID(state),
-	trialPos: getTrialPositon(state)
+	trialPos: getTrialPositon(state),
+	mode: getTaskMode(state)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {

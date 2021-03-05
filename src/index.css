@@ -48,3 +48,17 @@ span.yellow {
 				 -1px  0px black;
 
 }
+
+img.scaleup {
+	animation: scaleup 5s infinite;
+}
+
+@keyframes scaleup {
+  from {
+    transform: scale(10%,10%);
+  }
+
+  to {
+    transform: scale(100%,100%);
+  }
+}
