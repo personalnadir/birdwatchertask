@@ -21,7 +21,8 @@ import {
 	getTrialData,
 	getUserID,
 	getTrialPositon,
-	getTaskMode
+	getTaskMode,
+	getTrialStimuliType
 } from '../redux/selectors';
 import KeyListener from '../Components/KeyListener';
 import blueBird from '../images/task/bird-blue.png';
@@ -101,7 +102,7 @@ class StimuliPage extends React.Component {
 	}
 
 	render() {
-		const img = colToImg[MODE_STIMULI[this.props.mode]][this.props.trialColour];
+		const img = colToImg[this.props.stimType][this.props.trialColour];
 		const feedback = this.props.feedback? <p>{this.props.wasCorrect? "Correct": "Wrong"}</p> : null;
 		return (
 			<div>
@@ -114,6 +115,7 @@ class StimuliPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
+	stimType: getTrialStimuliType(state),
 	trialColour: getTrialColour(state),
 	data: getTrialData(state),
 	wasCorrect: getLastInputWasCorrect(state),

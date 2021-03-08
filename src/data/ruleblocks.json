@@ -6,6 +6,6 @@
 		"ruleOrder": ["modus ponens", "sequence", "negation", "rule shifting", "branching", "branching logic complex"]
 	},
 	"nonrandomised": {
-		"ruleOrder": ["modus ponens", "negation", "branching", "modus ponens", "sequence"]
+		"ruleOrder": ["modus ponens", "stroop simple", "sequence", "sequence of two snakes", "negation snakes", "branching snakes", "modus ponens", "sequence"]
 	}
 }

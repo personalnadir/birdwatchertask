@@ -8,9 +8,11 @@ import {
 } from './constants';
 
 import {
-  TYPE_TUTORIAL,
-  TYPE_MAIN,
-} from "./redux/taskconstants";
+	STIMULI_BIRD,
+	STIMULI_SNAKE,
+	STIMULI_SPIDER,
+	HUMAN_READABLE_STIMULI
+} from './redux/taskconstants';
 
 const ruleN = /rules\[(\d)\]\.(\w+)/g;
 const colourKeys = [
@@ -31,10 +33,19 @@ const ruleSymbols = {
 	"4":-4
 };
 
+const stimuliType = {
+	"birds":STIMULI_BIRD,
+	"snakes":STIMULI_SNAKE,
+	"spiders":STIMULI_SPIDER
+};
+
 const allColours = [1,2,3,4];
 
 const keyAct = /\{key_act\}/g;
 const keySkip = /\{key_skip\}/g;
+
+const stimulus = /\{stimulus\}/g;
+const stimuli = /\{stimuli\}/g;
 
 const isOr = /([a-d])\|([a-d])/g;
 const isNot = /!([a-d])/g;
@@ -98,7 +109,7 @@ const getVariables = (variables, rules) => {
 	return variableValues;
 };
 
-const generateInstructions = (humanReadableExplanation, colourOrder, variableValues) => {
+const generateInstructions = (humanReadableExplanation, colourOrder, variableValues, stimType) => {
 	let processedText = humanReadableExplanation;
 	for (const [col, reKey] of _.zip(colourOrder, colourKeys)) {
 		processedText = processedText.replace(reKey, HUMAN_READABLE_COLOURS[col]);
@@ -109,6 +120,8 @@ const generateInstructions = (humanReadableExplanation, colourOrder, variableVal
 	}
 	processedText = processedText.replace(keyAct, HUMAN_READABLE_KEYS[USER_INPUT_PHOTO]);
 	processedText = processedText.replace(keySkip, HUMAN_READABLE_KEYS[USER_INPUT_SKIP]);
+	processedText = processedText.replace(stimulus, HUMAN_READABLE_STIMULI[stimType].singular);
+	processedText = processedText.replace(stimuli, HUMAN_READABLE_STIMULI[stimType].plural);
 	return processedText;
 };
 
@@ -164,14 +177,17 @@ export default (colourOrder) => {
 	let processedRules = {};
 
 	for (const ruleName in rulesConfig) {
-		const {humanReadableExplanation, variables, rules} = rulesConfig[ruleName];
+		const {humanReadableExplanation, variables, rules, stimuli} = rulesConfig[ruleName];
+		const stimType = stimuliType[stimuli];
+		console.assert(stimType, `ruleparser: invalid stimulus type ${stimuli} defined for rule ${ruleName}`);
 		const variableValues = getVariables(variables, rules);
-		const instruction = generateInstructions(humanReadableExplanation, colourOrder, variableValues);
+		const instruction = generateInstructions(humanReadableExplanation, colourOrder, variableValues, stimType);
 		const translatedRules = generateRules(rules, colourOrder);
 		processedRules[ruleName] = {
 			text: instruction,
 			rules: translatedRules,
-			name: ruleName
+			name: ruleName,
+			stimuli: stimType
 		};
 	}
 

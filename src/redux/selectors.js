@@ -17,6 +17,8 @@ const currentTrialsExhausted = state => state.trial.stimuli.length === state.tri
 const getTrialsComplete = state => state.trial.complete;
 const getCurrentRuleConfig = state => getCurrentBlock(state).rules;
 const getCurrentRule = state => getCurrentRuleConfig(state).rules;
+const getTrialStimuliType = state => getCurrentRuleConfig(state).stimuli;
+
 const getStimuliForBlock = state => getCurrentBlock(state).trials;
 const getCurrentRuleText = state => getCurrentRuleConfig(state).text;
 const getLastInputWasCorrect = state => state.trial.correct;
@@ -55,5 +57,6 @@ export {
 	getTaskMode,
 	getUserID,
 	getInstructionsPage,
-	getTrialPositon
+	getTrialPositon,
+	getTrialStimuliType
 };

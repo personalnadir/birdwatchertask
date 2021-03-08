@@ -2,7 +2,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { goToNextTaskState } from '../redux/taskactions';
-import { getCurrentRuleText } from '../redux/selectors';
+import {
+	getCurrentRuleText,
+	getTrialStimuliType
+} from '../redux/selectors';
 
 import {
 	HUMAN_READABLE_COLOURS,
@@ -11,10 +14,13 @@ import {
 	HUMAN_READABLE_KEYS
 } from '../constants';
 
+import {
+	HUMAN_READABLE_STIMULI
+} from '../redux/taskconstants';
+
 
 const colourRe = new RegExp(`(${Object.values(HUMAN_READABLE_COLOURS).join('|')})`, 'g');
 
-const keyInstruction = (<div><p>Instructions:</p><p>Press '{HUMAN_READABLE_KEYS[USER_INPUT_PHOTO]}' to take a picture, and press '{HUMAN_READABLE_KEYS[USER_INPUT_SKIP]}' to skip this bird</p></div>);
 
 class RulePage extends React.Component{
 	componentDidUpdate() {
@@ -22,6 +28,7 @@ class RulePage extends React.Component{
 	}
 
 	render() {
+		const keyInstruction = (<div><p>Instructions:</p><p>Press '{HUMAN_READABLE_KEYS[USER_INPUT_PHOTO]}' to take a picture, and press '{HUMAN_READABLE_KEYS[USER_INPUT_SKIP]}' to skip this {HUMAN_READABLE_STIMULI[this.props.stimType].singular}</p></div>);
 		const text = (<p>
 			{this.props.ruleText.split(colourRe).map((t,i) => t.match(colourRe)? <span key={i} className={t}>{t}</span>:<span key={i}>{t}</span>)}
 		</p>);
@@ -36,7 +43,8 @@ class RulePage extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	ruleText: getCurrentRuleText(state)
+	ruleText: getCurrentRuleText(state),
+	stimType: getTrialStimuliType(state)
 });
 
 const mapDispatchToProps = dispatch => {

@@ -1,9 +1,10 @@
 {
 	"chainOfRules" : {
-		"humanReadableExplanation" : "Press {key_act} when you see a {a} bird. Then then press {key_act} for the next {n} {b} birds. Then press {key_act} when you see a {c} bird then the first {d} bird",
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} {stimulus}. Then then press {key_act} for the next {n} {b} {stimuli}. Then press {key_act} when you see a {c} {stimulus} then the first {d} {stimuli}",
 		"variables" : {
 			"n" : "rules[1].transitionAfterTargetsMatched"
 		},
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["a"],
@@ -29,7 +30,8 @@
 		]
 	},
 	"once" : {
-		"humanReadableExplanation" : "Press {key_act} when you see a {a} bird once only",
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} {stimulus} once only",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["a"],
@@ -40,7 +42,8 @@
 		]
 	},
 	"sequence of two" : {
-		"humanReadableExplanation" : "Press {key_act} when you see a {a} bird, followed immediately by a {b} bird",
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} {stimulus}, followed immediately by a {b} {stimulus}",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["a", "b"]
@@ -48,7 +51,8 @@
 		]
 	},
 	"two identical" : {
-		"humanReadableExplanation" : "Press {key_act} when you see two {a} birds, one after another ",
+		"humanReadableExplanation" : "Press {key_act} when you see two {a} {stimuli}, one after another ",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["a", "a"]
@@ -56,7 +60,8 @@
 		]
 	},
 	"double negation" : {
-		"humanReadableExplanation" : "Press {key_act} when you see any bird that is not {a} and not {b}",
+		"humanReadableExplanation" : "Press {key_act} when you see any {stimulus} that is not {a} and not {b}",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["c|d"]
@@ -64,7 +69,8 @@
 		]
 	},
 	"total negation" : {
-		"humanReadableExplanation" : "Press {key_act} when you see any bird that is not {a}, {b} or {c}",
+		"humanReadableExplanation" : "Press {key_act} when you see any {stimulus} that is not {a}, {b} or {c}",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["d"]
@@ -72,7 +78,8 @@
 		]
 	},
 	"simple sequence" : {
-		"humanReadableExplanation" : "Press {key_act} when you see a sequence of three birds matching: {a}, {b}, {c}",
+		"humanReadableExplanation" : "Press {key_act} when you see a sequence of three {stimuli} matching: {a}, {b}, {c}",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["a", "b", "c"]
@@ -80,7 +87,8 @@
 		]
 	},
 	"branching": {
-		"humanReadableExplanation" : "Start by taking a picture of each {a} bird. But if you see a {b} bird, photograph that {b} bird, and from then on, only photograph {b} birds.",
+		"humanReadableExplanation" : "Start by taking a picture of each {a} {stimuli}. But if you see a {b} {stimuli}, photograph that {b} {stimuli}, and from then on, only photograph {b} {stimulus}.",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["a"],
@@ -94,7 +102,8 @@
 		]
 	},
 	"complex branching": {
-		"humanReadableExplanation" : "Press {key_act} for every {a} bird until you see a second {b} bird. Then press {key_act} every time you see a {c} bird",
+		"humanReadableExplanation" : "Press {key_act} for every {a} {stimuli} until you see a second {b} {stimuli}. Then press {key_act} every time you see a {c} {stimuli}",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["a"],
@@ -108,10 +117,11 @@
 		]
 	},
 	"complexTarget" : {
-		"humanReadableExplanation" : "Press {key_act} when you see a {a} bird followed by any other bird except {a} and then a {b} bird. Repeat this {n} times",
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} {stimuli} followed by any other {stimulus} except {a} and then a {b} {stimuli}. Repeat this {n} times",
 		"variables" : {
-			"n" : "rules[0].transitionAfterTargetsMatched"
+			"n" :"rules[0].transitionAfterTargetsMatched"
 		},
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["a", "!a", "b"],
@@ -122,10 +132,11 @@
 		]
 	},
 	"orTarget" : {
-		"humanReadableExplanation" : "Press {key_act} when you see a {a} bird or a {b} bird followed by any other bird except {a}. Repeat this {n} times",
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} {stimulus} or a {b} {stimulus} followed by any other {stimuli} except {a}. Repeat this {n} times",
 		"variables" : {
 			"n" : "rules[0].transitionAfterTargetsMatched"
 		},
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["a|b", "!a"],
@@ -136,10 +147,11 @@
 		]
 	},
 	"wildCardTarget" : {
-		"humanReadableExplanation" : "Press {key_act} when you see a {a} bird or a {b} bird followed by any other bird, and then any bird except {a}. Repeat this {n} times",
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} {stimulus} or a {b} {stimulus} followed by any other {stimuli}, and then any {stimuli} except {a}. Repeat this {n} times",
 		"variables" : {
 			"n" : "rules[0].transitionAfterTargetsMatched"
 		},
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["a|b", "*", "!a"],
@@ -150,7 +162,8 @@
 		]
 	},
 	"ordinals" : {
-		"humanReadableExplanation" : "Make note of the first two bird colours you see. Press {key_act} whenever you see the first colour followed immediately by the second",
+		"humanReadableExplanation" : "Make note of the first two {stimulus} colours you see. Press {key_act} whenever you see the first colour followed immediately by the second",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["1", "2"]
@@ -158,7 +171,8 @@
 		]
 	},
 	"ordinal branching" : {
-		"humanReadableExplanation" : "If the second bird colour you see is {a} then photograph every {b} bird. But if the second bird colour is not {a} then photograph every {c} bird",
+		"humanReadableExplanation" : "If the second {stimulus} colour you see is {a} then photograph every {b} {stimulus}. But if the second {stimulus} colour is not {a} then photograph every {c} {stimulus}",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"startCondition": ["*", "a"],
@@ -171,7 +185,8 @@
 		]
 	},
 	"modus ponens": {
-		"humanReadableExplanation" : "If the first bird colour you see is {a} then photograph every {b} bird. But if the second bird colour is not {a} then photograph every {c} bird",
+		"humanReadableExplanation" : "If the first {stimulus} colour you see is {a} then photograph every {b} {stimulus}. But if the second {stimulus} colour is not {a} then photograph every {c} {stimulus}",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"startCondition": ["a"],
@@ -184,7 +199,8 @@
 		]
 	},
 	"sequence": {
-		"humanReadableExplanation" : "If you see {a}, {b}, {c} birds one after another, photograph the {c} bird.",
+		"humanReadableExplanation" : "If you see {a}, {b}, {c} {stimuli} one after another, photograph the {c} {stimulus}.",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["a","b","c"]
@@ -192,7 +208,8 @@
 		]
 	},
 	"negation": {
-		"humanReadableExplanation" : "Photograph all birds that are not {a}.",
+		"humanReadableExplanation" : "Photograph all {stimuli} that are not {a}.",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["!a"]
@@ -200,7 +217,8 @@
 		]
 	},
 	"rule shifting" :{
-		"humanReadableExplanation" : "Wait for the first {a} bird, then take a picture of it. Then wait for the first {b} bird, then take a picture of it. Alternate taking pictures of one {a} bird and one {b} bird.",
+		"humanReadableExplanation" : "Wait for the first {a} {stimulus}, then take a picture of it. Then wait for the first {b} {stimulus}, then take a picture of it. Alternate taking pictures of one {a} {stimulus} and one {b} {stimulus}.",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["a"],
@@ -215,7 +233,8 @@
 		]
 	},
 	"branching logic complex" :{
-		"humanReadableExplanation" : "Take a picture of every {a} bird, until you see at least two {b} birds in a row. Then photograph every {c} bird, but not {a} birds anymore.",
+		"humanReadableExplanation" : "Take a picture of every {a} {stimulus}, until you see at least two {b} {stimuli} in a row. Then photograph every {c} {stimulus}, but not {a} {stimuli} anymore.",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["a"],
@@ -229,10 +248,54 @@
 		]
 	},
 	"sequence": {
-		"humanReadableExplanation" : "If you see {a}, {b}, {c} birds one after another, photograph the {c} bird.",
+		"humanReadableExplanation" : "If you see {a}, {b}, {c} {stimuli} one after another, photograph the {c} {stimulus}.",
+		"stimuli": "birds",
 		"rules" : [
 			{
 				"target" : ["a","b","c"]
+			}
+		]
+	},
+	"stroop simple": {
+		"humanReadableExplanation" : "Now you will see the colour written over the {stimuli}. Ignore the colour of the {stimuli}, and only react to the word. Photograph every time you see {a}",
+		"stroop": true,
+		"stimuli": "birds",
+		"rules" : [
+			{
+				"target" : ["a"]
+			}
+		]
+	},
+	"sequence of two snakes" : {
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} {stimulus}, followed immediately by a {b} {stimulus}",
+		"stimuli": "snakes",
+		"rules" : [
+			{
+				"target" : ["a", "b"]
+			}
+		]
+	},
+	"negation snakes": {
+		"humanReadableExplanation" : "Photograph all {stimuli} that are not {a}.",
+		"stimuli": "snakes",
+		"rules" : [
+			{
+				"target" : ["!a"]
+			}
+		]
+	},
+	"branching snakes": {
+		"humanReadableExplanation" : "Start by taking a picture of each {a} {stimuli}. But if you see a {b} {stimuli}, photograph that {b} {stimuli}, and from then on, only photograph {b} {stimulus}.",
+		"stimuli": "snakes",
+		"rules" : [
+			{
+				"target" : ["a"],
+				"transitionOnTarget": ["b"],
+				"transitionToRule" : 1,
+				"transitionAfterTargetsMatched" : 1
+			},
+			{
+				"target": ["b"]
 			}
 		]
 	}
