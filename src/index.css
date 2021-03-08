@@ -55,10 +55,10 @@ img.scaleup {
 
 @keyframes scaleup {
   from {
-    transform: scale(10%,10%);
+    transform: scale(0,0);
   }
 
   to {
-    transform: scale(100%,100%);
+    transform: scale(1,1);
   }
 }
