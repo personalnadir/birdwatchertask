@@ -38,14 +38,14 @@ import {
 	COLOUR_GREEN,
 	COLOUR_YELLOW,
 	KEYS,
-	TIMEOUT_MILLIS,
-	ITI_MILLIS
+	TIMEOUT_MILLIS
 } from '../constants';
 
 import {
 	MODE_STIMULI,
 	STIMULI_BIRD,
-	STIMULI_SNAKE
+	STIMULI_SNAKE,
+	MODE_ITI
 } from '../redux/taskconstants';
 
 import keyEncode from '../keyencode';
@@ -84,7 +84,7 @@ class StimuliPage extends React.Component {
     		this.props.startTimeOutTimer(this.props.trialPos.block, this.props.trialPos.trial);
     		return;
     	}
-    	this.props.startITITimer(this.props.wasCorrect);
+    	this.props.startITITimer(this.props.wasCorrect, this.props.mode);
    	}
 
   	componentDidUpdate(prevProps, prevState, snapshot) {
@@ -92,7 +92,7 @@ class StimuliPage extends React.Component {
     		this.props.startTimeOutTimer(this.props.trialPos.block, this.props.trialPos.trial);
 			return;
     	}
-    	this.props.startITITimer(this.props.wasCorrect);
+    	this.props.startITITimer(this.props.wasCorrect, this.props.mode);
   	}
 	handleKeyPress(keyCode) {
 		if (_.has(validKeys, keyCode)) {
@@ -124,7 +124,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
-	    startITITimer: (wasCorrect) => dispatch(startTimeout(dispatch => {
+	    startITITimer: (wasCorrect,mode) => dispatch(startTimeout(dispatch => {
 	    	if (wasCorrect) {
 		    	dispatch(showITI());
 				dispatch(goToNextTrial());
@@ -132,7 +132,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	    		dispatch(endCurrentTrials());
 	    		dispatch(goToNextTaskState());
 	    	}
-		},ITI_MILLIS)),
+		},MODE_ITI[mode])),
 		 startTimeOutTimer: (block, trial) => dispatch(startTimeout(dispatch => {
 		 	console.log('TIMEOUT');
 		 	dispatch(showTimeOut(block, trial));
