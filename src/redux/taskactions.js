@@ -5,7 +5,8 @@ import {
 	getStimuliForBlock,
 	getCurrentRule,
 	getTaskMode,
-	getTrialPositon
+	getTaskPosition,
+	getTrialID
 } from './selectors';
 import {goToNextApplicationState} from './applicationactions';
 import {setTrialStimuli} from './trialactions';
@@ -65,15 +66,17 @@ export const switchMode = (newMode)=> ({
 	mode: newMode
 });
 
-export const showTimeOut = (block, trial) => {
+export const showTimeOut = (block, trial, id) => {
 	return (dispatch, getState) => {
 		const state = getState();
-		const pos = getTrialPositon(state);
+		const pos = getTaskPosition(state);
 
 		if (pos.block !== block || pos.trial !== trial) {
 			return;
 		}
-
+		if (id !== getTrialID(state)) {
+			return;
+		}
 		dispatch({
 			type: SHOW_TIMEOUT,
 			block,

@@ -5,7 +5,8 @@ import {
   NEXT_TRIAL,
   END_TRIAL,
   SET_TRIAL_STIMULI,
-  REGISTER_INPUT
+  REGISTER_INPUT,
+  INCREASE_ATTEMPTS
 } from "../trialactions";
 
 import {
@@ -21,9 +22,11 @@ const initialState = {
   trialPhaseIndex: 0,
   currentTrial: 0,
   feedbackType:false,
+  attempts: 0,
   stimuli: [],
   complete: true,
-  correctAction: []
+  correctAction: [],
+  id:0
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -32,6 +35,7 @@ export default function(state = initialState, action) {
     case SET_TRIAL_STIMULI:
       return {
         ...state,
+        id: state.id + 1,
         currentTrial: 0,
         trialPhaseIndex: 0,
         stimuli: action.stimuli,
@@ -62,12 +66,15 @@ export default function(state = initialState, action) {
       return {
         ...state,
         currentTrial: nextTrial,
-        complete
+        complete,
+        id: state.id + 1
       };
     case END_TRIAL:
       return {
         ...state,
-        complete:true
+        attempts: 0,
+        complete:true,
+        id: state.id + 1
       };
     case REGISTER_INPUT:
       const correct = state.correctAction[state.currentTrial] === action.optionSelected;
@@ -76,6 +83,15 @@ export default function(state = initialState, action) {
         correct,
         optionSelected: action.optionSelected,
         trialPhaseIndex: TRIAL_FLOW.indexOf(TRIAL_FEEDBACK)
+      };
+    case INCREASE_ATTEMPTS:
+      if (action.id !== state.id) {
+        return state;
+      }
+      return {
+        ...state,
+        attempts: state.attempts + 1,
+        id: state.id + 1
       };
     default:
       return state;

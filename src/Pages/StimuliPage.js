@@ -5,11 +5,11 @@ import {
 	showFeedback,
 	goToNextTrial,
 	showITI,
-	endCurrentTrials
+	increaseAttempts,
+	restartTrialOrGiveUp,
 } from '../redux/trialactions';
 
 import {
-	goToNextTaskState,
 	showTimeOut
 } from '../redux/taskactions';
 import {storeTrialData} from '../redux/dataactions';
@@ -20,9 +20,11 @@ import {
 	getLastInputWasCorrect,
 	getTrialData,
 	getUserID,
-	getTrialPositon,
+	getTaskPosition,
 	getTaskMode,
-	getTrialStimuliType
+	getTrialStimuliType,
+	getTrialID,
+	getAttempts
 } from '../redux/selectors';
 import KeyListener from '../Components/KeyListener';
 import blueBird from '../images/task/bird-blue.png';
@@ -82,22 +84,22 @@ class StimuliPage extends React.Component {
 	componentDidMount() {
 	 	this.trialStart = Date.now();
     	if (!this.props.feedback) {
-    		this.props.startTimeOutTimer(this.props.trialPos.block, this.props.trialPos.trial);
+    		this.props.startTimeOutTimer(this.props.trialPos.block, this.props.trialPos.trial, this.props.trialID);
     		return;
     	}
-    	this.props.startITITimer(this.props.wasCorrect, this.props.mode);
+    	this.props.startITITimer(this.props.wasCorrect, this.props.mode, this.props.trialID);
    	}
 
   	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (!this.props.feedback || prevProps.feedback) {
-    		this.props.startTimeOutTimer(this.props.trialPos.block, this.props.trialPos.trial);
+    		this.props.startTimeOutTimer(this.props.trialPos.block, this.props.trialPos.trial, this.props.trialID);
 			return;
     	}
-    	this.props.startITITimer(this.props.wasCorrect, this.props.mode);
+    	this.props.startITITimer(this.props.wasCorrect, this.props.mode, this.props.trialID);
   	}
 	handleKeyPress(keyCode) {
 		if (_.has(validKeys, keyCode)) {
-			this.props.registerKeyPress(this.props.user, keyCode, this.trialStart, this.props.data);
+			this.props.registerKeyPress(this.props.user, keyCode, this.trialStart, this.props.data, this.props.attempts);
 		}
 	}
 
@@ -120,32 +122,35 @@ const mapStateToProps = state => ({
 	data: getTrialData(state),
 	wasCorrect: getLastInputWasCorrect(state),
 	user: getUserID(state),
-	trialPos: getTrialPositon(state),
-	mode: getTaskMode(state)
+	trialPos: getTaskPosition(state),
+	trialID: getTrialID(state),
+	mode: getTaskMode(state),
+	attempts: getAttempts(state)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
-	    startITITimer: (wasCorrect,mode) => dispatch(startTimeout(dispatch => {
+	    startITITimer: (wasCorrect, mode, id) => dispatch(startTimeout(dispatch => {
 	    	if (wasCorrect) {
 		    	dispatch(showITI());
 				dispatch(goToNextTrial());
 	    	} else {
-	    		dispatch(endCurrentTrials());
-	    		dispatch(goToNextTaskState());
+	    		dispatch(increaseAttempts(id));
+	    		dispatch(restartTrialOrGiveUp());
+
 	    	}
 		},MODE_ITI[mode])),
-		 startTimeOutTimer: (block, trial) => dispatch(startTimeout(dispatch => {
-		 	console.log('TIMEOUT');
-		 	dispatch(showTimeOut(block, trial));
+		 startTimeOutTimer: (block, trial, id) => dispatch(startTimeout(dispatch => {
+		 	dispatch(showTimeOut(block, trial, id));
+    		dispatch(increaseAttempts(id));
 		},TIMEOUT_MILLIS)),
-		registerKeyPress: (user, keyCode, startTime, data) => {
+		registerKeyPress: (user, keyCode, startTime, data, attempts) => {
 			if (ownProps.feedback) {
 				return;
 			} else {
 				const keyAction = keyEncode(keyCode);
 				const reactionTime = Date.now() - startTime;
-				const dataAction = storeTrialData(keyAction, startTime, reactionTime, data);
+				const dataAction = storeTrialData(keyAction, startTime, reactionTime, data, attempts);
 				dispatch(dataAction);
 				storeData(user, dataAction);
 				dispatch(registerInput(keyAction));

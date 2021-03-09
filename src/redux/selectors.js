@@ -38,7 +38,9 @@ const getTrialData = state => {
 const getUserID = state => state.data.user;
 const getTaskMode = state => state.task.mode;
 const getInstructionsPage = state => state.application.instructionPage;
-const getTrialPositon = state => ({block: state.task.currentBlock, trial: state.trial.currentTrial});
+const getTaskPosition = state => ({block: state.task.currentBlock, trial: state.trial.currentTrial});
+const getAttempts = state => state.trial.attempts;
+const getTrialID = state => state.trial.id;
 
 export {
 	getApplicationState,
@@ -57,6 +59,8 @@ export {
 	getTaskMode,
 	getUserID,
 	getInstructionsPage,
-	getTrialPositon,
-	getTrialStimuliType
+	getTaskPosition,
+	getTrialStimuliType,
+	getAttempts,
+	getTrialID
 };

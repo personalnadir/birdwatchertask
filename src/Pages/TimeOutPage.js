@@ -2,9 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
 	hideTimeOut,
-	regenerateBlocks,
-	restartBlock
 } from '../redux/taskactions';
+
+import {
+	restartTrialOrGiveUp
+} from '../redux/trialactions';
 
 import KeyListener from '../Components/KeyListener';
 
@@ -38,8 +40,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		restartBlock: () => {
-			dispatch(regenerateBlocks());
-			dispatch(restartBlock());
+			dispatch(restartTrialOrGiveUp());
 			dispatch(hideTimeOut());
 		}
 	};

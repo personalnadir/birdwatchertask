@@ -1,7 +1,7 @@
 export const SET_USER_ID = 'data/setUserID';
 export const STORE_TRIAL = 'data/storeTrialData';
 
-export const storeTrialData = (userAction, startTime, reactionTime, trialData)=> ({
+export const storeTrialData = (userAction, startTime, reactionTime, trialData, attempts)=> ({
 	type: STORE_TRIAL,
 	userAction,
 	block: trialData.block,
@@ -11,6 +11,7 @@ export const storeTrialData = (userAction, startTime, reactionTime, trialData)=>
 	rule: trialData.rule,
 	reactionTime,
 	startTime,
+	attempts,
 	millis: Date.now(),
 	time: new Date().toTimeString(),
 	date: new Date().toDateString()

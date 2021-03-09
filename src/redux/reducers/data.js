@@ -18,6 +18,7 @@ export default function(state = initialState, action) {
         stimuli,
         correctAction,
         rule,
+        attempts,
         reactionTime,
         startTime,
         time
@@ -29,6 +30,7 @@ export default function(state = initialState, action) {
         stimuli,
         correctAction,
         rule,
+        attempts,
         reactionTime,
         startTime,
         time

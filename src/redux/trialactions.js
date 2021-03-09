@@ -1,5 +1,16 @@
-import {getTrialsComplete} from './selectors';
-import {goToNextTaskState} from './taskactions';
+import {
+	getTrialsComplete,
+	getAttempts
+} from './selectors';
+import {
+	ATTEMPTS_PER_TRIALBLOCK
+} from '../constants';
+
+import {
+	goToNextTaskState,
+	regenerateBlocks,
+	restartBlock
+} from './taskactions';
 export const SHOW_ITI = 'trial/showITI';
 export const SHOW_STIMULUS = 'trial/showStimulus';
 export const SHOW_FEEDBACK = 'trial/showFeeback';
@@ -7,6 +18,7 @@ export const NEXT_TRIAL = 'trial/nextTrial';
 export const SET_TRIAL_STIMULI = 'trial/setTrialStimuli';
 export const REGISTER_INPUT = 'trial/registerInput';
 export const END_TRIAL = 'trial/end';
+export const INCREASE_ATTEMPTS = 'trial/attempts';
 
 export const showITI = ()=> ({
 	type: SHOW_ITI
@@ -48,3 +60,19 @@ export const registerInput = (optionSelected) => ({
 	optionSelected,
 });
 
+export const increaseAttempts = (id) => ({
+	type: INCREASE_ATTEMPTS,
+	id
+});
+
+export const restartTrialOrGiveUp = () => {
+	return (dispatch, getState) => {
+		if (getAttempts(getState()) >= ATTEMPTS_PER_TRIALBLOCK) {
+			dispatch(endCurrentTrials());
+    		dispatch(goToNextTaskState());
+			return;
+		}
+		dispatch(regenerateBlocks());
+		dispatch(restartBlock());
+	};
+};
