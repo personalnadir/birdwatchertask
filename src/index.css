@@ -49,7 +49,12 @@ span.yellow {
 
 }
 
+img.stimuli {
+	width: 100%;
+}
+
 img.scaleup {
+	width: 100%;
 	animation: scaleup 5s infinite;
 }
 
@@ -61,4 +66,32 @@ img.scaleup {
   to {
     transform: scale(1,1);
   }
+}
+
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+  width: 400px;
+}
+
+.centred {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  text-transform: uppercase;
+  font-weight: bold;
+  color:white;
+  font-size: 3em;
+
+   text-shadow:  1px  1px black,
+				 -1px  1px black,
+				  1px -1px black,
+				 -1px -1px black,
+				  0px  1px black,
+				  0px -1px black,
+				  1px  0px black,
+				 -1px  0px black;
 }

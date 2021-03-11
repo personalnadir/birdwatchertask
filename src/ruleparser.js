@@ -177,7 +177,7 @@ export default (colourOrder) => {
 	let processedRules = {};
 
 	for (const ruleName in rulesConfig) {
-		const {humanReadableExplanation, variables, rules, stimuli} = rulesConfig[ruleName];
+		const {humanReadableExplanation, variables, rules, stimuli, stroop} = rulesConfig[ruleName];
 		const stimType = stimuliType[stimuli];
 		console.assert(stimType, `ruleparser: invalid stimulus type ${stimuli} defined for rule ${ruleName}`);
 		const variableValues = getVariables(variables, rules);
@@ -187,7 +187,8 @@ export default (colourOrder) => {
 			text: instruction,
 			rules: translatedRules,
 			name: ruleName,
-			stimuli: stimType
+			stimuli: stimType,
+			stroop: stroop
 		};
 	}
 

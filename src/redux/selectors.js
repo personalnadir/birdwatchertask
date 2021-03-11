@@ -18,6 +18,8 @@ const getTrialsComplete = state => state.trial.complete;
 const getCurrentRuleConfig = state => getCurrentBlock(state).rules;
 const getCurrentRule = state => getCurrentRuleConfig(state).rules;
 const getTrialStimuliType = state => getCurrentRuleConfig(state).stimuli;
+const isTrialStoopVersion = state => getCurrentRuleConfig(state).stroop;
+
 
 const getStimuliForBlock = state => getCurrentBlock(state).trials;
 const getCurrentRuleText = state => getCurrentRuleConfig(state).text;
@@ -62,5 +64,6 @@ export {
 	getTaskPosition,
 	getTrialStimuliType,
 	getAttempts,
-	getTrialID
+	getTrialID,
+	isTrialStoopVersion
 };

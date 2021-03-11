@@ -24,7 +24,8 @@ import {
 	getTaskMode,
 	getTrialStimuliType,
 	getTrialID,
-	getAttempts
+	getAttempts,
+	isTrialStoopVersion
 } from '../redux/selectors';
 import KeyListener from '../Components/KeyListener';
 import blueBird from '../images/task/bird-blue.png';
@@ -41,7 +42,8 @@ import {
 	COLOUR_GREEN,
 	COLOUR_YELLOW,
 	KEYS,
-	TIMEOUT_MILLIS
+	TIMEOUT_MILLIS,
+	HUMAN_READABLE_COLOURS
 } from '../constants';
 
 import {
@@ -56,10 +58,10 @@ import _ from 'underscore';
 
 const colToImg = {
 	[STIMULI_BIRD]: {
-		[COLOUR_RED]: (<img alt="Red Bird" src={redBird} />),
-		[COLOUR_BLUE]: (<img alt="Blue Bird" src={blueBird} />),
-		[COLOUR_GREEN]: (<img alt="Green Bird" src={greenBird} />),
-		[COLOUR_YELLOW]: (<img alt="Yellow Bird" src={yellowBird} />)
+		[COLOUR_RED]: (<img alt="Red Bird" className="stimuli" src={redBird} />),
+		[COLOUR_BLUE]: (<img alt="Blue Bird" className="stimuli" src={blueBird} />),
+		[COLOUR_GREEN]: (<img alt="Green Bird" className="stimuli" src={greenBird} />),
+		[COLOUR_YELLOW]: (<img alt="Yellow Bird" className="stimuli" src={yellowBird} />)
 	},
 	[STIMULI_SNAKE]: {
 		[COLOUR_RED]: (<img alt="Red Snake" className="scaleup" src={redSnake} />),
@@ -70,6 +72,13 @@ const colToImg = {
 };
 
 const validKeys = _.invert(KEYS);
+
+const stroopAlternativeColours = {
+	[COLOUR_RED]: [COLOUR_BLUE, COLOUR_GREEN, COLOUR_YELLOW],
+	[COLOUR_BLUE]: [COLOUR_RED, COLOUR_GREEN, COLOUR_YELLOW],
+	[COLOUR_GREEN]: [COLOUR_RED, COLOUR_BLUE, COLOUR_YELLOW],
+	[COLOUR_YELLOW]: [COLOUR_RED, COLOUR_BLUE, COLOUR_GREEN],
+};
 
 class StimuliPage extends React.Component {
 	constructor (props) {
@@ -104,13 +113,17 @@ class StimuliPage extends React.Component {
 	}
 
 	render() {
-		const img = colToImg[this.props.stimType][this.props.trialColour];
+		const col = this.props.stroop? stroopAlternativeColours[this.props.trialColour][this.props.trialID % 3]: this.props.trialColour;
+		const img = colToImg[this.props.stimType][col];
 		const feedback = this.props.feedback? <p>{this.props.wasCorrect? "Correct": "Wrong"}</p> : null;
+		const feedbackText = <div className="centred">{feedback}</div>;
+		const stroopText = !this.props.feedback && this.props.stroop? <div className="centred">{HUMAN_READABLE_COLOURS[this.props.trialColour]}</div>: null;
 		return (
-			<div>
+			<div className="container">
 				<KeyListener onKeyEvent = {this.handleKeyPress} />
-				{feedback}
 				{img}
+				{stroopText}
+				{feedbackText}
 			</div>
 		);
 	}
@@ -125,7 +138,8 @@ const mapStateToProps = state => ({
 	trialPos: getTaskPosition(state),
 	trialID: getTrialID(state),
 	mode: getTaskMode(state),
-	attempts: getAttempts(state)
+	attempts: getAttempts(state),
+	stroop: isTrialStoopVersion(state)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
