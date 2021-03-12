@@ -109,7 +109,7 @@ const getVariables = (variables, rules) => {
 	return variableValues;
 };
 
-const generateInstructions = (humanReadableExplanation, colourOrder, variableValues, stimType) => {
+const generateInstructions = (humanReadableExplanation, colourOrder, variableValues, stimType, swapInputs) => {
 	let processedText = humanReadableExplanation;
 	for (const [col, reKey] of _.zip(colourOrder, colourKeys)) {
 		processedText = processedText.replace(reKey, HUMAN_READABLE_COLOURS[col]);
@@ -118,8 +118,13 @@ const generateInstructions = (humanReadableExplanation, colourOrder, variableVal
 	for (const valName in variableValues) {
 		processedText = processedText.replace(new RegExp(`{${valName}}`,'g'), variableValues[valName]);
 	}
-	processedText = processedText.replace(keyAct, HUMAN_READABLE_KEYS[USER_INPUT_PHOTO]);
-	processedText = processedText.replace(keySkip, HUMAN_READABLE_KEYS[USER_INPUT_SKIP]);
+	if (swapInputs) {
+		processedText = processedText.replace(keySkip, HUMAN_READABLE_KEYS[USER_INPUT_PHOTO]);
+		processedText = processedText.replace(keyAct, HUMAN_READABLE_KEYS[USER_INPUT_SKIP]);
+	} else {
+		processedText = processedText.replace(keyAct, HUMAN_READABLE_KEYS[USER_INPUT_PHOTO]);
+		processedText = processedText.replace(keySkip, HUMAN_READABLE_KEYS[USER_INPUT_SKIP]);
+	}
 	processedText = processedText.replace(stimulus, HUMAN_READABLE_STIMULI[stimType].singular);
 	processedText = processedText.replace(stimuli, HUMAN_READABLE_STIMULI[stimType].plural);
 	return processedText;
@@ -177,18 +182,19 @@ export default (colourOrder) => {
 	let processedRules = {};
 
 	for (const ruleName in rulesConfig) {
-		const {humanReadableExplanation, variables, rules, stimuli, stroop} = rulesConfig[ruleName];
+		const {humanReadableExplanation, variables, rules, stimuli, stroop, swapInputs} = rulesConfig[ruleName];
 		const stimType = stimuliType[stimuli];
 		console.assert(stimType, `ruleparser: invalid stimulus type ${stimuli} defined for rule ${ruleName}`);
 		const variableValues = getVariables(variables, rules);
-		const instruction = generateInstructions(humanReadableExplanation, colourOrder, variableValues, stimType);
+		const instruction = generateInstructions(humanReadableExplanation, colourOrder, variableValues, stimType, swapInputs);
 		const translatedRules = generateRules(rules, colourOrder);
 		processedRules[ruleName] = {
 			text: instruction,
 			rules: translatedRules,
 			name: ruleName,
 			stimuli: stimType,
-			stroop: stroop
+			stroop,
+			swapInputs
 		};
 	}
 

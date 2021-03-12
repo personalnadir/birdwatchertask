@@ -19,7 +19,7 @@ const getCurrentRuleConfig = state => getCurrentBlock(state).rules;
 const getCurrentRule = state => getCurrentRuleConfig(state).rules;
 const getTrialStimuliType = state => getCurrentRuleConfig(state).stimuli;
 const isTrialStoopVersion = state => getCurrentRuleConfig(state).stroop;
-
+const getInputsSwapped = state =>getCurrentRuleConfig(state).swapInputs;
 
 const getStimuliForBlock = state => getCurrentBlock(state).trials;
 const getCurrentRuleText = state => getCurrentRuleConfig(state).text;
@@ -65,5 +65,6 @@ export {
 	getTrialStimuliType,
 	getAttempts,
 	getTrialID,
-	isTrialStoopVersion
+	isTrialStoopVersion,
+	getInputsSwapped
 };

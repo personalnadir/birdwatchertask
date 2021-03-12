@@ -1,6 +1,6 @@
 {
 	"tutorial": {
-		"ruleOrder": ["stroop simple", "modus ponens", "sequence of two"]
+		"ruleOrder": ["negation snakes swap", "stroop simple", "modus ponens", "sequence of two"]
 	},
 	"randomised":{
 		"ruleOrder": ["modus ponens", "sequence", "negation", "rule shifting", "branching", "branching logic complex"]

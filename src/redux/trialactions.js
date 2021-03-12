@@ -1,6 +1,7 @@
 import {
 	getTrialsComplete,
-	getAttempts
+	getAttempts,
+	getInputsSwapped
 } from './selectors';
 import {
 	ATTEMPTS_PER_TRIALBLOCK
@@ -11,6 +12,12 @@ import {
 	regenerateBlocks,
 	restartBlock
 } from './taskactions';
+
+import {
+	TRIAL_ACTION_SKIP,
+	TRIAL_ACTION_PHOTO
+} from './trialconstants';
+
 export const SHOW_ITI = 'trial/showITI';
 export const SHOW_STIMULUS = 'trial/showStimulus';
 export const SHOW_FEEDBACK = 'trial/showFeeback';
@@ -54,11 +61,19 @@ export const setTrialStimuli = (stimuli, rule) => ({
 	rule
 });
 
-export const registerInput = (optionSelected) => ({
-	type: REGISTER_INPUT,
-	time: Date.now(),
-	optionSelected,
-});
+export const registerInput = (optionSelected) => {
+	return (dispatch, getState) => {
+		const swap = getInputsSwapped(getState());
+		if (swap) {
+			optionSelected = optionSelected === TRIAL_ACTION_PHOTO ? TRIAL_ACTION_SKIP : TRIAL_ACTION_PHOTO;
+		}
+		dispatch({
+			type: REGISTER_INPUT,
+			time: Date.now(),
+			optionSelected
+		});
+	};
+};
 
 export const increaseAttempts = (id) => ({
 	type: INCREASE_ATTEMPTS,

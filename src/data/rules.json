@@ -298,5 +298,15 @@
 				"target": ["b"]
 			}
 		]
+	},
+	"negation snakes swap": {
+		"humanReadableExplanation" : "Photograph all {stimuli} that are not {a}.",
+		"stimuli": "snakes",
+		"swapInputs": true,
+		"rules" : [
+			{
+				"target" : ["!a"]
+			}
+		]
 	}
 }

@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { goToNextTaskState } from '../redux/taskactions';
 import {
 	getCurrentRuleText,
-	getTrialStimuliType
+	getTrialStimuliType,
+	getInputsSwapped
 } from '../redux/selectors';
 
 import {
@@ -28,7 +29,17 @@ class RulePage extends React.Component{
 	}
 
 	render() {
-		const keyInstruction = (<div><p>Instructions:</p><p>Press '{HUMAN_READABLE_KEYS[USER_INPUT_PHOTO]}' to take a picture, and press '{HUMAN_READABLE_KEYS[USER_INPUT_SKIP]}' to skip this {HUMAN_READABLE_STIMULI[this.props.stimType].singular}</p></div>);
+		let photoKey;
+		let skipKey;
+		if (this.props.swapInputs) {
+			photoKey = HUMAN_READABLE_KEYS[USER_INPUT_SKIP];
+			skipKey = HUMAN_READABLE_KEYS[USER_INPUT_PHOTO];
+		} else {
+			photoKey = HUMAN_READABLE_KEYS[USER_INPUT_PHOTO];
+			skipKey = HUMAN_READABLE_KEYS[USER_INPUT_SKIP];
+		}
+
+		const keyInstruction = (<div><p>Instructions:</p><p>Press '{photoKey}' to take a picture, and press '{skipKey}' to skip this {HUMAN_READABLE_STIMULI[this.props.stimType].singular}</p></div>);
 		const text = (<p>
 			{this.props.ruleText.split(colourRe).map((t,i) => t.match(colourRe)? <span key={i} className={t}>{t}</span>:<span key={i}>{t}</span>)}
 		</p>);
@@ -44,7 +55,8 @@ class RulePage extends React.Component{
 
 const mapStateToProps = state => ({
 	ruleText: getCurrentRuleText(state),
-	stimType: getTrialStimuliType(state)
+	stimType: getTrialStimuliType(state),
+	swapInputs: getInputsSwapped(state)
 });
 
 const mapDispatchToProps = dispatch => {
