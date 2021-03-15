@@ -117,7 +117,9 @@ class StimuliPage extends React.Component {
 		const img = colToImg[this.props.stimType][col];
 		const feedback = this.props.feedback? <p>{this.props.wasCorrect? "Correct": "Wrong"}</p> : null;
 		const feedbackText = <div className="centred">{feedback}</div>;
-		const stroopText = !this.props.feedback && this.props.stroop? <div className="centred">{HUMAN_READABLE_COLOURS[this.props.trialColour]}</div>: null;
+		const colour = HUMAN_READABLE_COLOURS[this.props.trialColour];
+		const textColour = HUMAN_READABLE_COLOURS[col];
+		const stroopText = !this.props.feedback && this.props.stroop? <div className={"centred " + textColour}>{colour}</div>: null;
 		return (
 			<div className="container">
 				<KeyListener onKeyEvent = {this.handleKeyPress} />
