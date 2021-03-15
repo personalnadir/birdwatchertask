@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setUserID } from '../redux/dataactions';
 import {goToNextApplicationState} from '../redux/applicationactions';
+import Url from 'url-parse';
+import qs from 'querystringify';
 
 class LoginPage extends React.Component {
 	constructor (props) {
@@ -12,6 +14,16 @@ class LoginPage extends React.Component {
 
 		this.handleInput = this.handleInput.bind(this);
 		this.handleButtonPress = this.handleButtonPress.bind(this);
+	}
+
+	componentDidMount() {
+		const url = new Url(window.location.href);
+		if (url.query) {
+			const query = qs.parse(url.query);
+			if (query.PROLIFIC_PID) {
+				this.props.handleLoginRequest(query.PROLIFIC_PID);
+			}
+		}
 	}
 
 	handleInput(event) {
