@@ -22,6 +22,7 @@ export const SWITCH_MODE = 'task/switchMode';
 export const SHOW_TIMEOUT = 'task/showTimeout';
 export const HIDE_TIMEOUT = 'task/hideTimeout';
 export const REGENERATE_BLOCK = 'task/regenBlock';
+export const COUNTER_BALACE = 'task/counterBalance';
 
 export const goToNextTaskState = () => {
 	return (dispatch, getState) => {
@@ -106,3 +107,8 @@ export const restartBlock = () => {
 		);
 	};
 };
+
+export const counterBalanceTrials = id => ({
+	type: COUNTER_BALACE,
+	counterBalanceA: id % 2 === 0
+});

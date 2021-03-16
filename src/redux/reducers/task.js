@@ -4,7 +4,8 @@ import {
   SWITCH_MODE,
   SHOW_TIMEOUT,
   HIDE_TIMEOUT,
-  REGENERATE_BLOCK
+  REGENERATE_BLOCK,
+  COUNTER_BALACE
 } from "../taskactions";
 
 import gen from '../../generatetrials';
@@ -26,16 +27,8 @@ let ruleSets = parse(_.shuffle(COLOURS));
 const initialState = {
   taskPhaseIndex: 0,
   currentBlock: 0,
-  mode: TYPE_TUTORIAL,
-  blocks: {
-    [TYPE_TUTORIAL]:gen(genRuleBlocks(TYPE_TUTORIAL, ruleSets)),
-    [TYPE_RANDOMISED]:gen(genRuleBlocks(TYPE_RANDOMISED, ruleSets)),
-    [TYPE_NONRANDOMISED]:gen(genRuleBlocks(TYPE_NONRANDOMISED, ruleSets)),
-  }
+  mode: TYPE_TUTORIAL
 };
-
-// check in case tutorial only has one block
-initialState.lastBlock = initialState.blocks[TYPE_TUTORIAL].length === initialState.currentBlock + 1;
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialState, action) {
@@ -77,11 +70,27 @@ export default function(state = initialState, action) {
     case REGENERATE_BLOCK:
       let blocks = state.blocks;
       ruleSets = parse(_.shuffle(COLOURS));
-      blocks[state.mode] = gen(genRuleBlocks(state.mode, ruleSets));
+      blocks[state.mode] = gen(genRuleBlocks(state.mode, ruleSets, state.counterBalanceA));
       return {
         ...state,
         blocks
       };
+    case COUNTER_BALACE: {
+      const blocks = {
+        [TYPE_TUTORIAL]:gen(genRuleBlocks(TYPE_TUTORIAL, ruleSets, action.counterBalanceA)),
+        [TYPE_RANDOMISED]:gen(genRuleBlocks(TYPE_RANDOMISED, ruleSets, action.counterBalanceA)),
+        [TYPE_NONRANDOMISED]:gen(genRuleBlocks(TYPE_NONRANDOMISED, ruleSets, action.counterBalanceA)),
+      };
+      // check in case tutorial only has one block
+      const lastBlock = blocks[TYPE_TUTORIAL].length === state.currentBlock + 1;
+
+      return {
+        ...state,
+        blocks,
+        counterBalanceA: action.counterBalanceA,
+        lastBlock
+      };
+    }
     default:
       return state;
   }

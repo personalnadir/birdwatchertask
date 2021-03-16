@@ -55,6 +55,9 @@ function processTrials(ruleSet, trials) {
 
 	for(const col of trials) {
 		const rule = ruleSet[ruleIndex];
+		if (!_.has(rule, "target")) {
+			continue;
+		}
 		const targetSequence = rule.target.map(t => ordinalColours[t]? ordinalColours[t]: t);
 		const hasTransitionOnTargetRule = _.has(rule, "transitionTarget");
 		const transitionOnTarget = rule.transitionTarget;
@@ -186,6 +189,9 @@ function countRuleTransitions(ruleSet, trials) {
 
 	for(const col of trials) {
 		const rule = ruleSet[ruleIndex];
+		if (!_.has(rule, "target")) {
+			continue;
+		}
 		const targetSequence = rule.target.map(t => ordinalColours[t]? ordinalColours[t]: t);;
 		const hasTransitionOnTargetRule = _.has(rule, "transitionTarget");
 		const transitionOnTarget = rule.transitionTarget;

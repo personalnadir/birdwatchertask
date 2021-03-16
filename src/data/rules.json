@@ -308,5 +308,23 @@
 				"target" : ["!a"]
 			}
 		]
+	},
+	"counter balance snakes": {
+		"humanReadableExplanation" : "Photograph all {stimuli} that are not {a}.",
+		"stimuli": "snakes",
+		"rules" : [
+			{
+				"target" : ["!a"]
+			}
+		]
+	},
+	"counter balance snakes": {
+		"humanReadableExplanation" : "Photograph all {stimuli} that are not {a}.",
+		"stimuli": "snakes",
+		"rules" : [
+			{
+				"target" : ["!a"]
+			}
+		]
 	}
 }

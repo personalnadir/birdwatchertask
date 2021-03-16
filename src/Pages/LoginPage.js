@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setUserID } from '../redux/dataactions';
+import {counterBalanceTrials} from '../redux/taskactions';
 import {goToNextApplicationState} from '../redux/applicationactions';
 import Url from 'url-parse';
 import qs from 'querystringify';
@@ -28,7 +29,7 @@ class LoginPage extends React.Component {
 
 	handleInput(event) {
 		this.setState({
-			showButton: true,
+			showButton: !event.target.validity.patternMismatch,
 			id: event.target.value
 		});
 	}
@@ -55,9 +56,8 @@ class LoginPage extends React.Component {
 						id="name"
 						name="name"
 						required
-					    minLength="4"
-					    maxLength="8"
-					    size="10"
+					    size="16"
+					    pattern="[0-9a-fA-F]+"
 					    onInput = {this.handleInput}
 					/>
 				</div>
@@ -73,6 +73,8 @@ const mapDispatchToProps = dispatch => {
 	return {
 		handleLoginRequest: (id) => {
 			dispatch(setUserID(id));
+			const parsed = Number.parseInt(id, 16);
+			dispatch(counterBalanceTrials(parsed));
 			dispatch(goToNextApplicationState());
 		}
 	};
