@@ -32,3 +32,8 @@ export const HUMAN_READABLE_KEYS = {
 	[USER_INPUT_SKIP]: "Q",
 	[USER_INPUT_PHOTO]: "P",
 };
+
+export const HUMAN_READABLE_DIRECTIONS = {
+	[LOOKING_LEFT]: "facing left",
+	[LOOKING_RIGHT]: "facing right"
+};

@@ -87,7 +87,7 @@
 		]
 	},
 	"branching": {
-		"humanReadableExplanation" : "Start by taking a picture of each {a} {stimuli}. But if you see a {b} {stimuli}, photograph that {b} {stimuli}, and from then on, only photograph {b} {stimulus}.",
+		"humanReadableExplanation" : "Start by taking a picture of each {a} {stimuli}. But if you see a {b} {stimuli}, photograph that {b} {stimulus}, and from then on, only photograph {b} {stimulus}.",
 		"stimuli": "birds",
 		"rules" : [
 			{
@@ -318,12 +318,13 @@
 			}
 		]
 	},
-	"counter balance snakes": {
-		"humanReadableExplanation" : "Photograph all {stimuli} that are not {a}.",
-		"stimuli": "snakes",
+	"facing right": {
+		"humanReadableExplanation" : "Photograph all {stimuli} that are not {L}.",
+		"stimuli": "birds",
+		"stimuliMirroring": true,
 		"rules" : [
 			{
-				"target" : ["!a"]
+				"target" : ["R"]
 			}
 		]
 	}

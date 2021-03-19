@@ -6,14 +6,15 @@ import {
 	USER_INPUT_SKIP,
 	USER_INPUT_PHOTO,
 	LOOKING_LEFT,
-	LOOKING_RIGHT
+	LOOKING_RIGHT,
+	HUMAN_READABLE_DIRECTIONS
 } from './constants';
 
 import {
 	STIMULI_BIRD,
 	STIMULI_SNAKE,
 	STIMULI_SPIDER,
-	HUMAN_READABLE_STIMULI
+	HUMAN_READABLE_STIMULI,
 } from './redux/taskconstants';
 
 const ruleN = /rules\[(\d)\]\.(\w+)/g;
@@ -53,6 +54,8 @@ const keySkip = /\{key_skip\}/g;
 
 const stimulus = /\{stimulus\}/g;
 const stimuli = /\{stimuli\}/g;
+const facingLeft = /\{L\}/g;
+const facingRight = /\{R\}/g;
 
 const isOr = /([a-d][LR]?)\|([a-d][LR]?)/g;
 const isNot = /!([a-d][LR]?)/g;
@@ -168,6 +171,9 @@ const generateInstructions = (humanReadableExplanation, colourOrder, variableVal
 	}
 	processedText = processedText.replace(stimulus, HUMAN_READABLE_STIMULI[stimType].singular);
 	processedText = processedText.replace(stimuli, HUMAN_READABLE_STIMULI[stimType].plural);
+	processedText = processedText.replace(facingLeft, HUMAN_READABLE_DIRECTIONS[LOOKING_LEFT]);
+	processedText = processedText.replace(facingRight, HUMAN_READABLE_DIRECTIONS[LOOKING_RIGHT]);
+
 	return processedText;
 };
 
