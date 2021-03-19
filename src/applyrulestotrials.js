@@ -64,7 +64,8 @@ function processTrials(ruleSet, trials) {
 	let targetMatches = 0;
 	let takePhoto = [];
 
-	for(const col of trials) {
+	for(let i = 0; i < trials.length; i++) {
+		const t = trials[i];
 		const rule = ruleSet[ruleIndex];
 		if (!_.has(rule, "target")) {
 			takePhoto.push(false);
@@ -101,6 +102,10 @@ function processTrials(ruleSet, trials) {
 			if (hasTransition && targetMatches >= rule.transitionAfterTargetsMatched) {
 				targetMatches = 0;
 				ruleIndex = rule.transitionToRule;
+				if (isTransitionTarget) {
+					i --; // check the transition target does not match the new rule target
+					continue;
+				}
 			}
 		}
 
@@ -199,7 +204,8 @@ function countRuleTransitions(ruleSet, trials) {
 	let transitionOnTargetIndex = 0;
 	let targetMatches = 0;
 
-	for(const t of trials) {
+	for(let i = 0; i < trials.length; i++) {
+		const t = trials[i];
 		const rule = ruleSet[ruleIndex];
 		if (!_.has(rule, "target")) {
 			continue;
@@ -236,6 +242,10 @@ function countRuleTransitions(ruleSet, trials) {
 			if (hasTransition && targetMatches >= rule.transitionAfterTargetsMatched) {
 				targetMatches = 0;
 				ruleIndex = rule.transitionToRule;
+				if (isTransitionTarget) {
+					i --; // check the transition target does not match the new rule target
+					continue;
+				}
 			}
 		}
 
