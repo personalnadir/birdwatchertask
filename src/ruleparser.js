@@ -46,7 +46,7 @@ const stimuliType = {
 	"spiders":STIMULI_SPIDER
 };
 
-const allColours = [1,2,3,4];
+const allColours = [0,1,2,3];
 
 const keyAct = /\{key_act\}/g;
 const keySkip = /\{key_skip\}/g;
