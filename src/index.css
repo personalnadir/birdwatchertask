@@ -175,4 +175,19 @@ img.scaleup {
 				  4px  0px white,
 				 -4px  0px white;
 }
+
+.warning {
+	color: red;
+	padding:0.2em;
+	background-color: lightpink;
+	font-style: bold;
+	font-size: 2em;
+	text-shadow:  1px  1px white,
+				 -1px  1px white,
+				  1px -1px white,
+				 -1px -1px white,
+				  0px  1px white,
+				  0px -1px white,
+				  1px  0px white,
+				 -1px  0px white;
 }

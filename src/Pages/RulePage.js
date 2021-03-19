@@ -39,12 +39,13 @@ class RulePage extends React.Component{
 			skipKey = HUMAN_READABLE_KEYS[USER_INPUT_SKIP];
 		}
 
-		const keyInstruction = (<div><p>Instructions:</p><p>Press '{photoKey}' to take a picture, and press '{skipKey}' to skip this {HUMAN_READABLE_STIMULI[this.props.stimType].singular}</p></div>);
+		const keyInstruction = (<div><p>Instructions:</p><p>Press <b>'{photoKey}'</b> to take a picture, and press <b>'{skipKey}'</b> to skip this {HUMAN_READABLE_STIMULI[this.props.stimType].singular}</p></div>);
 		const text = (<p>
 			{this.props.ruleText.split(colourRe).map((t,i) => t.match(colourRe)? <span key={i} className={t}>{t}</span>:<span key={i}>{t}</span>)}
 		</p>);
 		return (
 			<div>
+				{this.props.swapInputs? <p className="warning">The buttons you must press have been switched!</p>: null}
 				{keyInstruction}
 				{text}
 				<button onClick={this.props.nextPage} className="ContinueButton">Continue</button>
