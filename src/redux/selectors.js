@@ -12,7 +12,7 @@ const getCurrentBlock = state => {
 };
 const getCurrentTrial = state => state.trial.currentTrial;
 const getCurrentTrialStimulus = state => state.trial.stimuli[getCurrentTrial(state)];
-const getTrialColour = state => getCurrentTrialStimulus(state);
+const getTrialColour = state => getCurrentTrialStimulus(state).col;
 const currentTrialsExhausted = state => state.trial.stimuli.length === state.trial.currentTrial;
 const getTrialsComplete = state => state.trial.complete;
 const getCurrentRuleConfig = state => getCurrentBlock(state).rules;

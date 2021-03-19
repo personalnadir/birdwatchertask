@@ -9,13 +9,20 @@ function detectOrdinalColours(trials) {
 	return _.first(trials,4);
 }
 
-function targetMatchesTrials (target, trials){
+function mapOrdinals(target, ordinalColours) {
+	return target.map(t => ordinalColours[t.symbol]? ({
+		...t,
+		symbol: ordinalColours[t.symbol].col
+	}): t);
+}
+
+function targetMatchesTrials (target, trials, evalDir){
 	const ordinalColours = detectOrdinalColours(trials);
-	const targetSequence = target.map(t => ordinalColours[t]? ordinalColours[t]: t);
+	const targetSequence = mapOrdinals(target, ordinalColours);
 	let targetIndex = 0;
 
-	for(const col of trials) {
-		const isTarget = targetSequence? targetSequence[targetIndex].indexOf(col) >= 0: false;
+	for(const t of trials) {
+		const isTarget = matchesTarget(targetSequence[targetIndex], t.col, t.face, evalDir);
 		if (!isTarget) {
 			return false;
 		}
@@ -36,7 +43,7 @@ function getStartingRuleIndex(ruleSet, trials) {
 			continue;
 		}
 
-		if (targetMatchesTrials(ruleSet[i].condition, trials)) {
+		if (targetMatchesTrials(ruleSet[i].condition, trials, ruleSet.stimuliMirroring)) {
 			return i;
 		}
 	}
@@ -44,8 +51,12 @@ function getStartingRuleIndex(ruleSet, trials) {
 	return 0;
 }
 
+function matchesTarget(target, col, dir, evalDir) {
+	const trial = evalDir? {symbol: col, direction: dir}:{symbol: col};
+	return !_.isUndefined(_.findWhere(target ?? [], trial));
+}
+
 function processTrials(ruleSet, trials) {
-	console.log(ruleSet);
 	const ordinalColours = detectOrdinalColours(trials);
 	let ruleIndex = getStartingRuleIndex(ruleSet, trials);
 	let targetIndex = 0;
@@ -58,12 +69,12 @@ function processTrials(ruleSet, trials) {
 		if (!_.has(rule, "target")) {
 			continue;
 		}
-		const targetSequence = rule.target.map(t => ordinalColours[t]? ordinalColours[t]: t);
+		const targetSequence = mapOrdinals(rule.target, ordinalColours);
 		const hasTransitionOnTargetRule = _.has(rule, "transitionTarget");
 		const transitionOnTarget = rule.transitionTarget;
 
-		const isTarget = targetSequence? targetSequence[targetIndex].indexOf(col) >= 0: false;
-		const isTransitionTarget = hasTransitionOnTargetRule && transitionOnTarget[transitionOnTargetIndex].indexOf(col) >= 0;
+		const isTarget = matchesTarget(targetSequence[targetIndex], t.col, t.face, ruleSet.stimuliMirroring);
+		const isTransitionTarget = hasTransitionOnTargetRule && matchesTarget(transitionOnTarget[transitionOnTargetIndex], t.col, t.face, ruleSet.stimuliMirroring);
 
 		let isPhotoTarget = false;
 		if (isTarget || isTransitionTarget) {
@@ -187,17 +198,18 @@ function countRuleTransitions(ruleSet, trials) {
 	let transitionOnTargetIndex = 0;
 	let targetMatches = 0;
 
-	for(const col of trials) {
+	for(const t of trials) {
 		const rule = ruleSet[ruleIndex];
 		if (!_.has(rule, "target")) {
 			continue;
 		}
-		const targetSequence = rule.target.map(t => ordinalColours[t]? ordinalColours[t]: t);;
+
+		const targetSequence = mapOrdinals(rule.target, ordinalColours);
 		const hasTransitionOnTargetRule = _.has(rule, "transitionTarget");
 		const transitionOnTarget = rule.transitionTarget;
 
-		const isTarget = targetSequence? targetSequence[targetIndex].indexOf(col) >= 0: false;
-		const isTransitionTarget = hasTransitionOnTargetRule && transitionOnTarget[transitionOnTargetIndex].indexOf(col) >= 0;
+		const isTarget = matchesTarget(targetSequence[targetIndex], t.col, t.face, ruleSet.stimuliMirroring);
+		const isTransitionTarget = hasTransitionOnTargetRule && matchesTarget(transitionOnTarget[transitionOnTargetIndex], t.col, t.face, ruleSet.stimuliMirroring);
 
 		if (isTarget || isTransitionTarget) {
 			if (isTarget) {
@@ -233,7 +245,6 @@ function countRuleTransitions(ruleSet, trials) {
 		if (!isTransitionTarget) {
 			transitionOnTargetIndex = 0;
 		}
-
 	}
 
 	return transitions;

@@ -2,6 +2,8 @@ import {
 	COLOURS,
 	MIN_ANIMALS_PER_BLOCK,
 	MAX_ANIMALS_PER_BLOCK,
+	LOOKING_LEFT,
+	DIRECTIONS
 } from './constants';
 
 import {
@@ -18,12 +20,15 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
 
-function generateRandomTrials() {
+function generateRandomTrials(varyFacing) {
 	const numTrials = getRandomInt(MIN_ANIMALS_PER_BLOCK, MAX_ANIMALS_PER_BLOCK);
 
 	const trials = Array(numTrials);
 	for (let k = numTrials - 1; k >= 0; k--) {
-		trials[k] = COLOURS[getRandomInt(0,COLOURS.length)];
+		trials[k] = {
+			col: COLOURS[getRandomInt(0,COLOURS.length)],
+			face: varyFacing? DIRECTIONS[getRandomInt(0,DIRECTIONS.length)]: LOOKING_LEFT
+		};
 	}
 	return trials;
 }
@@ -58,7 +63,7 @@ function generateBlockTrials(rules) {
 	while (true) {
 		count ++;
 		if (count > 500) {
-			console.log(rules, "Perfect match not generated");
+			console.log(rules, "Perfect match not generated for rule");
 			return;
 		}
 		let transitionCounts = population.map(trials => countRuleTransitions(rules, trials));

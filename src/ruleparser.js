@@ -4,7 +4,9 @@ import {
 	HUMAN_READABLE_COLOURS,
 	HUMAN_READABLE_KEYS,
 	USER_INPUT_SKIP,
-	USER_INPUT_PHOTO
+	USER_INPUT_PHOTO,
+	LOOKING_LEFT,
+	LOOKING_RIGHT
 } from './constants';
 
 import {
@@ -33,6 +35,11 @@ const ruleSymbols = {
 	"4":-4
 };
 
+const directions = {
+	"L": LOOKING_LEFT,
+	"R": LOOKING_RIGHT
+};
+
 const stimuliType = {
 	"birds":STIMULI_BIRD,
 	"snakes":STIMULI_SNAKE,
@@ -47,46 +54,80 @@ const keySkip = /\{key_skip\}/g;
 const stimulus = /\{stimulus\}/g;
 const stimuli = /\{stimuli\}/g;
 
-const isOr = /([a-d])\|([a-d])/g;
-const isNot = /!([a-d])/g;
+const isOr = /([a-d][LR]?)\|([a-d][LR]?)/g;
+const isNot = /!([a-d][LR]?)/g;
 const anySymbol = /\*/g;
-const specifcSymbol = /([a-d])/g;
-const number = /([1-4])/g;
+const specifcSymbol = /([a-d][LR]?)/g;
+const number = /([1-4][LR]?)/g;
+const directionOnly = /([LR]?)/g;
+const splitSymbol = /([a-d1-4])([LR]?)/g;
 
-const processSymbol = symbol => {
+const oppositeDirection = {
+	[LOOKING_LEFT]: LOOKING_RIGHT,
+	[LOOKING_RIGHT]: LOOKING_LEFT
+};
+
+const ordinalToColor = (i, colourOrder) => i >= 0? colourOrder[i]: Math.abs(i) - 1;
+
+const splitSymbolDirection = (text, colourOrder) => {
+	let array = [...text.matchAll(splitSymbol)];
+	const symbol = ordinalToColor(ruleSymbols[array[0][1]], colourOrder);
+
+	return {
+		symbol,
+		direction: array[0][2]? directions[array[0][2]]: null
+	};
+};
+
+const processSymbol = (symbol, colourOrder) => {
 	let array = [...symbol.matchAll(isOr)];
 	if (array.length > 0) {
-		return [ruleSymbols[array[0][1]],ruleSymbols[array[0][2]]];
+		const left = splitSymbolDirection(array[0][1], colourOrder);
+		const right = splitSymbolDirection(array[0][2], colourOrder);
+		return [left, right];
 	}
 	array = [...symbol.matchAll(isNot)];
 	if (array.length > 0) {
-		const exclude = ruleSymbols[array[0][1]];
+		const exclude = splitSymbolDirection(array[0][1], colourOrder);
 		let include = [];
 		for (const letter in ruleSymbols) {
-			const letterCode = ruleSymbols[letter];
-			if (letterCode === exclude) {
-				continue;
-			}
 			if (ruleSymbols[letter] < 0) {
 				continue;
 			}
-			include.push(letterCode);
+			const symbol = ordinalToColor(ruleSymbols[letter], colourOrder);
+			if (symbol === exclude.symbol) {
+				continue;
+			}
+			include.push({
+				symbol,
+				direction: oppositeDirection[exclude.direction]
+			});
 		}
 
 		return include;
 	}
 	array = [...symbol.matchAll(anySymbol)];
 	if (array.length > 0) {
-		return allColours;
+		return allColours.map(x => ({
+			symbol:ordinalToColor(x, colourOrder)
+		}));
 	}
 
 	array = [...symbol.matchAll(specifcSymbol)];
 	if (array.length > 0) {
-		return [ruleSymbols[array[0][1]]];
+		return [splitSymbolDirection(array[0][1], colourOrder)];
 	}
 	array = [...symbol.matchAll(number)];
 	if (array.length > 0) {
-		return [ruleSymbols[array[0][1]]];
+		return [splitSymbolDirection(array[0][1], colourOrder)];
+	}
+
+	array = [...symbol.matchAll(directionOnly)];
+	if (array.length > 0) {
+		return allColours.map(x => ({
+			symbol:ordinalToColor(x, colourOrder),
+			direction: directions[array[0][1]]
+		}));
 	}
 
 	console.error(`Could not parse ${symbol}`);
@@ -182,19 +223,20 @@ export default (colourOrder) => {
 	let processedRules = {};
 
 	for (const ruleName in rulesConfig) {
-		const {humanReadableExplanation, variables, rules, stimuli, stroop, swapInputs} = rulesConfig[ruleName];
+		const {humanReadableExplanation, variables, rules, stimuli, stroop, swapInputs, stimuliMirroring} = rulesConfig[ruleName];
 		const stimType = stimuliType[stimuli];
 		console.assert(stimType, `ruleparser: invalid stimulus type ${stimuli} defined for rule ${ruleName}`);
 		const variableValues = getVariables(variables, rules);
 		const instruction = generateInstructions(humanReadableExplanation, colourOrder, variableValues, stimType, swapInputs);
-		const translatedRules = generateRules(rules, colourOrder);
+		const translatedRules = generateRules(rules, colourOrder, stimuliMirroring);
 		processedRules[ruleName] = {
 			text: instruction,
 			rules: translatedRules,
 			name: ruleName,
 			stimuli: stimType,
 			stroop,
-			swapInputs
+			swapInputs,
+			stimuliMirroring
 		};
 	}
 
