@@ -171,7 +171,7 @@ const generateInstructions = (humanReadableExplanation, colourOrder, variableVal
 	return processedText;
 };
 
-const generateRules = (rules, colourOrder) => {
+const generateRules = (rules, colourOrder, stimuliMirroring) => {
 	let processedRules = JSON.parse(JSON.stringify(rules)); // deep clone
 	for (let rule of processedRules) {
 		const targetSpecified = _.has(rule, "target");
@@ -186,9 +186,7 @@ const generateRules = (rules, colourOrder) => {
 		if (targetSpecified) {
 			let target = [];
 	  		for (const symbol of rule.target) {
-	  			target.push(processSymbol(symbol).map(
-  					i => i >= 0? colourOrder[i]: Math.abs(symbol) - 1
-	  			));
+	  			target.push(processSymbol(symbol, colourOrder));
 			}
 			rule.target = target;
 		}
@@ -196,9 +194,7 @@ const generateRules = (rules, colourOrder) => {
 		if (transitionOnTargetSpecified) {
 			let transitionOnTarget = [];
 	  		for (const symbol of rule.transitionOnTarget) {
-	  			transitionOnTarget.push(processSymbol(symbol).map(
-  					i => i >= 0? colourOrder[i]: Math.abs(symbol) - 1
-	  			));
+	  			transitionOnTarget.push(processSymbol(symbol, colourOrder));
 			}
 			delete rule.transitionOnTarget;
 			rule.transitionTarget = transitionOnTarget;
@@ -207,9 +203,7 @@ const generateRules = (rules, colourOrder) => {
 		if (_.has(rule, "startCondition")) {
 			let condition = [];
 	  		for (const symbol of rule.startCondition) {
-	  			condition.push(processSymbol(symbol).map(
-  					i => i >= 0? colourOrder[i]: Math.abs(symbol) - 1
-	  			));
+	  			condition.push(processSymbol(symbol, colourOrder));
 			}
 			rule.condition = condition;
 		}
