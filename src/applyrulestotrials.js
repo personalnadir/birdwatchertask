@@ -67,6 +67,7 @@ function processTrials(ruleSet, trials) {
 	for(const col of trials) {
 		const rule = ruleSet[ruleIndex];
 		if (!_.has(rule, "target")) {
+			takePhoto.push(false);
 			continue;
 		}
 		const targetSequence = mapOrdinals(rule.target, ordinalColours);
