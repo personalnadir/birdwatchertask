@@ -13,11 +13,13 @@ const getCurrentBlock = state => {
 const getCurrentTrial = state => state.trial.currentTrial;
 const getCurrentTrialStimulus = state => state.trial.stimuli[getCurrentTrial(state)];
 const getTrialColour = state => getCurrentTrialStimulus(state).col;
+const getTrialDirection = state => getCurrentTrialStimulus(state).face;
 const currentTrialsExhausted = state => state.trial.stimuli.length === state.trial.currentTrial;
 const getTrialsComplete = state => state.trial.complete;
 const getCurrentRuleConfig = state => getCurrentBlock(state).rules;
 const getCurrentRule = state => getCurrentRuleConfig(state).rules;
 const getTrialStimuliType = state => getCurrentRuleConfig(state).stimuli;
+const getStimuliMirroring = state => getCurrentRuleConfig(state).stimuliMirroring;
 const isTrialStoopVersion = state => getCurrentRuleConfig(state).stroop;
 const getInputsSwapped = state =>getCurrentRuleConfig(state).swapInputs;
 
@@ -66,5 +68,7 @@ export {
 	getAttempts,
 	getTrialID,
 	isTrialStoopVersion,
-	getInputsSwapped
+	getInputsSwapped,
+	getTrialDirection,
+	getStimuliMirroring
 };

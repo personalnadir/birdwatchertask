@@ -40,7 +40,7 @@ export default function(state = initialState, action) {
         trialPhaseIndex: 0,
         stimuli: action.stimuli,
         complete: false,
-        correctAction: processTrials(action.rule, action.stimuli)
+        correctAction: processTrials(action.rule, action.stimuli, action.stimuliMirroring)
       };
     case SHOW_ITI:
       return {

@@ -6,7 +6,8 @@ import {
 	getCurrentRule,
 	getTaskMode,
 	getTaskPosition,
-	getTrialID
+	getTrialID,
+	getStimuliMirroring
 } from './selectors';
 import {goToNextApplicationState} from './applicationactions';
 import {setTrialStimuli} from './trialactions';
@@ -34,7 +35,8 @@ export const goToNextTaskState = () => {
 			dispatch(
 				setTrialStimuli(
 					getStimuliForBlock(getState()),
-					getCurrentRule(getState())
+					getCurrentRule(getState()),
+					getStimuliMirroring(getState())
 				)
 			);
 			return;
@@ -51,7 +53,8 @@ export const goToNextTaskState = () => {
 			dispatch(
 				setTrialStimuli(
 					getStimuliForBlock(getState()),
-					getCurrentRule(getState())
+					getCurrentRule(getState()),
+					getStimuliMirroring(getState())
 				)
 			);
 		}
@@ -102,7 +105,8 @@ export const restartBlock = () => {
 		dispatch(
 			setTrialStimuli(
 				getStimuliForBlock(getState()),
-				getCurrentRule(getState())
+				getCurrentRule(getState()),
+				getStimuliMirroring(getState())
 			)
 		);
 	};

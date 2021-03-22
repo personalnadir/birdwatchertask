@@ -55,10 +55,11 @@ export const goToNextTrial = () => {
 	};
 };
 
-export const setTrialStimuli = (stimuli, rule) => ({
+export const setTrialStimuli = (stimuli, rule, mirroring) => ({
 	type: SET_TRIAL_STIMULI,
 	stimuli,
-	rule
+	rule,
+	stimuliMirroring: mirroring
 });
 
 export const registerInput = (optionSelected) => {

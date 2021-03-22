@@ -51,13 +51,13 @@ function crossOver(mum, dad) {
 	return trials;
 }
 
-function generateBlockTrials(rules) {
+function generateBlockTrials(rules, varyFacing) {
 	let population = new Array(geneticCreatures);
 	for (let i = 0; i < geneticCreatures; i++) {
-		population[i] = generateRandomTrials();
+		population[i] = generateRandomTrials(varyFacing);
 	}
 
-	let numTransitionsDesired = population.map(trials => countNumRuleTransitions(rules, trials));
+	let numTransitionsDesired = population.map(trials => countNumRuleTransitions(rules, trials, varyFacing));
 
 	let count = 0;
 	while (true) {
@@ -66,7 +66,7 @@ function generateBlockTrials(rules) {
 			console.log(rules, "Perfect match not generated for rule");
 			return;
 		}
-		let transitionCounts = population.map(trials => countRuleTransitions(rules, trials));
+		let transitionCounts = population.map(trials => countRuleTransitions(rules, trials, varyFacing));
 		let transitionBitmaps = transitionCounts.map(counts => counts.map(n => Math.min(1, n)));
 		let perfectMatch = _.findIndex(transitionBitmaps, (bits, index) => {
 			let numTransitions = 0;
@@ -117,7 +117,7 @@ export default (ruleSets) => {
 	for (var i = 0; i < ruleSets.length; i++) {
 
 		blocks[i] = {
-			trials: generateBlockTrials(ruleSets[i].rules),
+			trials: generateBlockTrials(ruleSets[i].rules, ruleSets[i].stimuliMirroring),
 			rules: ruleSets[i]
 		};
 	}

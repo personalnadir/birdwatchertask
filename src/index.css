@@ -191,3 +191,7 @@ img.scaleup {
 				  1px  0px white,
 				 -1px  0px white;
 }
+
+img.mirrored  {
+	transform: scaleX(-1);
+}

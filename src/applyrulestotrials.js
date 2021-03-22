@@ -37,13 +37,13 @@ function targetMatchesTrials (target, trials, evalDir){
 	return false;
 }
 
-function getStartingRuleIndex(ruleSet, trials) {
+function getStartingRuleIndex(ruleSet, trials, mirroring) {
 	for (let i = 0; i < ruleSet.length; i++) {
 		if (!_.has(ruleSet[i], "condition")) {
 			continue;
 		}
 
-		if (targetMatchesTrials(ruleSet[i].condition, trials, ruleSet.stimuliMirroring)) {
+		if (targetMatchesTrials(ruleSet[i].condition, trials, mirroring)) {
 			return i;
 		}
 	}
@@ -53,12 +53,13 @@ function getStartingRuleIndex(ruleSet, trials) {
 
 function matchesTarget(target, col, dir, evalDir) {
 	const trial = evalDir? {symbol: col, direction: dir}:{symbol: col};
-	return !_.isUndefined(_.findWhere(target ?? [], trial));
+	const match = _.findWhere(target ?? [], trial);
+	return !_.isUndefined(match);
 }
 
-function processTrials(ruleSet, trials) {
+function processTrials(ruleSet, trials, mirroring) {
 	const ordinalColours = detectOrdinalColours(trials);
-	let ruleIndex = getStartingRuleIndex(ruleSet, trials);
+	let ruleIndex = getStartingRuleIndex(ruleSet, trials, mirroring);
 	let targetIndex = 0;
 	let transitionOnTargetIndex = 0;
 	let targetMatches = 0;
@@ -75,8 +76,8 @@ function processTrials(ruleSet, trials) {
 		const hasTransitionOnTargetRule = _.has(rule, "transitionTarget");
 		const transitionOnTarget = rule.transitionTarget;
 
-		const isTarget = matchesTarget(targetSequence[targetIndex], t.col, t.face, ruleSet.stimuliMirroring);
-		const isTransitionTarget = hasTransitionOnTargetRule && matchesTarget(transitionOnTarget[transitionOnTargetIndex], t.col, t.face, ruleSet.stimuliMirroring);
+		const isTarget = matchesTarget(targetSequence[targetIndex], t.col, t.face, mirroring);
+		const isTransitionTarget = hasTransitionOnTargetRule && matchesTarget(transitionOnTarget[transitionOnTargetIndex], t.col, t.face, mirroring);
 
 		let isPhotoTarget = false;
 		if (isTarget || isTransitionTarget) {
@@ -123,8 +124,8 @@ function processTrials(ruleSet, trials) {
 	return takePhoto.map(b => b? TRIAL_ACTION_PHOTO: TRIAL_ACTION_SKIP);
 }
 
-function mapRuleTransitions(ruleSet, trials) {
-	let isReachable = getReachableRules(ruleSet, trials);
+function mapRuleTransitions(ruleSet, trials, mirroring) {
+	let isReachable = getReachableRules(ruleSet, trials, mirroring);
 	let ruleMap = new Array(ruleSet.length);
 	let index = 0;
 	for (let i = 0; i < ruleSet.length; i++) {
@@ -153,8 +154,8 @@ function mapRuleTransitions(ruleSet, trials) {
 	return ruleMap;
 }
 
-function getReachableRules(ruleSet, trials) {
-	let ruleIndex = getStartingRuleIndex(ruleSet, trials);
+function getReachableRules(ruleSet, trials, mirroring) {
+	let ruleIndex = getStartingRuleIndex(ruleSet, trials, mirroring);
 	let reachable = new Array(ruleSet.length);
 	reachable.fill(false);
 	reachable[ruleIndex] = true;
@@ -172,8 +173,8 @@ function getReachableRules(ruleSet, trials) {
 	}
 }
 
-function countNumRuleTransitions(ruleSet, trials) {
-	let isReachable = getReachableRules(ruleSet, trials);
+function countNumRuleTransitions(ruleSet, trials, mirroring) {
+	let isReachable = getReachableRules(ruleSet, trials, mirroring);
 	let numTransitions = 0;
 	for (let i = 0; i < ruleSet.length; i++) {
 		if (!isReachable[i]) {
@@ -192,14 +193,14 @@ function countNumRuleTransitions(ruleSet, trials) {
 	return numTransitions;
 }
 
-function countRuleTransitions(ruleSet, trials) {
+function countRuleTransitions(ruleSet, trials, mirroring) {
 	const ordinalColours = detectOrdinalColours(trials);
 
-	let transitions = new Array(countNumRuleTransitions(ruleSet, trials));
-	let ruleMap = mapRuleTransitions(ruleSet, trials);
+	let transitions = new Array(countNumRuleTransitions(ruleSet, trials, mirroring));
+	let ruleMap = mapRuleTransitions(ruleSet, trials, mirroring);
 	transitions.fill(0);
 
-	let ruleIndex = getStartingRuleIndex(ruleSet, trials);
+	let ruleIndex = getStartingRuleIndex(ruleSet, trials, mirroring);
 	let targetIndex = 0;
 	let transitionOnTargetIndex = 0;
 	let targetMatches = 0;
@@ -215,8 +216,8 @@ function countRuleTransitions(ruleSet, trials) {
 		const hasTransitionOnTargetRule = _.has(rule, "transitionTarget");
 		const transitionOnTarget = rule.transitionTarget;
 
-		const isTarget = matchesTarget(targetSequence[targetIndex], t.col, t.face, ruleSet.stimuliMirroring);
-		const isTransitionTarget = hasTransitionOnTargetRule && matchesTarget(transitionOnTarget[transitionOnTargetIndex], t.col, t.face, ruleSet.stimuliMirroring);
+		const isTarget = matchesTarget(targetSequence[targetIndex], t.col, t.face, mirroring);
+		const isTransitionTarget = hasTransitionOnTargetRule && matchesTarget(transitionOnTarget[transitionOnTargetIndex], t.col, t.face, mirroring);
 
 		if (isTarget || isTransitionTarget) {
 			if (isTarget) {

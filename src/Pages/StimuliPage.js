@@ -25,7 +25,8 @@ import {
 	getTrialStimuliType,
 	getTrialID,
 	getAttempts,
-	isTrialStoopVersion
+	isTrialStoopVersion,
+	getTrialDirection
 } from '../redux/selectors';
 import KeyListener from '../Components/KeyListener';
 import blueBird from '../images/task/bird-blue.png';
@@ -43,11 +44,12 @@ import {
 	COLOUR_YELLOW,
 	KEYS,
 	TIMEOUT_MILLIS,
-	HUMAN_READABLE_COLOURS
+	HUMAN_READABLE_COLOURS,
+	LOOKING_LEFT,
+	LOOKING_RIGHT
 } from '../constants';
 
 import {
-	MODE_STIMULI,
 	STIMULI_BIRD,
 	STIMULI_SNAKE,
 	MODE_ITI
@@ -57,19 +59,37 @@ import keyEncode from '../keyencode';
 import _ from 'underscore';
 
 const colToImg = {
-	[STIMULI_BIRD]: {
-		[COLOUR_RED]: (<img alt="Red Bird" className="stimuli" src={redBird} />),
-		[COLOUR_BLUE]: (<img alt="Blue Bird" className="stimuli" src={blueBird} />),
-		[COLOUR_GREEN]: (<img alt="Green Bird" className="stimuli" src={greenBird} />),
-		[COLOUR_YELLOW]: (<img alt="Yellow Bird" className="stimuli" src={yellowBird} />)
+	[LOOKING_LEFT] : {
+		[STIMULI_BIRD]: {
+			[COLOUR_RED]: (<img alt="Red Bird" className="stimuli" src={redBird} />),
+			[COLOUR_BLUE]: (<img alt="Blue Bird" className="stimuli" src={blueBird} />),
+			[COLOUR_GREEN]: (<img alt="Green Bird" className="stimuli" src={greenBird} />),
+			[COLOUR_YELLOW]: (<img alt="Yellow Bird" className="stimuli" src={yellowBird} />)
+		},
+		[STIMULI_SNAKE]: {
+			[COLOUR_RED]: (<img alt="Red Snake" className="scaleup" src={redSnake} />),
+			[COLOUR_BLUE]: (<img alt="Blue Snake" className="scaleup" src={blueSnake} />),
+			[COLOUR_GREEN]: (<img alt="Green Snake" className="scaleup" src={greenSnake} />),
+			[COLOUR_YELLOW]: (<img alt="Yellow Snake" className="scaleup" src={yellowSnake} />)
+			}
 	},
-	[STIMULI_SNAKE]: {
-		[COLOUR_RED]: (<img alt="Red Snake" className="scaleup" src={redSnake} />),
-		[COLOUR_BLUE]: (<img alt="Blue Snake" className="scaleup" src={blueSnake} />),
-		[COLOUR_GREEN]: (<img alt="Green Snake" className="scaleup" src={greenSnake} />),
-		[COLOUR_YELLOW]: (<img alt="Yellow Snake" className="scaleup" src={yellowSnake} />)
+	[LOOKING_RIGHT] : {
+		[STIMULI_BIRD]: {
+			[COLOUR_RED]: (<img alt="Red Bird" className="mirrored stimuli" src={redBird} />),
+			[COLOUR_BLUE]: (<img alt="Blue Bird" className="mirrored stimuli" src={blueBird} />),
+			[COLOUR_GREEN]: (<img alt="Green Bird" className="mirrored stimuli" src={greenBird} />),
+			[COLOUR_YELLOW]: (<img alt="Yellow Bird" className="mirrored stimuli" src={yellowBird} />)
+		},
+		[STIMULI_SNAKE]: {
+			[COLOUR_RED]: (<img alt="Red Snake" className="mirrored scaleup" src={redSnake} />),
+			[COLOUR_BLUE]: (<img alt="Blue Snake" className="mirrored scaleup" src={blueSnake} />),
+			[COLOUR_GREEN]: (<img alt="Green Snake" className="mirrored scaleup" src={greenSnake} />),
+			[COLOUR_YELLOW]: (<img alt="Yellow Snake" className="mirrored scaleup" src={yellowSnake} />)
+			}
 	}
+
 };
+
 
 const validKeys = _.invert(KEYS);
 
@@ -114,7 +134,7 @@ class StimuliPage extends React.Component {
 
 	render() {
 		const col = this.props.stroop? stroopAlternativeColours[this.props.trialColour][this.props.trialID % 3]: this.props.trialColour;
-		const img = colToImg[this.props.stimType][col];
+		const img = colToImg[this.props.facing][this.props.stimType][col];
 		const feedback = this.props.feedback? <p>{this.props.wasCorrect? "Correct": "Wrong"}</p> : null;
 		const feedbackText = <div className="centred">{feedback}</div>;
 		const colour = HUMAN_READABLE_COLOURS[this.props.trialColour];
@@ -141,7 +161,8 @@ const mapStateToProps = state => ({
 	trialID: getTrialID(state),
 	mode: getTaskMode(state),
 	attempts: getAttempts(state),
-	stroop: isTrialStoopVersion(state)
+	stroop: isTrialStoopVersion(state),
+	facing: getTrialDirection(state)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
