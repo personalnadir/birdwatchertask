@@ -37,6 +37,11 @@ import blueSnake from '../images/task/snake-blue.png';
 import greenSnake from '../images/task/snake-green.png';
 import redSnake from '../images/task/snake-red.png';
 import yellowSnake from '../images/task/snake-yellow.png';
+import blueSpider from '../images/task/spider-blue.png';
+import greenSpider from '../images/task/spider-green.png';
+import redSpider from '../images/task/spider-red.png';
+import yellowSpider from '../images/task/spider-yellow.png';
+
 import {
 	COLOUR_RED,
 	COLOUR_BLUE,
@@ -53,6 +58,7 @@ import {
 	STIMULI_BIRD,
 	STIMULI_SNAKE,
 	MODE_ITI
+	STIMULI_SPIDER
 } from '../redux/taskconstants';
 
 import keyEncode from '../keyencode';
@@ -71,7 +77,13 @@ const colToImg = {
 			[COLOUR_BLUE]: (<img alt="Blue Snake" className="scaleup" src={blueSnake} />),
 			[COLOUR_GREEN]: (<img alt="Green Snake" className="scaleup" src={greenSnake} />),
 			[COLOUR_YELLOW]: (<img alt="Yellow Snake" className="scaleup" src={yellowSnake} />)
-			}
+		},
+		[STIMULI_SPIDER]: {
+			[COLOUR_RED]: (<img alt="Red Spider" className="scaleup" src={redSpider} />),
+			[COLOUR_BLUE]: (<img alt="Blue Spider" className="scaleup" src={blueSpider} />),
+			[COLOUR_GREEN]: (<img alt="Green Spider" className="scaleup" src={greenSpider} />),
+			[COLOUR_YELLOW]: (<img alt="Yellow Spider" className="scaleup" src={yellowSpider} />)
+		}
 	},
 	[LOOKING_RIGHT] : {
 		[STIMULI_BIRD]: {
@@ -85,9 +97,14 @@ const colToImg = {
 			[COLOUR_BLUE]: (<img alt="Blue Snake" className="mirrored scaleup" src={blueSnake} />),
 			[COLOUR_GREEN]: (<img alt="Green Snake" className="mirrored scaleup" src={greenSnake} />),
 			[COLOUR_YELLOW]: (<img alt="Yellow Snake" className="mirrored scaleup" src={yellowSnake} />)
-			}
+		},
+		[STIMULI_SPIDER]: {
+			[COLOUR_RED]: (<img alt="Red Spider" className="mirrored scaleup" src={redSpider} />),
+			[COLOUR_BLUE]: (<img alt="Blue Spider" className="mirrored scaleup" src={blueSpider} />),
+			[COLOUR_GREEN]: (<img alt="Green Spider" className="mirrored scaleup" src={greenSpider} />),
+			[COLOUR_YELLOW]: (<img alt="Yellow Spider" className="mirrored scaleup" src={yellowSpider} />)
+		}
 	}
-
 };
 
 
