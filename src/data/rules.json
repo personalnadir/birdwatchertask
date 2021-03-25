@@ -542,5 +542,19 @@
 				"target" : ["c"]
 			}
 		]
-	}
+	},
+	"snakes ordinal branching" : {
+		"humanReadableExplanation" : "If the second {stimulus} colour you see is {a} then photograph every {b} {stimulus}. But if the second {stimulus} colour is not {a} then photograph every {c} {stimulus}",
+		"stimuli": "snakes",
+		"rules" : [
+			{
+				"startCondition": ["*", "a"],
+				"target" : ["b"]
+			},
+			{
+				"startCondition": ["*", "!a"],
+				"target" : ["c"]
+			}
+		]
+	},
 }
