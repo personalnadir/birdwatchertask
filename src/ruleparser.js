@@ -62,6 +62,7 @@ const isNot = /!([a-d][LR]?)/g;
 const anySymbol = /\*/g;
 const specifcSymbol = /([a-d][LR]?)/g;
 const number = /([1-4][LR]?)/g;
+const notNumber = /!([1-4][LR]?)/g;
 const directionOnly = /([LR]?)/g;
 const splitSymbol = /([a-d1-4])([LR]?)/g;
 
@@ -120,6 +121,19 @@ const processSymbol = (symbol, colourOrder) => {
 	if (array.length > 0) {
 		return [splitSymbolDirection(array[0][1], colourOrder)];
 	}
+
+	array = [...symbol.matchAll(notNumber)];
+	if (array.length > 0) {
+		const exclude = splitSymbolDirection(array[0][1], colourOrder);
+		return _.chain(_.range(0,4))
+			.filter(x => exclude.symbol === x)
+			.map(x => ({
+				symbol: ordinalToColor(x, colourOrder),
+				direction: oppositeDirection[exclude.direction]
+			}))
+			.value();
+	}
+
 	array = [...symbol.matchAll(number)];
 	if (array.length > 0) {
 		return [splitSymbolDirection(array[0][1], colourOrder)];
