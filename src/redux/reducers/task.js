@@ -73,7 +73,8 @@ export default function(state = initialState, action) {
     case REGENERATE_BLOCK:
       let blocks = state.blocks;
       ruleSets = parse(_.shuffle(COLOURS));
-      blocks[state.mode] = gen(genRuleBlocks(state.mode, ruleSets, state.counterBalanceA));
+      const blockNames = getBlockNames();
+      blocks[state.mode] = gen(genRuleBlocks(blockNames[state.mode], ruleSets, state.counterBalanceA));
       return {
         ...state,
         blocks
