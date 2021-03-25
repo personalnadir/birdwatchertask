@@ -245,7 +245,7 @@
 		]
 	},
 	"sequence with negation": {
-		"humanReadableExplanation" : "Photograph any {stimuli} that comes after a {a} {stimulus}, unless it is {b}.",
+		"humanReadableExplanation" : "Photograph any {stimulus} that comes after a {a} {stimulus}, unless it is {b}.",
 		"stimuli": "birds",
 		"rules" : [
 			{
@@ -254,7 +254,7 @@
 		]
 	},
 	"not first": {
-		"humanReadableExplanation" : "Photograph any {stimuli} that does not match the colour of the first {stimulus} you see",
+		"humanReadableExplanation" : "Photograph any {stimulus} that does not match the colour of the first {stimulus} you see",
 		"stimuli": "birds",
 		"rules" : [
 			{
@@ -365,7 +365,7 @@
 		]
 	},
 	"facing left": {
-		"humanReadableExplanation" : "Photograph all {a} {stimuli} that facing {L}.",
+		"humanReadableExplanation" : "Photograph all {a} {stimuli} that {L}.",
 		"stimuli": "birds",
 		"stimuliMirroring": true,
 		"rules" : [
@@ -375,7 +375,7 @@
 		]
 	},
 	"sequence facing right": {
-		"humanReadableExplanation" : "Photograph if you see {a} {stimulus} facing {R} followed by a {b} {stimulus} facing any direction.",
+		"humanReadableExplanation" : "Photograph if you see {a} {stimulus} {R} followed by a {b} {stimulus} facing any direction.",
 		"stimuli": "birds",
 		"stimuliMirroring": true,
 		"rules" : [
@@ -385,7 +385,7 @@
 		]
 	},
 	"not and facing left": {
-		"humanReadableExplanation" : "Photograph all {stimuli} which are facing {L}.",
+		"humanReadableExplanation" : "Photograph all {stimuli} which are {L}.",
 		"stimuli": "birds",
 		"stimuliMirroring": true,
 		"rules" : [
@@ -498,7 +498,7 @@
 		]
 	},
 	"snakes not first": {
-		"humanReadableExplanation" : "Photograph any {stimuli} that does not match the colour of the first {stimulus} you see",
+		"humanReadableExplanation" : "Photograph any {stimulus} that does not match the colour of the first {stimulus} you see",
 		"stimuli": "snakes",
 		"rules" : [
 			{
@@ -507,7 +507,7 @@
 		]
 	},
 	"spiders not first": {
-		"humanReadableExplanation" : "Photograph any {stimuli} that does not match the colour of the first {stimulus} you see",
+		"humanReadableExplanation" : "Photograph any {stimulus} that does not match the colour of the first {stimulus} you see",
 		"stimuli": "spiders",
 		"rules" : [
 			{
