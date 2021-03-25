@@ -395,7 +395,7 @@
 		]
 	},
 	"first": {
-		"humanReadableExplanation": "Keep the first {stimulus} in mind, then photograph every {stimulus} that matches it",
+		"humanReadableExplanation": "Photograph the first {stimulus}, then photograph every {stimulus} that matches it",
 		"stimuli": "birds",
 		"rules" : [
 			{
