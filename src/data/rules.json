@@ -184,6 +184,20 @@
 			}
 		]
 	},
+	"simple ordinal branching" : {
+		"humanReadableExplanation" : "If the first {stimulus} colour you see is {a} then photograph every {b} {stimulus}. But if the first {stimulus} colour is not {a} then photograph every {c} {stimulus}",
+		"stimuli": "birds",
+		"rules" : [
+			{
+				"startCondition": ["a"],
+				"target" : ["b"]
+			},
+			{
+				"startCondition": ["!a"],
+				"target" : ["c"]
+			}
+		]
+	},
 	"modus ponens": {
 		"humanReadableExplanation" : "If the first {stimulus} colour you see is {a} then photograph every {b} {stimulus}. But if the second {stimulus} colour is not {a} then photograph every {c} {stimulus}",
 		"stimuli": "birds",
@@ -213,6 +227,24 @@
 		"rules" : [
 			{
 				"target" : ["!a"]
+			}
+		]
+	},
+	"sequence with negation": {
+		"humanReadableExplanation" : "Photograph any {stimuli} that comes after a {a} {stimulus}, unless it is {b}.",
+		"stimuli": "birds",
+		"rules" : [
+			{
+				"target" : ["a","!b"]
+			}
+		]
+	},
+	"not first": {
+		"humanReadableExplanation" : "Photograph any {stimuli} that does not match the colour of the first {stimulus} you see",
+		"stimuli": "birds",
+		"rules" : [
+			{
+				"target" : ["!1"]
 			}
 		]
 	},
@@ -325,6 +357,154 @@
 		"rules" : [
 			{
 				"target" : ["R"]
+			}
+		]
+	},
+	"first": {
+		"humanReadableExplanation": "Keep the first {stimulus} in mind, then photograph every {stimulus} that matches it",
+		"stimuli": "birds",
+		"rules" : [
+			{
+				"target" : ["1"]
+			}
+		]
+	},
+	"single": {
+		"humanReadableExplanation": "Photograph all {a} {stimuli}. Skip other {stimuli}",
+		"stimuli": "birds",
+		"rules" : [
+			{
+				"target" : ["a"]
+			}
+		]
+	},
+	"sequence of two swapped" : {
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} {stimulus}, followed immediately by a {b} {stimulus}",
+		"stimuli": "birds",
+		"swapInputs": true,
+		"rules" : [
+			{
+				"target" : ["a", "b"]
+			}
+		]
+	},
+	"stroop sequence of two": {
+		"humanReadableExplanation" : "Now you will see the colour written over the {stimuli}. Ignore the colour of the {stimuli}, and only react to the word. Photograph every time you see {a} followed by {a} ",
+		"stroop": true,
+		"stimuli": "birds",
+		"rules" : [
+			{
+				"target" : ["a", "a"]
+			}
+		]
+	},
+	"stroop sequence of three": {
+		"humanReadableExplanation" : "Now you will see the colour written over the {stimuli}. Ignore the colour of the {stimuli}, and only react to the word. Photograph every time you see {a} followed by {b} followed by {c} ",
+		"stroop": true,
+		"stimuli": "birds",
+		"rules" : [
+			{
+				"target" : ["a", "b", "c"]
+			}
+		]
+	},
+	"stroop branching": {
+		"humanReadableExplanation" : "Now you will see the colour written over the {stimuli}. Ignore the colour of the {stimuli}, and only react to the word. Start by taking a picture of each {a} {stimuli}. But if you see a {b} {stimuli}, photograph that {b} {stimulus}, and from then on, only photograph {b} {stimulus}.",
+		"stimuli": "birds",
+		"stroop": true,
+		"rules" : [
+			{
+				"target" : ["a"],
+				"transitionOnTarget": ["b"],
+				"transitionToRule" : 1,
+				"transitionAfterTargetsMatched" : 1
+			},
+			{
+				"target": ["b"]
+			}
+		]
+	},
+	"single swapped": {
+		"humanReadableExplanation": "Photograph all {a} {stimuli}. Skip other {stimuli}",
+		"swapInputs": true,
+		"stimuli": "birds",
+		"rules" : [
+			{
+				"target" : ["a"]
+			}
+		]
+	},
+	"negation swapped": {
+		"humanReadableExplanation" : "Photograph all {stimuli} that are not {a}.",
+		"swapInputs": true,
+		"stimuli": "birds",
+		"rules" : [
+			{
+				"target" : ["!a"]
+			}
+		]
+	},
+	"snakes seq of two" : {
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} {stimulus}, followed immediately by a {b} {stimulus}",
+		"stimuli": "snakes",
+		"rules" : [
+			{
+				"target" : ["a", "b"]
+			}
+		]
+	},
+	"spiders seq of two" : {
+		"humanReadableExplanation" : "Press {key_act} when you see a {a} {stimulus}, followed immediately by a {b} {stimulus}",
+		"stimuli": "spiders",
+		"rules" : [
+			{
+				"target" : ["a", "b"]
+			}
+		]
+	},
+	"snakes not first": {
+		"humanReadableExplanation" : "Photograph any {stimuli} that does not match the colour of the first {stimulus} you see",
+		"stimuli": "snakes",
+		"rules" : [
+			{
+				"target" : ["!1"]
+			}
+		]
+	},
+	"spiders not first": {
+		"humanReadableExplanation" : "Photograph any {stimuli} that does not match the colour of the first {stimulus} you see",
+		"stimuli": "spiders",
+		"rules" : [
+			{
+				"target" : ["!1"]
+			}
+		]
+	},
+	"snakes branching": {
+		"humanReadableExplanation" : "If the first {stimulus} colour you see is {a} then photograph every {b} {stimulus}. But if the first {stimulus} colour is not {a} then photograph every {c} {stimulus}",
+		"stimuli": "snakes",
+		"rules" : [
+			{
+				"startCondition": ["a"],
+				"target" : ["b"]
+			},
+			{
+				"startCondition": ["!a"],
+				"target" : ["c"]
+			}
+		]
+	},
+	"spiders branching": {
+		"humanReadableExplanation" : "If the first {stimulus} colour you see is {a} then photograph every {b} {stimulus}. But if the first {stimulus} colour is not {a} then photograph every {c} {stimulus}",
+		"stimuli": "spiders",
+		"rules" : [
+			{
+				"startCondition": ["a"],
+				"target" : ["b"]
+			},
+			{
+				"startCondition": ["!a"],
+				"target" : ["c"]
 			}
 		]
 	}

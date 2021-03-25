@@ -20,6 +20,8 @@ const getCurrentRuleConfig = state => getCurrentBlock(state).rules;
 const getCurrentRule = state => getCurrentRuleConfig(state).rules;
 const getTrialStimuliType = state => getCurrentRuleConfig(state).stimuli;
 const getStimuliMirroring = state => getCurrentRuleConfig(state).stimuliMirroring;
+const getITI = state => getCurrentRuleConfig(state).iti;
+
 const isTrialStoopVersion = state => getCurrentRuleConfig(state).stroop;
 const getInputsSwapped = state =>getCurrentRuleConfig(state).swapInputs;
 
@@ -70,5 +72,6 @@ export {
 	isTrialStoopVersion,
 	getInputsSwapped,
 	getTrialDirection,
-	getStimuliMirroring
+	getStimuliMirroring,
+	getITI
 };

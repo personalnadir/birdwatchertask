@@ -1,18 +1,90 @@
-{
-	"tutorial": {
+[
+	{
+		"name": "tutorial",
+		"iti": 1000,
+		"introText": "tutorial starting",
 		"ruleOrder": [
-			"facing right",
-			{
-				"a":["negation snakes swap", "total negation"],
-				"b":["stroop simple", "once"]
-			},
-			"modus ponens", "sequence of two"
+			"single",
+			"single",
+			"first",
+			"first"
 		]
 	},
-	"randomised":{
-		"ruleOrder": ["modus ponens", "sequence", "negation", "rule shifting", "branching", "branching logic complex"]
+	{
+		"name": "easy",
+		"iti": 1000,
+		"introText": "easy starting",
+		"ruleOrder": [
+			"two identical",
+			"sequence of two"
+		]
 	},
-	"nonrandomised": {
-		"ruleOrder": ["modus ponens", "stroop simple", "sequence", "sequence of two snakes", "negation snakes", "branching snakes", "modus ponens", "sequence"]
+	{
+		"name": "negation",
+		"iti": 1000,
+		"introText": "negation starting",
+		"ruleOrder": [
+			"negation",
+			"sequence with negation",
+			"not first"
+		]
+	},
+	{
+		"name": "medium",
+		"iti": 1000,
+		"introText": "medium starting",
+		"ruleOrder": [
+			"sequence",
+			"rule shifting"
+		]
+
+	},
+	{
+		"name": "hard",
+		"iti": 1000,
+		"introText": "hard starting",
+		"ruleOrder": [
+			"branching",
+			"sequence",
+			"simple ordinal branching"
+		]
+	},
+	{
+		"name": "easy2",
+		"iti": 1000,
+		"introText": "easy2 starting",
+		"ruleOrder": [
+			"single",
+			"negation"
+		]
+	},
+	{
+		"name": "volatility",
+		"iti": 1000,
+		"introText": "volatility starting",
+		"ruleOrder": [
+			"sequence of two swapped",
+			"sequence of two swapped",
+			"stroop sequence of two",
+			"stroop sequence of three",
+			"stroop branching",
+			"single swapped",
+			"negation swapped",
+			"sequence of two",
+			{
+				"a":["snakes seq of two", "snakes not first", "snakes branching"],
+				"b":["spiders seq of two", "spiders not first", "spiders branching"]
+			}
+		]
+	},
+	{
+		"name": "easy3",
+		"iti": 1000,
+		"introText": "easy3 starting",
+		"ruleOrder": [
+			"single",
+			"sequence of two",
+			"negation"
+		]
 	}
-}
+]

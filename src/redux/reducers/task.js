@@ -1,7 +1,7 @@
 import {
   NEXT_TASK_STATE,
   NEXT_BLOCK,
-  SWITCH_MODE,
+  NEXT_MODE,
   SHOW_TIMEOUT,
   HIDE_TIMEOUT,
   REGENERATE_BLOCK,
@@ -11,15 +11,15 @@ import {
 import gen from '../../generatetrials';
 
 import {
-  TYPE_TUTORIAL,
-  TYPE_RANDOMISED,
-  TYPE_NONRANDOMISED,
   TASK_FLOW
 } from "../taskconstants";
 
 
 import parse from '../../ruleparser';
-import genRuleBlocks from '../../ruleblockparser';
+import {
+  createBlocks as genRuleBlocks,
+  getBlockNames
+} from '../../ruleblockparser';
 import {COLOURS} from '../../constants';
 import _ from 'underscore';
 
@@ -27,7 +27,7 @@ let ruleSets = parse(_.shuffle(COLOURS));
 const initialState = {
   taskPhaseIndex: 0,
   currentBlock: 0,
-  mode: TYPE_TUTORIAL
+  mode: 0
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -49,10 +49,13 @@ export default function(state = initialState, action) {
         currentBlock: blockIndex,
         taskPhaseIndex: phaseIndex
       };
-    case SWITCH_MODE:
+    case NEXT_MODE:
+      if (action.currentMode !== state.mode) {
+        return state;
+      }
       return {
         ...state,
-        mode:action.mode,
+        mode: action.currentMode + 1,
         taskPhaseIndex: 0,
         currentBlock: 0,
         lastBlock: false
@@ -76,13 +79,10 @@ export default function(state = initialState, action) {
         blocks
       };
     case COUNTER_BALACE: {
-      const blocks = {
-        [TYPE_TUTORIAL]:gen(genRuleBlocks(TYPE_TUTORIAL, ruleSets, action.counterBalanceA)),
-        [TYPE_RANDOMISED]:gen(genRuleBlocks(TYPE_RANDOMISED, ruleSets, action.counterBalanceA)),
-        [TYPE_NONRANDOMISED]:gen(genRuleBlocks(TYPE_NONRANDOMISED, ruleSets, action.counterBalanceA)),
-      };
+      const blockNames = getBlockNames();
+      const blocks = blockNames.map(n => gen(genRuleBlocks(n, ruleSets, action.counterBalanceA)));
       // check in case tutorial only has one block
-      const lastBlock = blocks[TYPE_TUTORIAL].length === state.currentBlock + 1;
+      const lastBlock = blocks[state.mode].length === state.currentBlock + 1;
 
       return {
         ...state,

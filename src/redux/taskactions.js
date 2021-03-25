@@ -12,14 +12,12 @@ import {
 import {goToNextApplicationState} from './applicationactions';
 import {setTrialStimuli} from './trialactions';
 import {
-	TASK_PROPER,
-	TYPE_RANDOMISED,
-	TYPE_NONRANDOMISED
+	TASK_PROPER
 } from './taskconstants';
 
 export const NEXT_TASK_STATE = 'task/nextTaskState';
 export const NEXT_BLOCK = 'task/nextBlock';
-export const SWITCH_MODE = 'task/switchMode';
+export const NEXT_MODE = 'task/nextMode';
 export const SHOW_TIMEOUT = 'task/showTimeout';
 export const HIDE_TIMEOUT = 'task/hideTimeout';
 export const REGENERATE_BLOCK = 'task/regenBlock';
@@ -31,7 +29,7 @@ export const goToNextTaskState = () => {
 		const inTask = getTaskState(state) === TASK_PROPER;
 		if (isLastBlock(state) && inTask) {
 			dispatch(goToNextApplicationState());
-			dispatch(switchMode(getTaskMode(state) === TYPE_RANDOMISED? TYPE_NONRANDOMISED : TYPE_RANDOMISED));
+			dispatch(nextMode(getTaskMode(state)));
 			dispatch(
 				setTrialStimuli(
 					getStimuliForBlock(getState()),
@@ -65,9 +63,9 @@ export const goToNextBlock = ()=> ({
 	type: NEXT_BLOCK
 });
 
-export const switchMode = (newMode)=> ({
-	type: SWITCH_MODE,
-	mode: newMode
+export const nextMode = (curMode)=> ({
+	type: NEXT_MODE,
+	currentMode: curMode
 });
 
 export const showTimeOut = (block, trial, id) => {
