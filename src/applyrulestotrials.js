@@ -9,11 +9,13 @@ function detectOrdinalColours(trials) {
 	return _.first(trials,4);
 }
 
-function mapOrdinals(target, ordinalColours) {
-	return target.map(t => ordinalColours[t.symbol]? ({
-		...t,
-		symbol: ordinalColours[t.symbol].col
-	}): t);
+function mapOrdinals(targets, ordinalColours) {
+	return _.map(targets, list => list.map(t => ordinalColours[t.symbol]? ({
+			...t,
+			symbol: ordinalColours[t.symbol].col,
+		})
+		: t)
+	);
 }
 
 function targetMatchesTrials (target, trials, evalDir){
@@ -215,7 +217,6 @@ function countRuleTransitions(ruleSet, trials, mirroring) {
 		const targetSequence = mapOrdinals(rule.target, ordinalColours);
 		const hasTransitionOnTargetRule = _.has(rule, "transitionTarget");
 		const transitionOnTarget = rule.transitionTarget;
-
 		const isTarget = matchesTarget(targetSequence[targetIndex], t.col, t.face, mirroring);
 		const isTransitionTarget = hasTransitionOnTargetRule && matchesTarget(transitionOnTarget[transitionOnTargetIndex], t.col, t.face, mirroring);
 
@@ -258,7 +259,6 @@ function countRuleTransitions(ruleSet, trials, mirroring) {
 			transitionOnTargetIndex = 0;
 		}
 	}
-
 	return transitions;
 }
 
