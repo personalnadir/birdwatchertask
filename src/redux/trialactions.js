@@ -46,6 +46,7 @@ export const endCurrentTrials = () => ({
 export const goToNextTrial = () => {
 	return (dispatch, getState) => {
 		if (getTrialsComplete(getState())) {
+			dispatch(endCurrentTrials());
 			dispatch(goToNextTaskState());
 			return;
 		}
