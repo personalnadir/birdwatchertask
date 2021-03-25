@@ -126,7 +126,7 @@ const processSymbol = (symbol, colourOrder) => {
 	if (array.length > 0) {
 		const exclude = splitSymbolDirection(array[0][1], colourOrder);
 		return _.chain(_.range(0,4))
-			.filter(x => exclude.symbol === x)
+			.reject(x => exclude.symbol === x)
 			.map(x => ({
 				symbol: ordinalToColor(x, colourOrder),
 				direction: oppositeDirection[exclude.direction]
