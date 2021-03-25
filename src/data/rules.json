@@ -198,6 +198,20 @@
 			}
 		]
 	},
+	"simple ordinal branching" : {
+		"humanReadableExplanation" : "If the first {stimulus} colour you see is {a} then photograph every {b} {stimulus}. But if the first {stimulus} colour is not {a} then photograph every {c} {stimulus}",
+		"stimuli": "birds",
+		"rules" : [
+			{
+				"startCondition": ["a"],
+				"target" : ["b"]
+			},
+			{
+				"startCondition": ["!a"],
+				"target" : ["c"]
+			}
+		]
+	},
 	"modus ponens": {
 		"humanReadableExplanation" : "If the first {stimulus} colour you see is {a} then photograph every {b} {stimulus}. But if the second {stimulus} colour is not {a} then photograph every {c} {stimulus}",
 		"stimuli": "birds",
@@ -350,13 +364,33 @@
 			}
 		]
 	},
-	"facing right": {
-		"humanReadableExplanation" : "Photograph all {stimuli} that are not {L}.",
+	"facing left": {
+		"humanReadableExplanation" : "Photograph all {a} {stimuli} that facing {L}.",
 		"stimuli": "birds",
 		"stimuliMirroring": true,
 		"rules" : [
 			{
-				"target" : ["R"]
+				"target" : ["aL"]
+			}
+		]
+	},
+	"sequence facing right": {
+		"humanReadableExplanation" : "Photograph if you see {a} {stimulus} facing {R} followed by a {b} {stimulus} facing any direction.",
+		"stimuli": "birds",
+		"stimuliMirroring": true,
+		"rules" : [
+			{
+				"target" : ["aR", "b"]
+			}
+		]
+	},
+	"not and facing left": {
+		"humanReadableExplanation" : "Photograph all {stimuli} which are facing {L}.",
+		"stimuli": "birds",
+		"stimuliMirroring": true,
+		"rules" : [
+			{
+				"target" : ["!aL"]
 			}
 		]
 	},
@@ -398,9 +432,10 @@
 			}
 		]
 	},
-	"stroop sequence of three": {
+	"stroop sequence of three swapped": {
 		"humanReadableExplanation" : "Now you will see the colour written over the {stimuli}. Ignore the colour of the {stimuli}, and only react to the word. Photograph every time you see {a} followed by {b} followed by {c} ",
 		"stroop": true,
+		"swapInputs": true,
 		"stimuli": "birds",
 		"rules" : [
 			{

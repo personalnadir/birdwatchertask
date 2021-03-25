@@ -4,6 +4,7 @@
 		"iti": 1000,
 		"introText": "tutorial starting",
 		"ruleOrder": [
+			"once",
 			"single",
 			"single",
 			"first",
@@ -40,13 +41,23 @@
 
 	},
 	{
+		"name": "second order",
+		"iti": 1000,
+		"introText": "second order starting",
+		"ruleOrder": [
+			"facing left",
+			"sequence facing right",
+			"not and facing left"
+		]
+	},
+	{
 		"name": "hard",
 		"iti": 1000,
 		"introText": "hard starting",
 		"ruleOrder": [
 			"branching",
-			"sequence",
-			"simple ordinal branching"
+			"simple ordinal branching",
+			"ordinal branching"
 		]
 	},
 	{
@@ -55,6 +66,9 @@
 		"introText": "easy2 starting",
 		"ruleOrder": [
 			"single",
+			"single",
+			"sequence of two",
+			"sequence of two",
 			"negation"
 		]
 	},
@@ -66,13 +80,13 @@
 			"sequence of two swapped",
 			"sequence of two swapped",
 			"stroop sequence of two",
-			"stroop sequence of three",
+			"stroop sequence of three swapped",
 			"stroop branching",
 			"single swapped",
 			"negation swapped",
 			"sequence of two",
 			{
-				"a":["snakes seq of two", "snakes not first", "snakes branching"],
+				"a":["snakes seq of two", "snakes not first", "snakes ordinal branching"],
 				"b":["spiders seq of two", "spiders not first", "spiders branching"]
 			}
 		]
