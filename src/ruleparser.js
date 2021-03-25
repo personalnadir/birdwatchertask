@@ -237,6 +237,7 @@ export default (colourOrder) => {
 	let processedRules = {};
 
 	for (const ruleName in rulesConfig) {
+		colourOrder = _.shuffle(colourOrder);
 		const {humanReadableExplanation, variables, rules, stimuli, stroop, swapInputs, stimuliMirroring} = rulesConfig[ruleName];
 		const stimType = stimuliType[stimuli];
 		console.assert(stimType, `ruleparser: invalid stimulus type ${stimuli} defined for rule ${ruleName}`);

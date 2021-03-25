@@ -21,9 +21,8 @@ import {
   getBlockNames
 } from '../../ruleblockparser';
 import {COLOURS} from '../../constants';
-import _ from 'underscore';
 
-let ruleSets = parse(_.shuffle(COLOURS));
+let ruleSets = parse(COLOURS);
 const initialState = {
   taskPhaseIndex: 0,
   currentBlock: 0,
@@ -72,7 +71,7 @@ export default function(state = initialState, action) {
       };
     case REGENERATE_BLOCK:
       let blocks = state.blocks;
-      ruleSets = parse(_.shuffle(COLOURS));
+      ruleSets = parse(COLOURS);
       const blockNames = getBlockNames();
       blocks[state.mode] = gen(genRuleBlocks(blockNames[state.mode], ruleSets, state.counterBalanceA));
       return {
