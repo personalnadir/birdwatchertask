@@ -58,9 +58,7 @@ function matchesTarget(target, col, dir, evalDir) {
 	let match = _.findWhere(target ?? [], trial);
 	if (evalDir && !match) {
 		match = _.findWhere(target ?? [], {symbol: col});
-		if (match && !match.direction) {
-			return true;
-		}
+		return match && _.isUndefined(match.direction);
 	}
 	return !_.isUndefined(match);
 }
