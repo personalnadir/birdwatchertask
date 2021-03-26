@@ -1,5 +1,6 @@
 import {
 	isLastBlock,
+	isLastMode,
 	getTrialsComplete,
 	getTaskState,
 	getStimuliForBlock,
@@ -27,8 +28,10 @@ export const goToNextTaskState = () => {
 	return (dispatch, getState) => {
 		const state = getState();
 		const inTask = getTaskState(state) === TASK_PROPER;
-		if (isLastBlock(state) && inTask) {
-			dispatch(goToNextApplicationState());
+		if ((isLastMode(state) || isLastBlock(state)) && inTask) {
+			if (isLastMode(state)) {
+				dispatch(goToNextApplicationState());
+			}
 			dispatch(nextMode(getTaskMode(state)));
 			dispatch(
 				setTrialStimuli(

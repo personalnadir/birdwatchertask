@@ -6,6 +6,7 @@ const getApplicationState = state => APP_STATE_FLOW[state.application.appStateIn
 const getTaskState = state => state.task.timeout? TASK_TIMEOUT: TASK_FLOW[state.task.taskPhaseIndex];
 const getTrialState = state => TRIAL_FLOW[state.trial.trialPhaseIndex];
 const isLastBlock = state => state.task.lastBlock;
+const isLastMode = state => state.task.lastMode;
 const getCurrentBlock = state => {
 	const {blocks, currentBlock, mode} = state.task;
 	return blocks[mode][currentBlock];
@@ -55,6 +56,7 @@ export {
 	getTrialColour,
 	getTrialsComplete,
 	isLastBlock,
+	isLastMode,
 	getCurrentBlock,
 	currentTrialsExhausted,
 	getCurrentRuleText,

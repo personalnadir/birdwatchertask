@@ -52,11 +52,16 @@ export default function(state = initialState, action) {
       if (action.currentMode !== state.mode) {
         return state;
       }
+      const newMode = action.currentMode + 1;
+      const blockNames = getBlockNames();
+      const lastMode = newMode + 1 >= blockNames.length;
+
       return {
         ...state,
-        mode: action.currentMode + 1,
+        mode: newMode,
         taskPhaseIndex: 0,
         currentBlock: 0,
+        lastMode: lastMode,
         lastBlock: false
       };
     case SHOW_TIMEOUT:
@@ -69,7 +74,7 @@ export default function(state = initialState, action) {
         ...state,
         timeout:false
       };
-    case REGENERATE_BLOCK:
+    case REGENERATE_BLOCK: {
       let blocks = state.blocks;
       ruleSets = parse(COLOURS);
       const blockNames = getBlockNames();
@@ -78,6 +83,8 @@ export default function(state = initialState, action) {
         ...state,
         blocks
       };
+
+    }
     case COUNTER_BALACE: {
       const blockNames = getBlockNames();
       const blocks = blockNames.map(n => gen(genRuleBlocks(n, ruleSets, action.counterBalanceA)));
