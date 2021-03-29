@@ -33,13 +33,16 @@ function generateRandomTrials(varyFacing) {
 	return trials;
 }
 
-function crossOver(mum, dad) {
+function crossOver(mum, dad, varyFacing) {
 	let trials = new Array(getRandomInt(MIN_ANIMALS_PER_BLOCK, MAX_ANIMALS_PER_BLOCK));
 	const parents = [mum, dad];
 	for (let i = 0; i < trials.length; i++) {
 		const p = parents[getRandomInt(0, 2)];
 		if (i >= p.length) {
-			trials[i] = COLOURS[getRandomInt(0,COLOURS.length)];
+			trials[i] = {
+				col: COLOURS[getRandomInt(0,COLOURS.length)],
+				face: varyFacing? DIRECTIONS[getRandomInt(0,DIRECTIONS.length)]: LOOKING_LEFT
+			};
 		} else {
 			trials[i] = p[i];
 		}
@@ -106,7 +109,7 @@ function generateBlockTrials(rules, varyFacing) {
 			}
 			const mum = population[notDeadList[getRandomInt(0, numNotDead)]];
 			const dad = population[notDeadList[getRandomInt(0, numNotDead)]];
-			population[i] = crossOver(mum, dad);
+			population[i] = crossOver(mum, dad, varyFacing);
 		}
 	}
 }
