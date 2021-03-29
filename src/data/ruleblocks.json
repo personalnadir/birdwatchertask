@@ -1,7 +1,7 @@
 [
 	{
 		"name": "tutorial",
-		"iti": 1000,
+		"iti": 500,
 		"introText": "tutorial starting",
 		"ruleOrder": [
 			"once",
@@ -13,7 +13,7 @@
 	},
 	{
 		"name": "easy",
-		"iti": 1000,
+		"iti": 500,
 		"introText": "easy starting",
 		"ruleOrder": [
 			"two identical",
@@ -22,7 +22,7 @@
 	},
 	{
 		"name": "negation",
-		"iti": 1000,
+		"iti": 500,
 		"introText": "negation starting",
 		"ruleOrder": [
 			"negation",
@@ -32,7 +32,7 @@
 	},
 	{
 		"name": "medium",
-		"iti": 1000,
+		"iti": 500,
 		"introText": "medium starting",
 		"ruleOrder": [
 			"sequence",
@@ -42,7 +42,7 @@
 	},
 	{
 		"name": "second order",
-		"iti": 1000,
+		"iti": 500,
 		"introText": "second order starting",
 		"ruleOrder": [
 			"facing left",
@@ -52,7 +52,7 @@
 	},
 	{
 		"name": "hard",
-		"iti": 1000,
+		"iti": 500,
 		"introText": "hard starting",
 		"ruleOrder": [
 			"branching",
@@ -62,7 +62,7 @@
 	},
 	{
 		"name": "easy2",
-		"iti": 1000,
+		"iti": 500,
 		"introText": "easy2 starting",
 		"ruleOrder": [
 			"single",
@@ -74,7 +74,7 @@
 	},
 	{
 		"name": "volatility",
-		"iti": 1000,
+		"iti": 250,
 		"introText": "volatility starting",
 		"ruleOrder": [
 			"sequence of two swapped",
@@ -93,7 +93,7 @@
 	},
 	{
 		"name": "easy3",
-		"iti": 1000,
+		"iti": 500,
 		"introText": "easy3 starting",
 		"ruleOrder": [
 			"single",
