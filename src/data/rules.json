@@ -171,7 +171,7 @@
 		]
 	},
 	"ordinal branching" : {
-		"humanReadableExplanation" : "If the second {stimulus} colour you see is {a} then photograph every {b} {stimulus}. But if the second {stimulus} colour is not {a} then photograph every {c} {stimulus}",
+		"humanReadableExplanation" : "Skip the first {stimuli}. If the second {stimulus} colour you see is {a} then photograph every {b} {stimulus}. But if the second {stimulus} colour is not {a} then photograph every {c} {stimulus}",
 		"stimuli": "birds",
 		"rules" : [
 			{
@@ -254,7 +254,7 @@
 		]
 	},
 	"not first": {
-		"humanReadableExplanation" : "Photograph any {stimulus} that does not match the colour of the first {stimulus} you see",
+		"humanReadableExplanation" : "Photograph all {stimuli} that are not the same colour as the first {stimulus} you see",
 		"stimuli": "birds",
 		"rules" : [
 			{
@@ -544,7 +544,7 @@
 		]
 	},
 	"snakes ordinal branching" : {
-		"humanReadableExplanation" : "If the second {stimulus} colour you see is {a} then photograph every {b} {stimulus}. But if the second {stimulus} colour is not {a} then photograph every {c} {stimulus}",
+		"humanReadableExplanation" : "Skip the first {stimuli}. If the second {stimulus} colour you see is {a} then photograph every {b} {stimulus}. But if the second {stimulus} colour is not {a} then photograph every {c} {stimulus}",
 		"stimuli": "snakes",
 		"rules" : [
 			{
