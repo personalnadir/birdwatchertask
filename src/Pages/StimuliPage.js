@@ -26,8 +26,7 @@ import {
 	getTrialID,
 	getAttempts,
 	isTrialStoopVersion,
-	getTrialDirection,
-	getITI
+	getTrialDirection
 } from '../redux/selectors';
 import KeyListener from '../Components/KeyListener';
 import blueBird from '../images/task/bird-blue.png';
@@ -52,7 +51,8 @@ import {
 	TIMEOUT_MILLIS,
 	HUMAN_READABLE_COLOURS,
 	LOOKING_LEFT,
-	LOOKING_RIGHT
+	LOOKING_RIGHT,
+	FEEDBACK_MILLIS
 } from '../constants';
 
 import {
@@ -133,7 +133,7 @@ class StimuliPage extends React.Component {
     		this.props.startTimeOutTimer(this.props.trialPos.block, this.props.trialPos.trial, this.props.trialID);
     		return;
     	}
-    	this.props.startITITimer(this.props.iti, this.props.wasCorrect, this.props.mode, this.props.trialID);
+    	this.props.startFeedbackTimer(this.props.wasCorrect, this.props.mode, this.props.trialID);
    	}
 
   	componentDidUpdate(prevProps, prevState, snapshot) {
@@ -141,7 +141,7 @@ class StimuliPage extends React.Component {
     		this.props.startTimeOutTimer(this.props.trialPos.block, this.props.trialPos.trial, this.props.trialID);
 			return;
     	}
-    	this.props.startITITimer(this.props.iti, this.props.wasCorrect, this.props.mode, this.props.trialID);
+    	this.props.startFeedbackTimer(this.props.wasCorrect, this.props.mode, this.props.trialID);
   	}
 	handleKeyPress(keyCode) {
 		if (_.has(validKeys, keyCode)) {
@@ -179,13 +179,12 @@ const mapStateToProps = state => ({
 	mode: getTaskMode(state),
 	attempts: getAttempts(state),
 	stroop: isTrialStoopVersion(state),
-	facing: getTrialDirection(state),
-	iti: getITI(state)
+	facing: getTrialDirection(state)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
-	    startITITimer: (iti, wasCorrect, mode, id) => dispatch(startTimeout(dispatch => {
+	    startFeedbackTimer: (wasCorrect, mode, id) => dispatch(startTimeout(dispatch => {
 	    	if (wasCorrect) {
 		    	dispatch(showITI());
 				dispatch(goToNextTrial());
@@ -193,7 +192,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	    		dispatch(increaseAttempts(id));
 	    		dispatch(restartTrialOrGiveUp());
 	    	}
-		}, iti)),
+		}, FEEDBACK_MILLIS)),
 		 startTimeOutTimer: (block, trial, id) => dispatch(startTimeout(dispatch => {
 		 	dispatch(showTimeOut(block, trial, id));
     		dispatch(increaseAttempts(id));

@@ -3,10 +3,13 @@ import cross from '../images/iti/fixation.png';
 import {startTimeout} from '../redux/timeactions';
 import {showStimulus} from '../redux/trialactions';
 import { connect } from 'react-redux';
+import {
+  getITI
+} from '../redux/selectors';
 
 class ITIPage extends React.Component {
   componentDidMount() {
-    this.props.startTimeout();
+    this.props.startTimeout(this.props.iti);
   }
 
   render() {
@@ -19,13 +22,17 @@ class ITIPage extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  iti: getITI(state)
+});
+
 const mapDispathToProps = dispatch => {
   return {
-    startTimeout: () => dispatch(startTimeout(dispatch => dispatch(showStimulus()),1000))
+    startTimeout: iti => dispatch(startTimeout(dispatch => dispatch(showStimulus()),iti))
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispathToProps
 )(ITIPage);
