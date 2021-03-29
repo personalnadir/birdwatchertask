@@ -128,7 +128,7 @@ const processSymbol = (symbol, colourOrder) => {
 		return _.chain(_.range(0,4))
 			.reject(x => exclude.symbol === x)
 			.map(x => ({
-				symbol: ordinalToColor(x, colourOrder),
+				symbol: ordinalToColor(ruleSymbols[x], colourOrder),
 				direction: oppositeDirection[exclude.direction]
 			}))
 			.value();

@@ -10,7 +10,7 @@ function detectOrdinalColours(trials) {
 }
 
 function mapOrdinals(targets, ordinalColours) {
-	return _.map(targets, list => list.map(t => ordinalColours[t.symbol]? ({
+	return targets.map(list => list.map(t => ordinalColours[t.symbol]? ({
 			...t,
 			symbol: ordinalColours[t.symbol].col,
 		})
