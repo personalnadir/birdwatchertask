@@ -56,9 +56,9 @@ function getStartingRuleIndex(ruleSet, trials, mirroring) {
 function matchesTarget(target, col, dir, evalDir) {
 	const trial = evalDir? {symbol: col, direction: dir}:{symbol: col};
 	let match = _.findWhere(target ?? [], trial);
-	if (evalDir && !match) {
+	if (evalDir && _.isUndefined(match)) {
 		match = _.findWhere(target ?? [], {symbol: col});
-		return match && _.isUndefined(match.direction);
+		return match && (_.isUndefined(match.direction) || _.isNull(match.direction));
 	}
 	return !_.isUndefined(match);
 }
