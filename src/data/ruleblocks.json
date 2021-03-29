@@ -6,8 +6,6 @@
 		"ruleOrder": [
 			"once",
 			"single",
-			"single",
-			"first",
 			"first"
 		]
 	},
@@ -66,8 +64,6 @@
 		"introText": "easy2 starting",
 		"ruleOrder": [
 			"single",
-			"single",
-			"sequence of two",
 			"sequence of two",
 			"negation"
 		]
