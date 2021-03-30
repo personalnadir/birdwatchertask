@@ -12,7 +12,7 @@ class EndPage extends React.Component {
 	render() {
 		return (
 			<div className = "InstructionPage">
-				<span className="TextEmphasis">Please download the data file and e-mail it to: email@email.com</span>
+				<span className="TextEmphasis">Please download the data file and e-mail it to: chr273@nyu.edu</span>
 			</div>
 		);
 	}
