@@ -3,6 +3,11 @@ import {
 	TRIAL_ACTION_SKIP
 } from "./redux/trialconstants";
 
+import {
+	COLOURS,
+	LOOKING_LEFT
+} from "./constants";
+
 import _ from 'underscore';
 
 function detectOrdinalColours(trials) {
@@ -18,9 +23,29 @@ function mapOrdinals(targets, ordinalColours) {
 	);
 }
 
+function everyOtherColor(symbol, trials) {
+	const col = trials[symbol].col;
+	return _.chain(COLOURS)
+				.reject(c => c === col)
+				.map(c => ({
+					symbol: c,
+					direction: LOOKING_LEFT
+				}))
+				.value();
+}
+
+function normaliseOrdinalNegations(targets, trials) {
+	const negations = _.filter(targets, list => _.findWhere(list, {negate:true}));
+	if (negations.length === 0) {
+		return targets;
+	}
+	return targets.map(list => _.flatten(list.map(t => t.negate? everyOtherColor(t.symbol, trials): t)),1);
+
+}
+
 function targetMatchesTrials (target, trials, evalDir){
 	const ordinalColours = detectOrdinalColours(trials);
-	const targetSequence = mapOrdinals(target, ordinalColours);
+	const targetSequence = mapOrdinals(normaliseOrdinalNegations(target, trials), ordinalColours);
 	let targetIndex = 0;
 
 	for(const t of trials) {
@@ -56,11 +81,12 @@ function getStartingRuleIndex(ruleSet, trials, mirroring) {
 function matchesTarget(target, col, dir, evalDir) {
 	const trial = evalDir? {symbol: col, direction: dir}:{symbol: col};
 	let match = _.findWhere(target ?? [], trial);
-	if (evalDir && _.isUndefined(match)) {
+	const matchFound = !_.isUndefined(match);
+	if (evalDir && !matchFound) {
 		match = _.findWhere(target ?? [], {symbol: col});
 		return match && (_.isUndefined(match.direction) || _.isNull(match.direction));
 	}
-	return !_.isUndefined(match);
+	return matchFound;
 }
 
 function processTrials(ruleSet, trials, mirroring) {
@@ -78,7 +104,8 @@ function processTrials(ruleSet, trials, mirroring) {
 			takePhoto.push(false);
 			continue;
 		}
-		const targetSequence = mapOrdinals(rule.target, ordinalColours);
+
+		const targetSequence = mapOrdinals(normaliseOrdinalNegations(rule.target, trials), ordinalColours);
 		const hasTransitionOnTargetRule = _.has(rule, "transitionTarget");
 		const transitionOnTarget = rule.transitionTarget;
 
@@ -217,8 +244,8 @@ function countRuleTransitions(ruleSet, trials, mirroring) {
 		if (!_.has(rule, "target")) {
 			continue;
 		}
+		const targetSequence = mapOrdinals(normaliseOrdinalNegations(rule.target, trials), ordinalColours);
 
-		const targetSequence = mapOrdinals(rule.target, ordinalColours);
 		const hasTransitionOnTargetRule = _.has(rule, "transitionTarget");
 		const transitionOnTarget = rule.transitionTarget;
 		const isTarget = matchesTarget(targetSequence[targetIndex], t.col, t.face, mirroring);

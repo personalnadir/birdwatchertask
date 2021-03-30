@@ -95,7 +95,8 @@ export default function(state = initialState, action) {
         ...state,
         blocks,
         counterBalanceA: action.counterBalanceA,
-        lastBlock
+        lastBlock,
+        lastMode: blocks.length === state.mode + 1
       };
     }
     default:

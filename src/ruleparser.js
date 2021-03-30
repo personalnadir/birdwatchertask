@@ -124,14 +124,9 @@ const processSymbol = (symbol, colourOrder) => {
 
 	array = [...symbol.matchAll(notNumber)];
 	if (array.length > 0) {
-		const exclude = splitSymbolDirection(array[0][1], colourOrder);
-		return _.chain(_.range(0,4))
-			.reject(x => exclude.symbol === x)
-			.map(x => ({
-				symbol: ordinalToColor(ruleSymbols[x], colourOrder),
-				direction: oppositeDirection[exclude.direction]
-			}))
-			.value();
+		let exclude = splitSymbolDirection(array[0][1], colourOrder);
+		exclude.negate = true;
+		return [exclude];
 	}
 
 	array = [...symbol.matchAll(number)];
