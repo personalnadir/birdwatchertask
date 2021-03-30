@@ -444,7 +444,7 @@
 		]
 	},
 	"stroop branching": {
-		"humanReadableExplanation" : "Now you will see the colour written over the {stimuli}. Ignore the colour of the {stimuli}, and only react to the word. Start by taking a picture of each {a} {stimuli}. But if you see a {b} {stimuli}, photograph that {b} {stimulus}, and from then on, only photograph {b} {stimulus}.",
+		"humanReadableExplanation" : "Now you will see the colour written over the {stimuli}. Ignore the colour of the {stimuli}, and only react to the word. Start by taking a picture when you read {a}. But if you see the word {b}, photograph it, and then only photograph the word {b}.",
 		"stimuli": "birds",
 		"stroop": true,
 		"rules" : [
