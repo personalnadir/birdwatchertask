@@ -385,12 +385,12 @@
 		]
 	},
 	"not and facing left": {
-		"humanReadableExplanation" : "Photograph all {stimuli} which are {L}.",
+		"humanReadableExplanation" : "Photograph all {stimuli} which are not {a}, but are {L}.",
 		"stimuli": "birds",
 		"stimuliMirroring": true,
 		"rules" : [
 			{
-				"target" : ["!aL"]
+				"target" : ["!aR"]
 			}
 		]
 	},
