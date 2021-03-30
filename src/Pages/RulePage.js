@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { goToNextTaskState } from '../redux/taskactions';
+import { setReadingTime } from '../redux/dataactions';
 import {
 	getCurrentRuleText,
 	getTrialStimuliType,
@@ -19,13 +20,16 @@ import {
 	HUMAN_READABLE_STIMULI
 } from '../redux/taskconstants';
 
-
 const colourRe = new RegExp(`(${Object.values(HUMAN_READABLE_COLOURS).join('|')})`, 'g');
 
 
 class RulePage extends React.Component{
 	componentDidUpdate() {
 		window.scrollTo(0, 0);
+	}
+
+	componentDidMount() {
+		this.textAppeared = Date.now();
 	}
 
 	render() {
@@ -48,7 +52,7 @@ class RulePage extends React.Component{
 				{this.props.swapInputs? <p className="warning">The buttons you must press have been switched!</p>: null}
 				{keyInstruction}
 				{text}
-				<button onClick={this.props.nextPage} className="ContinueButton">Continue</button>
+				<button onClick={() => this.props.nextPage(this.textAppeared)} className="ContinueButton">Continue</button>
 			</div>
 		);
 	}
@@ -62,7 +66,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
 	return {
-		nextPage: () => {
+		nextPage: startReading => {
+			const readingTime = Date.now() - startReading;
+			dispatch(setReadingTime(readingTime));
 			dispatch(goToNextTaskState());
 		}
 	};

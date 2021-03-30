@@ -13,7 +13,6 @@ import {
 	showTimeOut
 } from '../redux/taskactions';
 import {storeTrialData} from '../redux/dataactions';
-import {storeData} from '../database/db';
 import {startTimeout} from '../redux/timeactions';
 import {
 	getTrialColour,
@@ -145,7 +144,7 @@ class StimuliPage extends React.Component {
   	}
 	handleKeyPress(keyCode) {
 		if (_.has(validKeys, keyCode)) {
-			this.props.registerKeyPress(this.props.user, keyCode, this.trialStart, this.props.data, this.props.attempts);
+			this.props.registerKeyPress(keyCode, this.trialStart, this.props.data, this.props.attempts);
 		}
 	}
 
@@ -173,7 +172,6 @@ const mapStateToProps = state => ({
 	trialColour: getTrialColour(state),
 	data: getTrialData(state),
 	wasCorrect: getLastInputWasCorrect(state),
-	user: getUserID(state),
 	trialPos: getTaskPosition(state),
 	trialID: getTrialID(state),
 	mode: getTaskMode(state),
@@ -197,15 +195,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 		 	dispatch(showTimeOut(block, trial, id));
     		dispatch(increaseAttempts(id));
 		},TIMEOUT_MILLIS)),
-		registerKeyPress: (user, keyCode, startTime, data, attempts) => {
+		registerKeyPress: (keyCode, startTime, data, attempts) => {
 			if (ownProps.feedback) {
 				return;
 			} else {
 				const keyAction = keyEncode(keyCode);
 				const reactionTime = Date.now() - startTime;
-				const dataAction = storeTrialData(keyAction, startTime, reactionTime, data, attempts);
-				dispatch(dataAction);
-				storeData(user, dataAction);
+				dispatch(storeTrialData(keyAction, startTime, reactionTime, data, attempts));
 				dispatch(registerInput(keyAction));
 				dispatch(showFeedback());
 			}

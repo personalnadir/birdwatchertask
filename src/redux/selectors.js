@@ -48,6 +48,7 @@ const getInstructionsPage = state => state.application.instructionPage;
 const getTaskPosition = state => ({block: state.task.currentBlock, trial: state.trial.currentTrial});
 const getAttempts = state => state.trial.attempts;
 const getTrialID = state => state.trial.id;
+const getReadingTime = state => state.data.readingTime;
 
 export {
 	getApplicationState,
@@ -75,5 +76,6 @@ export {
 	getInputsSwapped,
 	getTrialDirection,
 	getStimuliMirroring,
-	getITI
+	getITI,
+	getReadingTime
 };

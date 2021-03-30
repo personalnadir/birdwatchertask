@@ -1,6 +1,7 @@
 import {
   STORE_TRIAL,
-  SET_USER_ID
+  SET_USER_ID,
+  SET_READING_TIME
 } from "../dataactions";
 
 const initialState = {
@@ -35,7 +36,7 @@ export default function(state = initialState, action) {
         attempts,
         reactionTime,
         startTime,
-        time
+        time,
       });
       return {
         ...state,
@@ -45,6 +46,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         user: action.id
+      };
+    case SET_READING_TIME:
+      return {
+        ...state,
+        readingTime: action.time
       };
     default:
       return state;
