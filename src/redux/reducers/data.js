@@ -15,7 +15,8 @@ export default function(state = initialState, action) {
         userAction,
         block,
         mode,
-        stimuli,
+        stimuliColour,
+        stimuliDirection,
         correctAction,
         rule,
         attempts,
@@ -24,10 +25,11 @@ export default function(state = initialState, action) {
         time
       } = action;
       data.push({
-       userAction,
+        userAction,
         block,
         mode,
-        stimuli,
+        stimuliColour,
+        stimuliDirection,
         correctAction,
         rule,
         attempts,
