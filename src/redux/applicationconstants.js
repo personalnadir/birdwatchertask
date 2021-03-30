@@ -6,9 +6,6 @@ export const END = 'END';
 export const APP_STATE_FLOW = [
 	LOGIN_PAGE,
 	INSTRUCTIONS,
-	TASK, // tutorial
-	INSTRUCTIONS,
-	TASK, // randomised task,
-	TASK, // non-randomised
+	TASK,
 	END,
 ];

@@ -28,9 +28,9 @@ export const goToNextTaskState = () => {
 	return (dispatch, getState) => {
 		const state = getState();
 		const inTask = getTaskState(state) === TASK_PROPER;
-		if ((isLastMode(state) || isLastBlock(state)) && inTask) {
-			if (isLastMode(state)) {
-				dispatch(goToNextApplicationState());
+		if (isLastBlock(state) && inTask) {
+			if (isLastMode(state) && isLastBlock(state)) {
+				return dispatch(goToNextApplicationState());
 			}
 			dispatch(nextMode(getTaskMode(state)));
 			dispatch(
