@@ -34,7 +34,8 @@
 		"introText": "medium starting",
 		"ruleOrder": [
 			"sequence",
-			"rule shifting"
+			"rule shifting",
+			"branching"
 		]
 
 	},
@@ -44,7 +45,7 @@
 		"introText": "second order starting",
 		"ruleOrder": [
 			"facing left",
-			"sequence facing right",
+			"sequence end facing right",
 			"not and facing left"
 		]
 	},
@@ -53,7 +54,7 @@
 		"iti": 500,
 		"introText": "hard starting",
 		"ruleOrder": [
-			"branching",
+			"seq branching",
 			"simple ordinal branching",
 			"ordinal branching"
 		]
@@ -63,7 +64,6 @@
 		"iti": 500,
 		"introText": "easy2 starting",
 		"ruleOrder": [
-			"single",
 			"sequence of two",
 			"negation"
 		]
@@ -93,7 +93,6 @@
 		"introText": "easy3 starting",
 		"ruleOrder": [
 			"single",
-			"sequence of two",
 			"negation"
 		]
 	}

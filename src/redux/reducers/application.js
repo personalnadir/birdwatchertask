@@ -13,7 +13,7 @@ export default function(state = initialState, action) {
     case NEXT_APP_STATE:
       return {
         ...state,
-        appStateIndex: state.appStateIndex + 1,
+        appStateIndex: state.appStateIndex + 1
       };
     case NEXT_INSTRUCTIONS_PAGE:
       return {

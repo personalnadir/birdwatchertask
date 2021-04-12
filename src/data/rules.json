@@ -87,7 +87,7 @@
 		]
 	},
 	"branching": {
-		"humanReadableExplanation" : "Start by taking a picture of each {a} {stimuli}. But if you see a {b} {stimuli}, photograph that {b} {stimulus}, and from then on, only photograph {b} {stimulus}.",
+		"humanReadableExplanation" : "Start by taking a picture of each {a} {stimulus}. But if you see a {b} {stimulus}, photograph that {b} {stimulus}, and from then on, only photograph {b} {stimuli}.",
 		"stimuli": "birds",
 		"rules" : [
 			{
@@ -98,6 +98,21 @@
 			},
 			{
 				"target": ["b"]
+			}
+		]
+	},
+	"seq branching": {
+		"humanReadableExplanation" : "Start by taking a picture of each {a} {stimulus}. But if you see two {b} {stimuli} in a row, start photographing {c} {stimuli} instead and stop photographing {a} {stimuli}",
+		"stimuli": "birds",
+		"rules" : [
+			{
+				"target" : ["a"],
+				"transitionOnTarget": ["b", "b"],
+				"transitionToRule" : 1,
+				"transitionAfterTargetsMatched" : 1
+			},
+			{
+				"target": ["c"]
 			}
 		]
 	},
@@ -171,7 +186,7 @@
 		]
 	},
 	"ordinal branching" : {
-		"humanReadableExplanation" : "Skip the first {stimuli}. If the second {stimulus} colour you see is {a} then photograph every {b} {stimulus}. But if the second {stimulus} colour is not {a} then photograph every {c} {stimulus}",
+		"humanReadableExplanation" : "Skip the first {stimulus}. If the second {stimulus} colour you see is {a} then photograph every {b} {stimulus}. But if the second {stimulus} colour is not {a} then photograph every {c} {stimulus}",
 		"stimuli": "birds",
 		"rules" : [
 			{
@@ -381,6 +396,16 @@
 		"rules" : [
 			{
 				"target" : ["aR", "b"]
+			}
+		]
+	},
+	"sequence end facing right": {
+		"humanReadableExplanation" : "Photograph if you see {a} {stimulus} followed by a {b} {stimulus} {R}",
+		"stimuli": "birds",
+		"stimuliMirroring": true,
+		"rules" : [
+			{
+				"target" : ["a", "bR"]
 			}
 		]
 	},
