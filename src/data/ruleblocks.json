@@ -14,7 +14,6 @@
 		"iti": 500,
 		"introText": "easy starting",
 		"ruleOrder": [
-			"two identical",
 			"sequence of two"
 		]
 	},
