@@ -33,13 +33,17 @@ const getTrialData = state => {
 	const {currentBlock, mode} = state.task;
 	const {currentTrial, stimuli, correctAction} = state.trial;
 	const rule = getCurrentRuleConfig(state);
+	const swapped = getInputsSwapped(state);
+
 	return {
 		block: currentBlock,
 		mode,
 		trial: currentTrial,
 		stimuli: stimuli[currentTrial],
 		correctAction: correctAction[currentTrial],
-		rule: rule.name
+		iti: getITI(state),
+		rule: rule.name,
+		keysSwapped: swapped || false
 	};
 };
 const getUserID = state => state.data.user;
