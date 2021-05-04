@@ -48,13 +48,14 @@ export default function(state = initialState, action) {
         currentBlock: blockIndex,
         taskPhaseIndex: phaseIndex
       };
-    case NEXT_MODE:
+    case NEXT_MODE: {
       if (action.currentMode !== state.mode) {
         return state;
       }
       const newMode = action.currentMode + 1;
       const blockNames = getBlockNames();
       const lastMode = newMode + 1 >= blockNames.length;
+      const lastBlock = state.blocks[newMode].length;
 
       return {
         ...state,
@@ -62,8 +63,9 @@ export default function(state = initialState, action) {
         taskPhaseIndex: 0,
         currentBlock: 0,
         lastMode: lastMode,
-        lastBlock: false
+        lastBlock
       };
+    }
     case SHOW_TIMEOUT:
       return {
         ...state,
