@@ -55,7 +55,7 @@ export default function(state = initialState, action) {
       const newMode = action.currentMode + 1;
       const blockNames = getBlockNames();
       const lastMode = newMode + 1 >= blockNames.length;
-      const lastBlock = state.blocks[newMode].length;
+      const lastBlock = state.blocks[newMode].length === 1;
 
       return {
         ...state,
